@@ -19,6 +19,19 @@ const theme = {
   leaf: '#5A7747', leafSoft: '#DCE4D0', sand: '#E0D4B8',
 };
 
+// ============================================================================
+// THE FLOAT BRAND LOGO
+// ============================================================================
+const FLOAT_LOGO_DATA_URL = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCACfAq8DASIAAhEBAxEB/8QAHQABAAMBAAMBAQAAAAAAAAAAAAcICQYDBAUBAv/EAFsQAAEDAwIEAQQKDQgGBwkBAAEAAgMEBQYHEQgSITFBExQiUQkVGDI3OEJhdrQjM0NSVXFzgZGUpbPUFhc0VnSEsdMkV3KCldIlZ3WDksHkNkRHY4Who7LDxP/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCmSIiAiIgIiICIvZtlDW3O409ut1LNV1lTI2KCCFhc+R7jsGtA6kkoFsoa253Gnt1upZqusqZGxQQQsLnyPcdg1oHUklaG8KfD1Qaa22PI8nggrcvqWA9dnstzT9zjPYv++ePxN6bl37wocPlFplbo8lyWKGrzCpj6no5lvY4dY4z2LyOjnj/ZHTcusCgrNxZ8ONLm1HPmGD0UNLk8LS+ppI2hjLk0dT8wm9R+V2PgRQSpgnpamWmqYZIJ4nlkkcjS1zHA7FpB6gg9Nlsoq08XHDrBndNPmeGU0cGUxM5qmmbs1tyaB+gSgdj8rsfAgM/UXkqYJ6WplpqmGSCeJ5ZJHI0tcxwOxaQeoIPTZeNAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBEXs2yhrbncae3W6lmq6ypkbFBBCwufI9x2DWgdSSUC2UNbc7jT263Us1XWVMjYoIIWFz5HuOwa0DqSStDuFDh8otMrdHkuSxQ1eYVMfU9HMt7HDrHGexeR0c8f7I6blzhQ4fKLTK3R5LksUNXmFTH1PRzLexw6xxnsXkdHPH+yOm5dYFAVNOLLidqaeumwrTG6GJ0Dyy43mncCS4d4oHeoHu8ePRvrPg4wuJHzjzzTzTyv+w+lDdrtA/7Z4OghcPk+Dnjv2HTcmnKC9HCFxJTZPUwYHqFXR+27gGWy5yEN88PQCGTw8r6nfK7H0tua2CxoY5zHh7HFrmncEHYgq9XCBxHtyRlJgOfVobe2gRW25Su2FcOwikJ+6+p3y+3vvfB9fi44dYM7pp8zwymjgymJnNU0zdmtuTQP0CUDsfldj4EUBqYJ6WplpqmGSCeJ5ZJHI0tcxwOxaQeoIPTZbKKtPFxw6wZ3TT5nhlNHBlMTOappm7NbcmgfoEoHY/K7HwIDP1F5KmCelqZaaphkgnieWSRyNLXMcDsWkHqCD02XjQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQERe3ZrZcLzdaW1Wqjmra6rlEUEELC58jydgAAgWa2XC83WltVqo5q2uq5RFBBCwufI8nYAALRHhZ4erbpfRRZFf2xV+X1EWz39HR0Ad3ji9btjs5/j1A6b83l4VtA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";
+const FloatLogo = ({ size = 'md' }) => {
+  const heights = { xs: 18, sm: 22, md: 28, lg: 36, xl: 48 };
+  const h = heights[size] || 28;
+  return (
+    <img src={FLOAT_LOGO_DATA_URL} alt="The Float" style={{ height: `${h}px`, width: 'auto', display: 'block', mixBlendMode: 'screen' }} />
+  );
+};
+
+
 const fmt = (n) => new Intl.NumberFormat('en-GH').format(Math.round(n));
 const cedi = (n) => '₵ ' + fmt(n);
 const pct = (n) => n.toFixed(1) + '%';
@@ -147,10 +160,9 @@ const MdSidebar = ({ activeNav, setActiveNav }) => (
   <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
-        <div>
-          <div className="font-serif" style={{ fontSize: '20px', letterSpacing: '-0.02em' }}>The Float</div>
-          <div className="text-[10px]" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
+        <div className="flex-1">
+          <FloatLogo size="md" />
+          <div className="text-[10px] mt-1" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
         </div>
       </div>
     </div>
@@ -837,10 +849,9 @@ const GmSidebar = ({ activeNav, setActiveNav }) => (
   <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
-        <div>
-          <div className="font-serif" style={{ fontSize: '20px', letterSpacing: '-0.02em' }}>The Float</div>
-          <div className="text-[10px]" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
+        <div className="flex-1">
+          <FloatLogo size="md" />
+          <div className="text-[10px] mt-1" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
         </div>
       </div>
     </div>
@@ -3469,10 +3480,9 @@ const GmperiodicSidebar = ({ activeNav, setActiveNav }) => (
   <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
-        <div>
-          <div className="font-serif" style={{ fontSize: '20px', letterSpacing: '-0.02em' }}>The Float</div>
-          <div className="text-[10px]" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
+        <div className="flex-1">
+          <FloatLogo size="md" />
+          <div className="text-[10px] mt-1" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
         </div>
       </div>
     </div>
@@ -4622,10 +4632,9 @@ const GmreportsSidebar = ({ activeNav, setActiveNav }) => (
   <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
-        <div>
-          <div className="font-serif" style={{ fontSize: '20px', letterSpacing: '-0.02em' }}>The Float</div>
-          <div className="text-[10px]" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
+        <div className="flex-1">
+          <FloatLogo size="md" />
+          <div className="text-[10px] mt-1" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
         </div>
       </div>
     </div>
@@ -5391,7 +5400,9 @@ const ReportLetterhead = ({ title, subtitle }) => (
   <div className="pb-5 mb-6" style={{ borderBottom: `2px solid ${theme.gold}` }}>
     <div className="flex items-start justify-between">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '18px', fontWeight: 600 }}>⌒</div>
+        <div className="flex items-center" style={{ background: theme.navBg, padding: '8px 12px' }}>
+          <FloatLogo size="md" />
+        </div>
         <div>
           <div className="font-serif" style={{ fontSize: '22px', color: theme.ink, letterSpacing: '-0.01em' }}>The Float</div>
           <div className="text-[10px]" style={{ color: theme.inkMute, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Lake Volta · Ghana</div>
@@ -5874,10 +5885,9 @@ const FomSidebar = ({ activeNav, setActiveNav }) => (
   <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
-        <div>
-          <div className="font-serif" style={{ fontSize: '20px', letterSpacing: '-0.02em' }}>The Float</div>
-          <div className="text-[10px]" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
+        <div className="flex-1">
+          <FloatLogo size="md" />
+          <div className="text-[10px] mt-1" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
         </div>
       </div>
     </div>
@@ -6547,10 +6557,9 @@ const FbSidebar = ({ activeNav, setActiveNav }) => (
   <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
-        <div>
-          <div className="font-serif" style={{ fontSize: '20px', letterSpacing: '-0.02em' }}>The Float</div>
-          <div className="text-[10px]" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
+        <div className="flex-1">
+          <FloatLogo size="md" />
+          <div className="text-[10px] mt-1" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
         </div>
       </div>
     </div>
@@ -6914,8 +6923,10 @@ const POSBillModal = ({ table, order, onClose }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-8" style={{ background: 'rgba(21,32,31,0.6)' }} onClick={onClose}>
       <div className="w-[420px] max-h-[90vh] flex flex-col" style={{ background: '#FFFEF8', boxShadow: '0 12px 48px rgba(0,0,0,0.3)' }} onClick={(e) => e.stopPropagation()}>
         <div className="px-7 py-5 text-center" style={{ borderBottom: `1px solid ${theme.rule}` }}>
-          <div className="w-10 h-10 mx-auto mb-2 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '18px', fontWeight: 600 }}>⌒</div>
-          <div className="font-serif" style={{ fontSize: '20px', color: theme.ink, letterSpacing: '-0.01em' }}>The Float</div>
+          <div className="flex justify-center mb-2" style={{ background: theme.navBg, padding: '10px', display: 'inline-flex', margin: '0 auto' }}>
+            <FloatLogo size="md" />
+          </div>
+          <div className="font-serif" style={{ fontSize: '20px', color: theme.ink, letterSpacing: '-0.01em', textAlign: 'center' }}>The Float</div>
           <div className="text-[10px]" style={{ color: theme.inkMute, letterSpacing: '0.16em', textTransform: 'uppercase' }}>Akosombo · Lake Volta · Ghana</div>
         </div>
         <div className="px-7 py-4 flex-1 overflow-y-auto">
@@ -7123,10 +7134,9 @@ const ChefSidebar = ({ activeNav, setActiveNav }) => (
   <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
-        <div>
-          <div className="font-serif" style={{ fontSize: '20px', letterSpacing: '-0.02em' }}>The Float</div>
-          <div className="text-[10px]" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
+        <div className="flex-1">
+          <FloatLogo size="md" />
+          <div className="text-[10px] mt-1" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
         </div>
       </div>
     </div>
@@ -8114,10 +8124,9 @@ const HkSidebar = ({ activeNav, setActiveNav }) => (
   <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
-        <div>
-          <div className="font-serif" style={{ fontSize: '20px', letterSpacing: '-0.02em' }}>The Float</div>
-          <div className="text-[10px]" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
+        <div className="flex-1">
+          <FloatLogo size="md" />
+          <div className="text-[10px] mt-1" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
         </div>
       </div>
     </div>
@@ -8662,10 +8671,9 @@ const HrSidebar = ({ activeNav, setActiveNav }) => (
   <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
-        <div>
-          <div className="font-serif" style={{ fontSize: '20px', letterSpacing: '-0.02em' }}>The Float</div>
-          <div className="text-[10px]" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
+        <div className="flex-1">
+          <FloatLogo size="md" />
+          <div className="text-[10px] mt-1" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
         </div>
       </div>
     </div>
@@ -9365,10 +9373,9 @@ const CaSidebar = ({ activeNav, setActiveNav }) => (
   <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
-        <div>
-          <div className="font-serif" style={{ fontSize: '20px', letterSpacing: '-0.02em' }}>The Float</div>
-          <div className="text-[10px]" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
+        <div className="flex-1">
+          <FloatLogo size="md" />
+          <div className="text-[10px] mt-1" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
         </div>
       </div>
     </div>
@@ -10537,10 +10544,9 @@ const PmSidebar = ({ activeNav, setActiveNav }) => (
   <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
-        <div>
-          <div className="font-serif" style={{ fontSize: '20px', letterSpacing: '-0.02em' }}>The Float</div>
-          <div className="text-[10px]" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
+        <div className="flex-1">
+          <FloatLogo size="md" />
+          <div className="text-[10px] mt-1" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
         </div>
       </div>
     </div>
@@ -11417,10 +11423,9 @@ const ItSidebar = ({ activeNav, setActiveNav }) => (
   <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
-        <div>
-          <div className="font-serif" style={{ fontSize: '20px', letterSpacing: '-0.02em' }}>The Float</div>
-          <div className="text-[10px]" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
+        <div className="flex-1">
+          <FloatLogo size="md" />
+          <div className="text-[10px] mt-1" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
         </div>
       </div>
     </div>
@@ -12292,6 +12297,1048 @@ const ItApp = () => {
 // ============================================================================
 // LAUNCHER · LOGIN · UNIFIED ENTRY POINT
 // ============================================================================
+
+// ============================================================================
+// RECEPTIONIST PERSONA · Kwame Boateng · Front Desk
+// ============================================================================
+// ============================================================================
+// RECEPTIONIST · Kwame Boateng · Front Desk
+// Transactional workspace — check-in, check-out, walk-in, in-house lookup
+// ============================================================================
+const RECEPTIONIST_NAV = [
+  { id: 'queue', label: 'Today\'s Queue', icon: ClipboardList },
+  { id: 'checkin', label: 'Check-In', icon: Key },
+  { id: 'checkout', label: 'Check-Out', icon: LogOut },
+  { id: 'walkin', label: 'Walk-In', icon: PenLine },
+  { id: 'inhouse', label: 'In-House Guests', icon: Users },
+];
+
+const RECEPTIONIST_QUEUE = [
+  { id: 'R1041', guest: 'Anneke Visser', room: '204', type: 'Lakeview Suite', eta: '14:30', vip: true, source: 'Direct', nights: 3, action: 'arriving', special: 'Anniversary — flowers + champagne ready', confirmed: true, depositPaid: 1500, balance: 7020 },
+  { id: 'R1042', guest: 'Marcus Holm',   room: '108', type: 'Garden Room',     eta: '15:00', vip: false, source: 'Booking.com', nights: 2, action: 'arriving', special: '', confirmed: true, depositPaid: 0, balance: 2480 },
+  { id: 'R1043', guest: 'Ines & Carlos Reyes', room: '301', type: 'Volta Suite', eta: '16:00', vip: true, source: 'Direct', nights: 4, action: 'in-room', special: 'Late dinner reservation 21:00', confirmed: true, depositPaid: 2000, balance: 12720 },
+  { id: 'R1031', guest: 'David Chen',    room: '109', type: 'Standard',         eta: 'now',   vip: false, source: 'Booking.com', nights: 2, action: 'departing', special: 'Express check-out preferred', confirmed: true, depositPaid: 0, balance: 1240 },
+  { id: 'R1044', guest: 'Tomohiro Sato', room: null,  type: 'Standard',         eta: '16:30', vip: false, source: 'Expedia', nights: 1, action: 'arriving', special: 'Arriving by ferry', confirmed: true, depositPaid: 0, balance: 980 },
+  { id: 'R1045', guest: 'Lena Bauer',    room: null,  type: 'Standard',         eta: '17:00', vip: false, source: 'Direct', nights: 2, action: 'arriving', special: '', confirmed: true, depositPaid: 600, balance: 580 },
+];
+
+const IN_HOUSE = [
+  { id: 'R1029', guest: 'Hiroshi Yamada', room: '202', type: 'Lakeview', nights: 4, daysLeft: 1, balance: 6480, vip: false, special: 'Minibar charge dispute' },
+  { id: 'R1043', guest: 'Reyes Family', room: '301', type: 'Volta Suite', nights: 4, daysLeft: 3, balance: 12720, vip: true, special: 'Late dinner res 21:00' },
+  { id: 'R1037', guest: 'Asante Wedding (8 pax)', room: '4× Deluxe', type: 'Group', nights: 2, daysLeft: 1, balance: 13200, vip: false, special: 'Wedding party — 8 guests' },
+  { id: 'R1031', guest: 'David Chen', room: '109', type: 'Standard', nights: 2, daysLeft: 0, balance: 1240, vip: false, special: 'Express check-out' },
+];
+
+const ReceptionistQueueModule = () => {
+  const arriving = RECEPTIONIST_QUEUE.filter(r => r.action === 'arriving');
+  const departing = RECEPTIONIST_QUEUE.filter(r => r.action === 'departing');
+  const inRoom = RECEPTIONIST_QUEUE.filter(r => r.action === 'in-room');
+  
+  return (
+    <div style={{ background: theme.bg, minHeight: '100%' }}>
+      <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
+          <div>
+            <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Front Desk · Today</div>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Today's Queue</h1>
+            <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{arriving.length} arrivals · {departing.length} departures · {inRoom.length} already in</div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Btn variant="secondary" icon={Search}>Find Guest</Btn>
+            <Btn variant="primary" icon={PenLine}>New Walk-In</Btn>
+          </div>
+        </div>
+      </div>
+
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <KpiTile label="Arrivals Today" value={arriving.length} sublabel="next: 14:30" icon={Bed} tone={theme.gold} />
+          <KpiTile label="Departures" value={departing.length + 4} sublabel="3 by 11:00" icon={LogOut} tone={theme.teal} />
+          <KpiTile label="In-House" value={IN_HOUSE.length + 14} sublabel="across 32 rooms" icon={Users} tone={theme.dusk} />
+          <KpiTile label="VIP Today" value={2} sublabel="Visser · Reyes" icon={Star} tone={theme.hibiscus} />
+        </div>
+
+        {/* Departing first - urgent */}
+        {departing.length > 0 && (
+          <Card title="Departing Now" accent={theme.clay}>
+            <div className="space-y-2">
+              {departing.map(g => (
+                <div key={g.id} className="p-3 flex items-center gap-3" style={{ background: theme.bg, border: `1px solid ${theme.ruleSoft}`, borderLeft: `3px solid ${theme.clay}` }}>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: theme.claySoft, color: theme.clay, fontWeight: 600, fontSize: '13px' }}>{g.guest.split(' ').map(n => n[0]).join('').slice(0,2)}</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm" style={{ color: theme.ink, fontWeight: 600 }}>{g.guest}</div>
+                    <div className="text-xs" style={{ color: theme.inkSoft }}>Room {g.room} · {g.nights}n · Balance {cedi(g.balance)}</div>
+                    {g.special && <div className="text-[10px] italic mt-0.5" style={{ color: theme.dusk }}>{g.special}</div>}
+                  </div>
+                  <Btn variant="primary" size="sm" icon={LogOut}>Check Out</Btn>
+                </div>
+              ))}
+            </div>
+          </Card>
+        )}
+
+        {/* Expected arrivals */}
+        <Card title={`Arriving Today · ${arriving.length} guests`} accent={theme.gold}>
+          <div className="space-y-2">
+            {arriving.map(g => (
+              <div key={g.id} className="p-3 flex items-center gap-3" style={{ background: theme.bg, border: `1px solid ${theme.ruleSoft}`, borderLeft: `3px solid ${g.vip ? theme.hibiscus : theme.gold}` }}>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: g.vip ? theme.hibiscusSoft : theme.goldSoft, color: g.vip ? theme.hibiscus : theme.gold, fontWeight: 600, fontSize: '13px' }}>{g.guest.split(' ').map(n => n[0]).join('').slice(0,2)}</div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <div className="text-sm" style={{ color: theme.ink, fontWeight: 600 }}>{g.guest}</div>
+                    {g.vip && <Pill tone="hibiscus" size="sm"><Star size={9} /> VIP</Pill>}
+                  </div>
+                  <div className="text-xs" style={{ color: theme.inkSoft }}>{g.type}{g.room ? ` · Room ${g.room}` : ' · No room assigned'} · {g.nights}n · ETA {g.eta}</div>
+                  {g.special && <div className="text-[10px] italic mt-0.5" style={{ color: theme.gold }}>{g.special}</div>}
+                </div>
+                <div className="flex flex-col items-end gap-1">
+                  <div className="text-xs font-mono" style={{ color: theme.inkSoft }}>{cedi(g.balance)} due</div>
+                  <Btn variant="primary" size="sm" icon={Key}>Check In</Btn>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        <div className="p-4 flex items-start gap-3" style={{ background: theme.tealSoft + '40', border: `1px solid ${theme.teal}30`, borderLeft: `3px solid ${theme.teal}` }}>
+          <Sparkles size={16} style={{ color: theme.teal, marginTop: 2 }} />
+          <div className="flex-1 text-sm">
+            <span style={{ color: theme.ink, fontWeight: 600 }}>Pre-arrival prep tip: </span>
+            <span style={{ color: theme.inkSoft }}>Anneke Visser arriving 14:30 — anniversary VIP. Room 204 prepared with flowers and champagne (per HK note WO-204-prep). Greeting card from Jana on the bedside table.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ReceptionistCheckInModule = () => {
+  const [selected, setSelected] = useState(null);
+  const [step, setStep] = useState(0); // 0=select guest, 1=ID, 2=card key, 3=done
+  const arriving = RECEPTIONIST_QUEUE.filter(r => r.action === 'arriving');
+
+  if (selected) {
+    return (
+      <div style={{ background: theme.bg, minHeight: '100%' }}>
+        <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+          <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
+            <div>
+              <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Check-In · Step {step + 1} of 3</div>
+              <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>{selected.guest}</h1>
+              <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{selected.type} · Room {selected.room || 'TBA'} · {selected.nights} nights</div>
+            </div>
+            <Btn variant="ghost" icon={ArrowLeft} onClick={() => { setSelected(null); setStep(0); }}>Back to Queue</Btn>
+          </div>
+        </div>
+
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          {/* Stepper */}
+          <div className="flex items-center gap-2 mb-4">
+            {[
+              { n: 0, label: 'Guest Info' },
+              { n: 1, label: 'ID Capture' },
+              { n: 2, label: 'Room & Key' },
+            ].map((s, i, arr) => (
+              <React.Fragment key={s.n}>
+                <div className={`flex items-center gap-2 px-3 py-1.5`} style={{ background: step >= s.n ? theme.gold : theme.bgPanel, color: step >= s.n ? theme.navBg : theme.inkMute, border: `1px solid ${step >= s.n ? theme.gold : theme.rule}`, fontSize: '11px', fontWeight: 600 }}>
+                  {step > s.n ? <Check size={11} /> : <span>{s.n + 1}</span>}
+                  <span className="hidden sm:inline">{s.label}</span>
+                </div>
+                {i < arr.length - 1 && <div className="flex-1 h-px" style={{ background: step > s.n ? theme.gold : theme.rule }} />}
+              </React.Fragment>
+            ))}
+          </div>
+
+          {step === 0 && (
+            <Card title="Guest Information" accent={theme.gold}>
+              <div className="space-y-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Full Name</label>
+                    <input defaultValue={selected.guest} className="w-full mt-1 px-3 py-2" style={{ background: theme.bg, border: `1px solid ${theme.rule}`, color: theme.ink, fontSize: '14px' }} />
+                  </div>
+                  <div>
+                    <label className="text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Confirmation #</label>
+                    <input defaultValue={selected.id} className="w-full mt-1 px-3 py-2 font-mono" style={{ background: theme.bg, border: `1px solid ${theme.rule}`, color: theme.ink, fontSize: '14px' }} />
+                  </div>
+                  <div>
+                    <label className="text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Email</label>
+                    <input placeholder="guest@example.com" className="w-full mt-1 px-3 py-2" style={{ background: theme.bg, border: `1px solid ${theme.rule}`, color: theme.ink, fontSize: '14px' }} />
+                  </div>
+                  <div>
+                    <label className="text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Phone</label>
+                    <input placeholder="+233 ..." className="w-full mt-1 px-3 py-2" style={{ background: theme.bg, border: `1px solid ${theme.rule}`, color: theme.ink, fontSize: '14px' }} />
+                  </div>
+                </div>
+                <div className="pt-3 flex justify-end" style={{ borderTop: `1px solid ${theme.ruleSoft}` }}>
+                  <Btn variant="primary" icon={ArrowRight} onClick={() => setStep(1)}>Continue to ID</Btn>
+                </div>
+              </div>
+            </Card>
+          )}
+
+          {step === 1 && (
+            <Card title="ID & Compliance" accent={theme.teal}>
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <button className="p-6 text-left transition-all" style={{ background: theme.tealSoft + '40', border: `2px dashed ${theme.teal}` }}>
+                    <Camera size={32} style={{ color: theme.teal }} />
+                    <div className="mt-2" style={{ color: theme.ink, fontWeight: 600, fontSize: '14px' }}>Scan Passport / ID</div>
+                    <div className="text-xs mt-1" style={{ color: theme.inkSoft }}>Tap to scan with the desk camera</div>
+                  </button>
+                  <div className="space-y-2">
+                    <div>
+                      <label className="text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Document Type</label>
+                      <select className="w-full mt-1 px-3 py-2" style={{ background: theme.bg, border: `1px solid ${theme.rule}`, color: theme.ink, fontSize: '14px' }}>
+                        <option>Passport</option>
+                        <option>National ID (Ghana Card)</option>
+                        <option>Driver's License</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Document Number</label>
+                      <input placeholder="P12345678" className="w-full mt-1 px-3 py-2 font-mono" style={{ background: theme.bg, border: `1px solid ${theme.rule}`, color: theme.ink, fontSize: '14px' }} />
+                    </div>
+                    <div>
+                      <label className="text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Nationality</label>
+                      <input placeholder="Netherlands" className="w-full mt-1 px-3 py-2" style={{ background: theme.bg, border: `1px solid ${theme.rule}`, color: theme.ink, fontSize: '14px' }} />
+                    </div>
+                  </div>
+                </div>
+                <div className="p-3 flex items-start gap-2" style={{ background: theme.goldSoft + '60', border: `1px solid ${theme.gold}30` }}>
+                  <CircleAlert size={14} style={{ color: theme.gold, marginTop: 1 }} />
+                  <div className="text-xs" style={{ color: theme.inkSoft }}>Ghana Tourism Authority requires guest ID capture for all stays. Information stored securely and only used for compliance.</div>
+                </div>
+                <div className="pt-3 flex justify-between" style={{ borderTop: `1px solid ${theme.ruleSoft}` }}>
+                  <Btn variant="ghost" icon={ArrowLeft} onClick={() => setStep(0)}>Back</Btn>
+                  <Btn variant="primary" icon={ArrowRight} onClick={() => setStep(2)}>Continue to Room</Btn>
+                </div>
+              </div>
+            </Card>
+          )}
+
+          {step === 2 && (
+            <Card title="Room Assignment & Key" accent={theme.gold}>
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="p-4" style={{ background: theme.bg, border: `1px solid ${theme.ruleSoft}` }}>
+                    <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.18em', fontWeight: 700 }}>Assigned Room</div>
+                    <div className="font-serif" style={{ fontSize: '40px', color: theme.ink, letterSpacing: '-0.02em' }}>{selected.room || '204'}</div>
+                    <div className="text-sm" style={{ color: theme.inkSoft }}>{selected.type}</div>
+                    <div className="text-xs mt-2" style={{ color: theme.leaf }}><Check size={12} className="inline mr-1" /> Cleaned & inspected · ready</div>
+                  </div>
+                  <div className="space-y-2">
+                    <div>
+                      <label className="text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Folio Setup</label>
+                      <div className="mt-1 p-3" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
+                        <div className="flex justify-between text-xs">
+                          <span style={{ color: theme.inkSoft }}>Room rate ({selected.nights}n)</span>
+                          <span className="font-mono" style={{ color: theme.ink }}>{cedi(selected.nights * 1840)}</span>
+                        </div>
+                        <div className="flex justify-between text-xs mt-1">
+                          <span style={{ color: theme.inkSoft }}>VAT (15%) + Tourism Levy</span>
+                          <span className="font-mono" style={{ color: theme.ink }}>{cedi(selected.nights * 1840 * 0.15)}</span>
+                        </div>
+                        <div className="flex justify-between text-xs mt-1">
+                          <span style={{ color: theme.leaf }}>Deposit paid</span>
+                          <span className="font-mono" style={{ color: theme.leaf }}>−{cedi(selected.depositPaid)}</span>
+                        </div>
+                        <div className="flex justify-between mt-2 pt-2" style={{ borderTop: `1px solid ${theme.ruleSoft}` }}>
+                          <span className="text-sm" style={{ color: theme.ink, fontWeight: 600 }}>Balance on departure</span>
+                          <span className="font-mono" style={{ color: theme.gold, fontWeight: 700 }}>{cedi(selected.balance)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button className="w-full p-4 flex items-center justify-center gap-3 transition-all" style={{ background: theme.gold, color: theme.navBg, fontWeight: 700, fontSize: '14px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                  <Key size={18} /> Print Key Card
+                </button>
+                <div className="pt-3 flex justify-between" style={{ borderTop: `1px solid ${theme.ruleSoft}` }}>
+                  <Btn variant="ghost" icon={ArrowLeft} onClick={() => setStep(1)}>Back</Btn>
+                  <Btn variant="primary" icon={Check} onClick={() => setStep(3)}>Complete Check-In</Btn>
+                </div>
+              </div>
+            </Card>
+          )}
+
+          {step === 3 && (
+            <Card title="Welcome to The Float" accent={theme.leaf}>
+              <div className="text-center py-6">
+                <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full" style={{ background: theme.leafSoft, color: theme.leaf }}>
+                  <Check size={32} />
+                </div>
+                <div className="font-serif" style={{ fontSize: '26px', color: theme.ink, letterSpacing: '-0.01em' }}>Akwaaba, {selected.guest.split(' ')[0]}!</div>
+                <p className="text-sm mt-2" style={{ color: theme.inkSoft }}>
+                  Room {selected.room || '204'} · Key card printed · Folio opened · Welcome packet ready
+                </p>
+                <div className="grid grid-cols-2 gap-2 mt-6 max-w-md mx-auto">
+                  <Btn variant="secondary" icon={Mail}>Email Receipt</Btn>
+                  <Btn variant="primary" icon={ArrowRight} onClick={() => { setSelected(null); setStep(0); }}>Next Guest</Btn>
+                </div>
+              </div>
+            </Card>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ background: theme.bg, minHeight: '100%' }}>
+      <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5">
+          <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Front Desk · Check-In</div>
+          <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Select Guest to Check In</h1>
+          <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{arriving.length} arrivals expected today</div>
+        </div>
+      </div>
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-3">
+        {arriving.map(g => (
+          <button key={g.id} onClick={() => setSelected(g)} className="w-full p-4 flex items-center gap-3 transition-all text-left" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${g.vip ? theme.hibiscus : theme.gold}` }}>
+            <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: g.vip ? theme.hibiscusSoft : theme.goldSoft, color: g.vip ? theme.hibiscus : theme.gold, fontWeight: 600, fontSize: '14px' }}>{g.guest.split(' ').map(n => n[0]).join('').slice(0,2)}</div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <div className="text-base" style={{ color: theme.ink, fontWeight: 600 }}>{g.guest}</div>
+                {g.vip && <Pill tone="hibiscus" size="sm"><Star size={9} /> VIP</Pill>}
+              </div>
+              <div className="text-xs mt-1" style={{ color: theme.inkSoft }}>{g.type}{g.room ? ` · Room ${g.room}` : ''} · {g.nights} nights · ETA {g.eta} · {g.source}</div>
+            </div>
+            <ArrowRight size={20} style={{ color: theme.inkMute }} />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const ReceptionistCheckOutModule = () => {
+  const [selected, setSelected] = useState(null);
+  const departing = [...RECEPTIONIST_QUEUE.filter(r => r.action === 'departing'), ...IN_HOUSE.filter(g => g.daysLeft === 0)];
+
+  if (selected) {
+    return (
+      <div style={{ background: theme.bg, minHeight: '100%' }}>
+        <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+          <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
+            <div>
+              <div className="text-[10px] uppercase mb-2" style={{ color: theme.clay, letterSpacing: '0.24em', fontWeight: 700 }}>Check-Out · Folio Settlement</div>
+              <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>{selected.guest}</h1>
+              <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Room {selected.room} · {selected.nights} nights · Departing now</div>
+            </div>
+            <Btn variant="ghost" icon={ArrowLeft} onClick={() => setSelected(null)}>Back</Btn>
+          </div>
+        </div>
+
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4">
+          <Card title="Folio · Final Bill" accent={theme.clay} padded={false}>
+            <table className="w-full text-sm">
+              <thead>
+                <tr style={{ borderBottom: `1px solid ${theme.rule}`, background: theme.bg }}>
+                  <th className="text-left py-3 px-5 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Date</th>
+                  <th className="text-left py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Description</th>
+                  <th className="text-right py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Charge</th>
+                  <th className="text-right py-3 px-5 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Tax</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style={{ borderBottom: `1px solid ${theme.ruleSoft}` }}>
+                  <td className="py-3 px-5" style={{ color: theme.ink }}>23 Apr</td>
+                  <td className="py-3 px-3" style={{ color: theme.ink }}>Room — Standard · Night 1</td>
+                  <td className="py-3 px-3 text-right font-mono" style={{ color: theme.ink }}>{cedi(620)}</td>
+                  <td className="py-3 px-5 text-right font-mono" style={{ color: theme.inkMute }}>{cedi(93)}</td>
+                </tr>
+                <tr style={{ borderBottom: `1px solid ${theme.ruleSoft}` }}>
+                  <td className="py-3 px-5" style={{ color: theme.ink }}>23 Apr</td>
+                  <td className="py-3 px-3" style={{ color: theme.ink }}>Bar — beverages</td>
+                  <td className="py-3 px-3 text-right font-mono" style={{ color: theme.ink }}>{cedi(180)}</td>
+                  <td className="py-3 px-5 text-right font-mono" style={{ color: theme.inkMute }}>{cedi(27)}</td>
+                </tr>
+                <tr style={{ borderBottom: `1px solid ${theme.ruleSoft}` }}>
+                  <td className="py-3 px-5" style={{ color: theme.ink }}>24 Apr</td>
+                  <td className="py-3 px-3" style={{ color: theme.ink }}>Room — Standard · Night 2</td>
+                  <td className="py-3 px-3 text-right font-mono" style={{ color: theme.ink }}>{cedi(620)}</td>
+                  <td className="py-3 px-5 text-right font-mono" style={{ color: theme.inkMute }}>{cedi(93)}</td>
+                </tr>
+                <tr style={{ borderBottom: `1px solid ${theme.ruleSoft}` }}>
+                  <td className="py-3 px-5" style={{ color: theme.ink }}>24 Apr</td>
+                  <td className="py-3 px-3" style={{ color: theme.ink }}>Restaurant — dinner</td>
+                  <td className="py-3 px-3 text-right font-mono" style={{ color: theme.ink }}>{cedi(245)}</td>
+                  <td className="py-3 px-5 text-right font-mono" style={{ color: theme.inkMute }}>{cedi(37)}</td>
+                </tr>
+                <tr style={{ borderTop: `2px solid ${theme.ink}`, background: theme.bgPanelAlt }}>
+                  <td className="py-3 px-5 font-serif" style={{ color: theme.ink, fontWeight: 700 }} colSpan={2}>Total Due</td>
+                  <td className="py-3 px-3 text-right font-mono" style={{ color: theme.ink, fontWeight: 700 }}>{cedi(1665)}</td>
+                  <td className="py-3 px-5 text-right font-mono" style={{ color: theme.gold, fontWeight: 700 }}>{cedi(1915)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </Card>
+
+          <Card title="Settlement Method" accent={theme.gold}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+              {[
+                { id: 'card', label: 'Card', icon: CreditCard, primary: true },
+                { id: 'cash', label: 'Cash', icon: DollarSign },
+                { id: 'momo', label: 'MTN MoMo', icon: Phone },
+                { id: 'transfer', label: 'Bank Transfer', icon: Receipt },
+              ].map(m => {
+                const Icon = m.icon;
+                return (
+                  <button key={m.id} className="p-3 flex flex-col items-center gap-2 transition-all" style={{ background: m.primary ? theme.gold : theme.bg, color: m.primary ? theme.navBg : theme.ink, border: `1px solid ${m.primary ? theme.gold : theme.rule}`, fontWeight: m.primary ? 600 : 400 }}>
+                    <Icon size={20} />
+                    <span className="text-xs">{m.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="mt-4 pt-4 flex flex-col md:flex-row gap-2 justify-end" style={{ borderTop: `1px solid ${theme.ruleSoft}` }}>
+              <Btn variant="ghost" icon={Mail}>Email Folio</Btn>
+              <Btn variant="secondary" icon={Printer}>Print Receipt</Btn>
+              <Btn variant="primary" icon={Check} onClick={() => setSelected(null)}>Settle & Check Out</Btn>
+            </div>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ background: theme.bg, minHeight: '100%' }}>
+      <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5">
+          <div className="text-[10px] uppercase mb-2" style={{ color: theme.clay, letterSpacing: '0.24em', fontWeight: 700 }}>Check-Out</div>
+          <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Select Guest to Check Out</h1>
+          <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{departing.length} departing today</div>
+        </div>
+      </div>
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-3">
+        {departing.map(g => (
+          <button key={g.id} onClick={() => setSelected(g)} className="w-full p-4 flex items-center gap-3 transition-all text-left" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${theme.clay}` }}>
+            <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: theme.claySoft, color: theme.clay, fontWeight: 600, fontSize: '14px' }}>{g.guest.split(' ').map(n => n[0]).join('').slice(0,2)}</div>
+            <div className="flex-1 min-w-0">
+              <div className="text-base" style={{ color: theme.ink, fontWeight: 600 }}>{g.guest}</div>
+              <div className="text-xs mt-1" style={{ color: theme.inkSoft }}>Room {g.room} · {g.nights} nights · Balance {cedi(g.balance || 1240)}</div>
+              {g.special && <div className="text-[10px] italic mt-0.5" style={{ color: theme.gold }}>{g.special}</div>}
+            </div>
+            <ArrowRight size={20} style={{ color: theme.inkMute }} />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const ReceptionistWalkInModule = () => (
+  <div style={{ background: theme.bg, minHeight: '100%' }}>
+    <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+      <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5">
+        <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Walk-In Registration</div>
+        <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>New Walk-In Guest</h1>
+        <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>4 rooms available now · best rate ₵1,240/night</div>
+      </div>
+    </div>
+    <div className="px-4 md:px-8 py-4 md:py-6 space-y-4">
+      <Card title="Available Rooms · Tonight" accent={theme.leaf}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+          {[
+            { room: '110', type: 'Standard', rate: 1240, view: 'Garden' },
+            { room: '203', type: 'Lakeview', rate: 1840, view: 'Lake' },
+            { room: '208', type: 'Lakeview', rate: 1840, view: 'Lake' },
+            { room: '305', type: 'Volta Suite', rate: 3680, view: 'Lake panorama' },
+          ].map(r => (
+            <button key={r.room} className="p-4 text-left transition-all" style={{ background: theme.bg, border: `1px solid ${theme.ruleSoft}`, borderLeft: `3px solid ${theme.leaf}` }}>
+              <div className="font-serif" style={{ fontSize: '32px', color: theme.ink, letterSpacing: '-0.02em', lineHeight: 1 }}>{r.room}</div>
+              <div className="text-xs mt-1" style={{ color: theme.inkSoft }}>{r.type} · {r.view}</div>
+              <div className="text-sm mt-2 font-mono" style={{ color: theme.gold, fontWeight: 700 }}>{cedi(r.rate)}/night</div>
+            </button>
+          ))}
+        </div>
+      </Card>
+
+      <Card title="Quick Walk-In Form" accent={theme.gold}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div>
+            <label className="text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Full Name</label>
+            <input className="w-full mt-1 px-3 py-2" style={{ background: theme.bg, border: `1px solid ${theme.rule}`, color: theme.ink }} />
+          </div>
+          <div>
+            <label className="text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Phone</label>
+            <input placeholder="+233 ..." className="w-full mt-1 px-3 py-2" style={{ background: theme.bg, border: `1px solid ${theme.rule}`, color: theme.ink }} />
+          </div>
+          <div>
+            <label className="text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Nights</label>
+            <input type="number" defaultValue={1} className="w-full mt-1 px-3 py-2 font-mono" style={{ background: theme.bg, border: `1px solid ${theme.rule}`, color: theme.ink }} />
+          </div>
+          <div>
+            <label className="text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Guests</label>
+            <input type="number" defaultValue={1} className="w-full mt-1 px-3 py-2 font-mono" style={{ background: theme.bg, border: `1px solid ${theme.rule}`, color: theme.ink }} />
+          </div>
+        </div>
+        <div className="mt-4 pt-4 flex justify-end gap-2" style={{ borderTop: `1px solid ${theme.ruleSoft}` }}>
+          <Btn variant="ghost">Cancel</Btn>
+          <Btn variant="primary" icon={ArrowRight}>Continue to Check-In</Btn>
+        </div>
+      </Card>
+    </div>
+  </div>
+);
+
+const ReceptionistInHouseModule = () => (
+  <div style={{ background: theme.bg, minHeight: '100%' }}>
+    <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+      <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5">
+        <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>In-House Guests</div>
+        <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>In-House · {IN_HOUSE.length + 14} Guests</h1>
+      </div>
+    </div>
+    <div className="px-4 md:px-8 py-4 md:py-6">
+      <Card title="Currently In-House" accent={theme.gold} padded={false}>
+        <table className="w-full text-sm">
+          <thead>
+            <tr style={{ borderBottom: `1px solid ${theme.rule}`, background: theme.bg }}>
+              <th className="text-left py-3 px-5 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Room</th>
+              <th className="text-left py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Guest</th>
+              <th className="text-left py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Nights</th>
+              <th className="text-left py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Departure</th>
+              <th className="text-right py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Folio</th>
+              <th className="text-right py-3 px-5 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            {IN_HOUSE.map((g, i) => (
+              <tr key={g.id} style={{ borderBottom: i < IN_HOUSE.length - 1 ? `1px solid ${theme.ruleSoft}` : 'none' }}>
+                <td className="py-3 px-5 font-mono" style={{ color: theme.ink, fontWeight: 600 }}>{g.room}</td>
+                <td className="py-3 px-3">
+                  <div className="flex items-center gap-2">
+                    <span style={{ color: theme.ink, fontWeight: 500 }}>{g.guest}</span>
+                    {g.vip && <Pill tone="hibiscus" size="sm"><Star size={9} /> VIP</Pill>}
+                  </div>
+                </td>
+                <td className="py-3 px-3 text-xs" style={{ color: theme.inkSoft }}>{g.nights}n</td>
+                <td className="py-3 px-3 text-xs" style={{ color: g.daysLeft === 0 ? theme.clay : theme.inkSoft, fontWeight: g.daysLeft === 0 ? 600 : 400 }}>{g.daysLeft === 0 ? 'Today' : `+${g.daysLeft}d`}</td>
+                <td className="py-3 px-3 text-right font-mono" style={{ color: theme.ink }}>{cedi(g.balance)}</td>
+                <td className="py-3 px-5 text-xs italic text-right" style={{ color: theme.inkMute, maxWidth: 200 }}>{g.special || '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Card>
+    </div>
+  </div>
+);
+
+const ReceptionistSidebar = ({ activeNav, setActiveNav }) => (
+  <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
+    <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+      <div className="flex items-center gap-3">
+        <div className="flex-1">
+          <FloatLogo size="md" />
+          <div className="text-[10px] mt-1" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
+        </div>
+      </div>
+    </div>
+    <div className="px-5 py-4" style={{ background: 'rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full flex items-center justify-center font-medium" style={{ background: theme.gold, color: theme.navBg, fontSize: '13px' }}>KB</div>
+        <div className="flex-1 min-w-0">
+          <div className="text-sm" style={{ fontWeight: 500 }}>Kwame Boateng</div>
+          <div className="text-[10px]" style={{ color: theme.gold, letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 600 }}>Receptionist</div>
+        </div>
+      </div>
+    </div>
+    <nav className="flex-1 px-3 py-3 overflow-y-auto">
+      {RECEPTIONIST_NAV.map(item => {
+        const Icon = item.icon;
+        const active = activeNav === item.id;
+        return (
+          <button key={item.id} onClick={() => setActiveNav(item.id)}
+            className="w-full flex items-center gap-3 px-3 py-2.5 mb-0.5 transition-all text-sm"
+            style={{ background: active ? 'rgba(185,135,64,0.15)' : 'transparent', color: active ? theme.gold : 'rgba(255,255,255,0.75)', borderLeft: active ? `3px solid ${theme.gold}` : '3px solid transparent', fontWeight: active ? 600 : 400 }}>
+            <Icon size={15} />
+            <span className="flex-1 text-left">{item.label}</span>
+          </button>
+        );
+      })}
+    </nav>
+    <div className="px-5 py-4" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+      <div className="flex items-center justify-between text-[10px]" style={{ color: 'rgba(255,255,255,0.5)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+        <span>v1.0</span>
+        <button className="hover:text-white"><LogOut size={12} /></button>
+      </div>
+    </div>
+  </aside>
+);
+
+const ReceptionistTopBar = () => (
+  <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+    <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
+      <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026 · Shift 14:00–22:00</span><span className="md:hidden">Sat 25 Apr</span>
+    </div>
+    <div className="flex items-center gap-3">
+      <div className="hidden md:flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
+        <Search size={13} style={{ color: theme.inkMute }} />
+        <input placeholder="Search guest by name or room..." className="bg-transparent outline-none text-sm w-56" style={{ color: theme.ink }} />
+      </div>
+      <button className="relative p-2"><Bell size={15} style={{ color: theme.inkSoft }} /><span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ background: theme.gold }} /></button>
+    </div>
+  </div>
+);
+
+const ReceptionistApp = () => {
+  const [activeNav, setActiveNav] = useState('queue');
+  let content;
+  if (activeNav === 'queue') content = <ReceptionistQueueModule />;
+  else if (activeNav === 'checkin') content = <ReceptionistCheckInModule />;
+  else if (activeNav === 'checkout') content = <ReceptionistCheckOutModule />;
+  else if (activeNav === 'walkin') content = <ReceptionistWalkInModule />;
+  else if (activeNav === 'inhouse') content = <ReceptionistInHouseModule />;
+  
+  return (
+    <div className="flex h-screen w-full overflow-hidden" style={{ background: theme.bg, fontFamily: '"Inter", system-ui, sans-serif', color: theme.ink }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+        * { font-family: 'Inter', sans-serif; }
+        .font-serif { font-family: 'Cormorant Garamond', serif !important; }
+        .font-mono { font-family: 'JetBrains Mono', monospace !important; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: ${theme.bg}; }
+        ::-webkit-scrollbar-thumb { background: ${theme.rule}; }
+      `}</style>
+      <ReceptionistSidebar activeNav={activeNav} setActiveNav={setActiveNav} />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <ReceptionistTopBar />
+        <div className="flex-1 overflow-y-auto">{content}</div>
+      </div>
+    </div>
+  );
+};
+
+
+// ============================================================================
+// WAITER PERSONA · Kofi Asante · POS
+// ============================================================================
+// ============================================================================
+// WAITER · Kofi Asante · POS · Restaurant Floor
+// ============================================================================
+const WAITER_NAV = [
+  { id: 'tabs', label: 'Open Tabs', icon: ClipboardList, badge: 6 },
+  { id: 'newtab', label: 'New Order', icon: Plus },
+  { id: 'menu', label: 'Menu', icon: BookOpen },
+  { id: 'shift', label: 'My Shift', icon: Clock },
+];
+
+const WAITER_TABS = [
+  { id: 'T-204', table: '4', guests: 2, opened: '19:42', items: [{ name: 'Tilapia · whole', qty: 1, price: 145, course: 'main' }, { name: 'Jollof rice', qty: 1, price: 35, course: 'side' }, { name: 'Star Beer', qty: 2, price: 18, course: 'drinks' }, { name: 'Star Beer', qty: 1, price: 18, course: 'drinks' }], status: 'eating', server: 'Kofi', total: 234 },
+  { id: 'T-211', table: '11', guests: 4, opened: '20:12', items: [{ name: 'Plantain crisps', qty: 1, price: 24, course: 'starter' }, { name: 'Goat curry', qty: 2, price: 95, course: 'main' }, { name: 'Banku & tilapia', qty: 1, price: 110, course: 'main' }, { name: 'Volta Wine', qty: 1, price: 280, course: 'drinks' }], status: 'in-kitchen', server: 'Kofi', total: 604 },
+  { id: 'T-208', table: '8', guests: 2, opened: '20:05', items: [{ name: 'Anniversary Tasting', qty: 2, price: 380, course: 'set' }, { name: 'Champagne (375ml)', qty: 1, price: 320, course: 'drinks' }], status: 'starter-served', server: 'Kofi', total: 1080, vip: true, note: 'Anniversary — Anneke Visser, Room 204' },
+  { id: 'T-206', table: '6', guests: 6, opened: '20:18', items: [{ name: 'Plantain crisps', qty: 2, price: 24, course: 'starter' }, { name: 'Mixed grill', qty: 2, price: 165, course: 'main' }, { name: 'Tilapia · grilled', qty: 1, price: 110, course: 'main' }, { name: 'Bissap juice', qty: 6, price: 12, course: 'drinks' }], status: 'ordering', server: 'Kofi', total: 530 },
+  { id: 'T-203', table: '3', guests: 1, opened: '20:24', items: [{ name: 'Goat curry', qty: 1, price: 95, course: 'main' }, { name: 'Star Beer', qty: 1, price: 18, course: 'drinks' }], status: 'in-kitchen', server: 'Kofi', total: 113 },
+  { id: 'T-209', table: '9', guests: 3, opened: '20:30', items: [{ name: 'Plantain crisps', qty: 1, price: 24, course: 'starter' }], status: 'starter-served', server: 'Kofi', total: 24 },
+];
+
+const WAITER_MENU = {
+  starters: [
+    { id: 'm-pl', name: 'Plantain Crisps', price: 24, prep: 5 },
+    { id: 'm-pe', name: 'Peanut Soup', price: 35, prep: 8 },
+    { id: 'm-sl', name: 'Salad of the Lake', price: 42, prep: 6 },
+    { id: 'm-bs', name: 'Bissap Cured Tilapia', price: 65, prep: 10 },
+  ],
+  mains: [
+    { id: 'm-tw', name: 'Tilapia · Whole', price: 145, prep: 22 },
+    { id: 'm-tg', name: 'Tilapia · Grilled Fillet', price: 110, prep: 18 },
+    { id: 'm-bk', name: 'Banku & Tilapia', price: 110, prep: 20 },
+    { id: 'm-jl', name: 'Jollof with Chicken', price: 95, prep: 15 },
+    { id: 'm-gc', name: 'Goat Curry', price: 95, prep: 25 },
+    { id: 'm-mx', name: 'Mixed Grill', price: 165, prep: 22 },
+    { id: 'm-vg', name: 'Vegetarian Banku', price: 78, prep: 18 },
+  ],
+  drinks: [
+    { id: 'd-st', name: 'Star Beer', price: 18 },
+    { id: 'd-cl', name: 'Club Beer', price: 18 },
+    { id: 'd-bs', name: 'Bissap Juice', price: 12 },
+    { id: 'd-wt', name: 'Mineral Water', price: 8 },
+    { id: 'd-vw', name: 'Volta Vintage Wine (btl)', price: 280 },
+    { id: 'd-cm', name: 'Champagne (375ml)', price: 320 },
+    { id: 'd-cf', name: 'Coffee', price: 14 },
+    { id: 'd-tg', name: 'Tea · Ginger', price: 14 },
+  ],
+  desserts: [
+    { id: 'ds-gr', name: 'Grilled Pineapple', price: 38 },
+    { id: 'ds-co', name: 'Coconut Tart', price: 42 },
+    { id: 'ds-cb', name: 'Chocolate · Banku Bread', price: 48 },
+  ],
+};
+
+const WaiterTabsModule = ({ openTab }) => {
+  const totalRevenue = WAITER_TABS.reduce((s, t) => s + t.total, 0);
+  const statuses = {
+    'ordering': { label: 'Taking order', tone: 'gold', icon: PenLine },
+    'in-kitchen': { label: 'In kitchen', tone: 'dusk', icon: ChefHat },
+    'starter-served': { label: 'Starter out', tone: 'teal', icon: Utensils },
+    'eating': { label: 'Eating', tone: 'leaf', icon: Coffee },
+  };
+
+  return (
+    <div style={{ background: theme.bg, minHeight: '100%' }}>
+      <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
+          <div>
+            <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Service · Restaurant Floor</div>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>My Tables</h1>
+            <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{WAITER_TABS.length} active tabs · {WAITER_TABS.reduce((s,t)=>s+t.guests,0)} covers · {cedi(totalRevenue)} on the floor</div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Btn variant="primary" icon={Plus}>New Order</Btn>
+          </div>
+        </div>
+      </div>
+
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <KpiTile label="Active Tabs" value={WAITER_TABS.length} sublabel={`${WAITER_TABS.reduce((s,t)=>s+t.guests,0)} covers`} icon={Utensils} tone={theme.gold} />
+          <KpiTile label="Floor Revenue" value={cedi(totalRevenue)} sublabel="on tabs now" icon={DollarSign} tone={theme.teal} />
+          <KpiTile label="Avg Cover" value={cedi(Math.round(totalRevenue / WAITER_TABS.reduce((s,t)=>s+t.guests,0)))} sublabel="this service" icon={TrendingUp} tone={theme.leaf} />
+          <KpiTile label="Tonight's Tips" value={cedi(180)} sublabel="estimated" icon={Sparkles} tone={theme.hibiscus} />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {WAITER_TABS.map(t => {
+            const s = statuses[t.status];
+            const Icon = s.icon;
+            const accentColor = s.tone === 'gold' ? theme.gold : s.tone === 'dusk' ? theme.dusk : s.tone === 'teal' ? theme.teal : theme.leaf;
+            return (
+              <button key={t.id} onClick={() => openTab(t)} className="p-4 text-left transition-all" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${t.vip ? theme.hibiscus : accentColor}` }}>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <div className="font-serif" style={{ fontSize: '32px', color: theme.ink, letterSpacing: '-0.02em', lineHeight: 1 }}>T{t.table}</div>
+                    {t.vip && <Pill tone="hibiscus" size="sm"><Star size={9} /> VIP</Pill>}
+                  </div>
+                  <Pill tone={s.tone} size="sm"><Icon size={9} /> {s.label}</Pill>
+                </div>
+                <div className="text-xs" style={{ color: theme.inkSoft }}>{t.guests} guests · opened {t.opened}</div>
+                {t.note && <div className="text-[10px] italic mt-1" style={{ color: theme.hibiscus }}>{t.note}</div>}
+                <div className="mt-3 pt-3 flex items-center justify-between" style={{ borderTop: `1px solid ${theme.ruleSoft}` }}>
+                  <div className="text-xs" style={{ color: theme.inkMute }}>{t.items.length} items</div>
+                  <div className="font-mono text-base" style={{ color: theme.gold, fontWeight: 700 }}>{cedi(t.total)}</div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const WaiterTabDetailModule = ({ tab, onBack }) => {
+  if (!tab) return null;
+  const subtotal = tab.items.reduce((s, i) => s + (i.price * i.qty), 0);
+  const tax = subtotal * 0.15;
+  const service = subtotal * 0.10;
+  const total = subtotal + tax + service;
+
+  return (
+    <div style={{ background: theme.bg, minHeight: '100%' }}>
+      <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
+          <div>
+            <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Tab · Table {tab.table}</div>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>{tab.id}</h1>
+            <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{tab.guests} guests · opened {tab.opened}{tab.vip ? ' · VIP' : ''}</div>
+            {tab.note && <div className="text-xs mt-1 italic" style={{ color: theme.hibiscus }}>{tab.note}</div>}
+          </div>
+          <Btn variant="ghost" icon={ArrowLeft} onClick={onBack}>Back</Btn>
+        </div>
+      </div>
+
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4">
+        <Card title="Items on Tab" accent={theme.gold} padded={false}>
+          <table className="w-full text-sm">
+            <thead>
+              <tr style={{ borderBottom: `1px solid ${theme.rule}`, background: theme.bg }}>
+                <th className="text-left py-3 px-5 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Qty</th>
+                <th className="text-left py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Item</th>
+                <th className="text-left py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Course</th>
+                <th className="text-right py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Price</th>
+                <th className="text-right py-3 px-5 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tab.items.map((item, i) => (
+                <tr key={i} style={{ borderBottom: i < tab.items.length - 1 ? `1px solid ${theme.ruleSoft}` : 'none' }}>
+                  <td className="py-3 px-5 font-mono" style={{ color: theme.ink, fontWeight: 600 }}>{item.qty}</td>
+                  <td className="py-3 px-3" style={{ color: theme.ink }}>{item.name}</td>
+                  <td className="py-3 px-3 text-xs italic" style={{ color: theme.inkMute }}>{item.course}</td>
+                  <td className="py-3 px-3 text-right font-mono" style={{ color: theme.inkSoft }}>{cedi(item.price)}</td>
+                  <td className="py-3 px-5 text-right font-mono" style={{ color: theme.ink, fontWeight: 500 }}>{cedi(item.price * item.qty)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="px-5 py-4" style={{ background: theme.bg, borderTop: `1px solid ${theme.rule}` }}>
+            <div className="space-y-1 text-sm">
+              <div className="flex justify-between"><span style={{ color: theme.inkSoft }}>Subtotal</span><span className="font-mono" style={{ color: theme.ink }}>{cedi(subtotal)}</span></div>
+              <div className="flex justify-between"><span style={{ color: theme.inkSoft }}>VAT 15% + Tourism Levy</span><span className="font-mono" style={{ color: theme.ink }}>{cedi(tax)}</span></div>
+              <div className="flex justify-between"><span style={{ color: theme.inkSoft }}>Service charge 10%</span><span className="font-mono" style={{ color: theme.ink }}>{cedi(service)}</span></div>
+              <div className="flex justify-between pt-2 mt-2" style={{ borderTop: `1px solid ${theme.ruleSoft}` }}>
+                <span className="font-serif text-lg" style={{ color: theme.ink, fontWeight: 700 }}>Total</span>
+                <span className="font-mono text-lg" style={{ color: theme.gold, fontWeight: 700 }}>{cedi(total)}</span>
+              </div>
+            </div>
+          </div>
+        </Card>
+
+        <Card title="Actions" accent={theme.teal}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <Btn variant="secondary" icon={Plus}>Add Items</Btn>
+            <Btn variant="secondary" icon={ChefHat}>Send to Kitchen</Btn>
+            <Btn variant="secondary" icon={Receipt}>Print Bill</Btn>
+            <Btn variant="primary" icon={CreditCard}>Settle Tab</Btn>
+          </div>
+        </Card>
+      </div>
+    </div>
+  );
+};
+
+const WaiterMenuModule = () => {
+  const [category, setCategory] = useState('mains');
+  const [cart, setCart] = useState([]);
+  const cats = [
+    { id: 'starters', label: 'Starters', items: WAITER_MENU.starters },
+    { id: 'mains', label: 'Mains', items: WAITER_MENU.mains },
+    { id: 'drinks', label: 'Drinks', items: WAITER_MENU.drinks },
+    { id: 'desserts', label: 'Desserts', items: WAITER_MENU.desserts },
+  ];
+  const items = cats.find(c => c.id === category).items;
+  const cartTotal = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+
+  const addToCart = (item) => {
+    setCart(prev => {
+      const existing = prev.find(i => i.id === item.id);
+      if (existing) return prev.map(i => i.id === item.id ? { ...i, qty: i.qty + 1 } : i);
+      return [...prev, { ...item, qty: 1 }];
+    });
+  };
+
+  return (
+    <div style={{ background: theme.bg, minHeight: '100%' }}>
+      <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5">
+          <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>POS · Quick Order</div>
+          <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Menu</h1>
+          <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Tap items to add to current order · Tab T-211 active</div>
+        </div>
+        <div className="px-4 md:px-8 flex gap-1 overflow-x-auto" style={{ borderTop: `1px solid ${theme.ruleSoft}` }}>
+          {cats.map(c => (
+            <button key={c.id} onClick={() => setCategory(c.id)} className="px-4 py-3 text-sm transition-all whitespace-nowrap"
+              style={{ color: category === c.id ? theme.ink : theme.inkSoft, fontWeight: category === c.id ? 600 : 400, borderBottom: category === c.id ? `2px solid ${theme.gold}` : '2px solid transparent', marginBottom: '-1px' }}>
+              {c.label} · {c.items.length}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
+        <div className="lg:col-span-2 px-4 md:px-8 py-4 md:py-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {items.map(item => (
+              <button key={item.id} onClick={() => addToCart(item)} className="p-4 text-left transition-all" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}` }}>
+                <div className="font-serif" style={{ fontSize: '17px', color: theme.ink, letterSpacing: '-0.01em', lineHeight: 1.2 }}>{item.name}</div>
+                {item.prep && <div className="text-[10px] mt-1" style={{ color: theme.inkMute }}>~{item.prep} min</div>}
+                <div className="text-sm mt-2 font-mono" style={{ color: theme.gold, fontWeight: 700 }}>{cedi(item.price)}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="lg:border-l px-4 md:px-6 py-4 md:py-6" style={{ background: theme.bgPanelAlt, borderLeft: `1px solid ${theme.rule}` }}>
+          <div className="text-[10px] uppercase mb-3" style={{ color: theme.gold, letterSpacing: '0.18em', fontWeight: 700 }}>Current Order · Table 11</div>
+          {cart.length === 0 ? (
+            <div className="p-6 text-center" style={{ background: theme.bgPanel, border: `1px dashed ${theme.rule}`, color: theme.inkMute, fontSize: '13px' }}>
+              Tap menu items to add
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {cart.map(c => (
+                <div key={c.id} className="flex items-center justify-between p-2" style={{ background: theme.bgPanel, border: `1px solid ${theme.ruleSoft}` }}>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm" style={{ color: theme.ink, fontWeight: 500 }}>{c.name}</div>
+                    <div className="text-[10px]" style={{ color: theme.inkMute }}>{cedi(c.price)} × {c.qty}</div>
+                  </div>
+                  <div className="text-sm font-mono" style={{ color: theme.gold, fontWeight: 600 }}>{cedi(c.price * c.qty)}</div>
+                </div>
+              ))}
+              <div className="pt-3 mt-3 flex justify-between" style={{ borderTop: `1px solid ${theme.rule}` }}>
+                <span className="font-serif" style={{ fontSize: '17px', color: theme.ink, fontWeight: 600 }}>Subtotal</span>
+                <span className="font-mono" style={{ fontSize: '17px', color: theme.gold, fontWeight: 700 }}>{cedi(cartTotal)}</span>
+              </div>
+              <div className="flex flex-col gap-2 mt-3">
+                <Btn variant="primary" icon={ChefHat}>Send to Kitchen</Btn>
+                <Btn variant="ghost" onClick={() => setCart([])}>Clear</Btn>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const WaiterShiftModule = () => (
+  <div style={{ background: theme.bg, minHeight: '100%' }}>
+    <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+      <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5">
+        <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>My Shift · Saturday Dinner Service</div>
+        <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Tonight's Performance</h1>
+        <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>18:00 → 23:00 · 4h 32m on the floor so far</div>
+      </div>
+    </div>
+    <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <KpiTile label="Tables Served" value={11} sublabel="6 currently active" icon={Utensils} tone={theme.gold} />
+        <KpiTile label="Total Covers" value={28} sublabel="avg ₵152/cover" icon={Users} tone={theme.teal} />
+        <KpiTile label="Revenue" value={cedi(4250)} sublabel="my section" icon={DollarSign} tone={theme.leaf} />
+        <KpiTile label="Tip Pool Share" value={cedi(180)} sublabel="estimated" icon={Sparkles} tone={theme.hibiscus} />
+      </div>
+
+      <Card title="My Tables Tonight" accent={theme.gold} padded={false}>
+        <table className="w-full text-sm">
+          <thead>
+            <tr style={{ borderBottom: `1px solid ${theme.rule}`, background: theme.bg }}>
+              <th className="text-left py-3 px-5 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Table</th>
+              <th className="text-left py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Opened</th>
+              <th className="text-left py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Closed</th>
+              <th className="text-left py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Covers</th>
+              <th className="text-right py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Total</th>
+              <th className="text-right py-3 px-5 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              { t: '2', o: '18:14', c: '19:48', cov: 2, tot: 312, status: 'paid' },
+              { t: '7', o: '18:32', c: '20:05', cov: 4, tot: 580, status: 'paid' },
+              { t: '5', o: '19:12', c: '20:38', cov: 3, tot: 412, status: 'paid' },
+              { t: '12', o: '19:25', c: '20:55', cov: 2, tot: 280, status: 'paid' },
+              { t: '4', o: '19:42', c: null, cov: 2, tot: 234, status: 'open' },
+              { t: '11', o: '20:12', c: null, cov: 4, tot: 604, status: 'open' },
+              { t: '8', o: '20:05', c: null, cov: 2, tot: 1080, status: 'open' },
+              { t: '6', o: '20:18', c: null, cov: 6, tot: 530, status: 'open' },
+              { t: '3', o: '20:24', c: null, cov: 1, tot: 113, status: 'open' },
+              { t: '9', o: '20:30', c: null, cov: 3, tot: 24, status: 'open' },
+            ].map((row, i, arr) => (
+              <tr key={i} style={{ borderBottom: i < arr.length - 1 ? `1px solid ${theme.ruleSoft}` : 'none' }}>
+                <td className="py-3 px-5 font-mono" style={{ color: theme.ink, fontWeight: 600 }}>T{row.t}</td>
+                <td className="py-3 px-3 text-xs" style={{ color: theme.inkSoft }}>{row.o}</td>
+                <td className="py-3 px-3 text-xs" style={{ color: theme.inkSoft }}>{row.c || '—'}</td>
+                <td className="py-3 px-3" style={{ color: theme.ink }}>{row.cov}</td>
+                <td className="py-3 px-3 text-right font-mono" style={{ color: theme.ink }}>{cedi(row.tot)}</td>
+                <td className="py-3 px-5 text-right">
+                  {row.status === 'paid' ? <Pill tone="leaf" size="sm">paid</Pill> : <Pill tone="gold" size="sm">open</Pill>}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Card>
+
+      <div className="p-4 flex items-start gap-3" style={{ background: theme.tealSoft + '40', border: `1px solid ${theme.teal}30`, borderLeft: `3px solid ${theme.teal}` }}>
+        <Sparkles size={16} style={{ color: theme.teal, marginTop: 2 }} />
+        <div className="flex-1 text-sm">
+          <span style={{ color: theme.ink, fontWeight: 600 }}>Service note: </span>
+          <span style={{ color: theme.inkSoft }}>Table 8 is the Visser anniversary VIP — coordinate with Yaa for the dessert presentation. Champagne already opened. Anniversary card from GM ready at hostess stand.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const WaiterSidebar = ({ activeNav, setActiveNav }) => (
+  <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
+    <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+      <div className="flex items-center gap-3">
+        <div className="flex-1">
+          <FloatLogo size="md" />
+          <div className="text-[10px] mt-1" style={{ color: theme.gold, letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Ghana</div>
+        </div>
+      </div>
+    </div>
+    <div className="px-5 py-4" style={{ background: 'rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full flex items-center justify-center font-medium" style={{ background: theme.gold, color: theme.navBg, fontSize: '13px' }}>KA</div>
+        <div className="flex-1 min-w-0">
+          <div className="text-sm" style={{ fontWeight: 500 }}>Kofi Asante</div>
+          <div className="text-[10px]" style={{ color: theme.gold, letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 600 }}>Waiter · Floor</div>
+        </div>
+      </div>
+    </div>
+    <nav className="flex-1 px-3 py-3 overflow-y-auto">
+      {WAITER_NAV.map(item => {
+        const Icon = item.icon;
+        const active = activeNav === item.id;
+        return (
+          <button key={item.id} onClick={() => setActiveNav(item.id)}
+            className="w-full flex items-center gap-3 px-3 py-2.5 mb-0.5 transition-all text-sm"
+            style={{ background: active ? 'rgba(185,135,64,0.15)' : 'transparent', color: active ? theme.gold : 'rgba(255,255,255,0.75)', borderLeft: active ? `3px solid ${theme.gold}` : '3px solid transparent', fontWeight: active ? 600 : 400 }}>
+            <Icon size={15} />
+            <span className="flex-1 text-left">{item.label}</span>
+            {item.badge && <span className="text-[10px] px-1.5 py-0.5 rounded-full" style={{ background: theme.gold, color: theme.navBg, fontWeight: 700 }}>{item.badge}</span>}
+          </button>
+        );
+      })}
+    </nav>
+    <div className="px-5 py-4" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+      <div className="flex items-center justify-between text-[10px]" style={{ color: 'rgba(255,255,255,0.5)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+        <span>v1.0</span>
+        <button className="hover:text-white"><LogOut size={12} /></button>
+      </div>
+    </div>
+  </aside>
+);
+
+const WaiterTopBar = () => (
+  <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+    <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
+      <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026 · Dinner service · 20:38</span><span className="md:hidden">Sat 25 Apr</span>
+    </div>
+    <div className="flex items-center gap-3">
+      <button className="relative p-2"><Bell size={15} style={{ color: theme.inkSoft }} /><span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ background: theme.gold }} /></button>
+    </div>
+  </div>
+);
+
+const WaiterApp = () => {
+  const [activeNav, setActiveNav] = useState('tabs');
+  const [openedTab, setOpenedTab] = useState(null);
+  let content;
+  if (openedTab) {
+    content = <WaiterTabDetailModule tab={openedTab} onBack={() => setOpenedTab(null)} />;
+  } else if (activeNav === 'tabs') content = <WaiterTabsModule openTab={setOpenedTab} />;
+  else if (activeNav === 'newtab') content = <WaiterMenuModule />;
+  else if (activeNav === 'menu') content = <WaiterMenuModule />;
+  else if (activeNav === 'shift') content = <WaiterShiftModule />;
+  
+  return (
+    <div className="flex h-screen w-full overflow-hidden" style={{ background: theme.bg, fontFamily: '"Inter", system-ui, sans-serif', color: theme.ink }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+        * { font-family: 'Inter', sans-serif; }
+        .font-serif { font-family: 'Cormorant Garamond', serif !important; }
+        .font-mono { font-family: 'JetBrains Mono', monospace !important; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: ${theme.bg}; }
+        ::-webkit-scrollbar-thumb { background: ${theme.rule}; }
+      `}</style>
+      <WaiterSidebar activeNav={activeNav} setActiveNav={(id) => { setOpenedTab(null); setActiveNav(id); }} />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <WaiterTopBar />
+        <div className="flex-1 overflow-y-auto">{content}</div>
+      </div>
+    </div>
+  );
+};
+
+
 const PERSONA_REGISTRY = [
   {
     id: 'md',
@@ -12325,6 +13372,28 @@ const PERSONA_REGISTRY = [
     icon: Bed,
     accent: theme.teal,
     Component: FomApp,
+  },
+  {
+    id: 'reception',
+    name: "Kwame Boateng",
+    initials: 'KB',
+    role: "Receptionist",
+    persona: "Front desk · transactional",
+    summary: "The person at the desk. Check guests in and out, capture IDs, assign rooms, settle folios, register walk-ins. Tap-tap-tap fast.",
+    icon: Key,
+    accent: theme.gold,
+    Component: ReceptionistApp,
+  },
+  {
+    id: 'waiter',
+    name: "Kofi Asante",
+    initials: 'KA',
+    role: "Waiter · POS",
+    persona: "Restaurant floor · point of sale",
+    summary: "On the floor. Open tabs, take orders, send to kitchen, present and settle bills. Fast iPad-style POS.",
+    icon: Utensils,
+    accent: theme.hibiscus,
+    Component: WaiterApp,
   },
   {
     id: 'fb',
@@ -12425,19 +13494,16 @@ const LoginScreen = ({ onSelect }) => {
       `}</style>
       <div className="relative px-6 md:px-16 py-10 md:py-16" style={{ background: theme.navBg, color: '#FBF7EE' }}>
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center gap-4 mb-10">
-            <div className="w-14 h-14 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '32px', fontWeight: 600 }}>⌒</div>
-            <div>
-              <div className="font-serif" style={{ fontSize: '36px', letterSpacing: '-0.02em', lineHeight: 1 }}>The Float</div>
-              <div className="text-xs mt-1" style={{ color: theme.gold, letterSpacing: '0.24em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Lake Volta · Ghana</div>
-            </div>
+          <div className="flex flex-col items-start gap-3 mb-10">
+            <FloatLogo size="xl" />
+            <div className="text-xs" style={{ color: theme.gold, letterSpacing: '0.24em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Lake Volta · Ghana</div>
           </div>
           <div className="text-[10px] uppercase mb-3" style={{ color: theme.gold, letterSpacing: '0.28em', fontWeight: 700 }}>Hospitality Platform · v1.0.4</div>
-          <h1 className="font-serif" style={{ fontSize: 'clamp(32px, 6vw, 52px)', letterSpacing: '-0.02em', lineHeight: 1.1, maxWidth: '720px' }}>
+          <h1 className="font-serif" style={{ fontSize: 'clamp(32px, 6vw, 52px)', letterSpacing: '-0.02em', lineHeight: 1.1, maxWidth: '720px', color: '#FFFFFF' }}>
             Akwaaba. Choose your workspace.
           </h1>
-          <p className="text-base mt-5 max-w-2xl" style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.6 }}>
-            12 persona-tailored workspaces. Each has its own sidebar, modules, and data threading. Click a persona to enter their workspace.
+          <p className="text-base mt-5 max-w-2xl" style={{ color: '#FFFFFF', lineHeight: 1.6 }}>
+            14 persona-tailored workspaces. Each has its own sidebar, modules, and data threading. Click a persona to enter their workspace.
           </p>
         </div>
       </div>
