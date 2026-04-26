@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Bed, Users, Utensils, Wrench, ClipboardList, BookOpen, Settings, LayoutDashboard, ChevronRight, ChevronLeft, ChevronDown, Search, Bell, LogOut, Plus, Check, X, AlertCircle, AlertTriangle, Calendar, Clock, ArrowUpRight, ArrowDownRight, Sparkles, FileText, DollarSign, Mail, Phone, Filter, Download, Printer, ArrowRight, CircleCheck, CircleAlert, Hotel, BarChart3, Receipt, Building2, UserCircle, RefreshCw, Wine, ChefHat, Award, Trash2, Percent, Activity, Leaf, Eye, Star, Globe, Heart, CreditCard, Briefcase, Key, FileSignature, PenLine, Car, Ban, Clock3, CalendarDays, BadgeCheck, LayoutGrid, Hammer, Bath, Package, Camera, MessageSquare, MapPin, Send, TrendingUp, TrendingDown, Coffee, Moon, ShoppingCart, Truck, CheckCircle2, ArrowLeft, Minus, Hash, Menu } from 'lucide-react';
+import { Bed, Users, Utensils, Wrench, ClipboardList, BookOpen, Settings, LayoutDashboard, ChevronRight, ChevronLeft, ChevronDown, Search, Bell, LogOut, Plus, Check, X, AlertCircle, AlertTriangle, Calendar, Clock, ArrowUpRight, ArrowDownRight, Sparkles, FileText, DollarSign, Mail, Phone, Filter, Download, Printer, ArrowRight, CircleCheck, CircleAlert, Hotel, BarChart3, Receipt, Building2, UserCircle, RefreshCw, Wine, ChefHat, Award, Trash2, Percent, Activity, Leaf, Eye, Star, Globe, Heart, CreditCard, Briefcase, Key, FileSignature, PenLine, Car, Ban, Clock3, CalendarDays, BadgeCheck, LayoutGrid, Hammer, Bath, Package, Camera, MessageSquare, MapPin, Send, TrendingUp, TrendingDown, Coffee, Moon, ShoppingCart, Truck, CheckCircle2, ArrowLeft, Minus, Hash, Menu, Image, Palette, Tag, Plug, Upload, EyeOff, Lock, LogIn, Shield } from 'lucide-react';
 import {
   LineChart, Line, AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, ScatterChart, Scatter,
@@ -13480,7 +13480,7 @@ const ROLE_GROUPS = [
   { id: 'support',     label: 'Support Functions',  personas: ['hr', 'ca', 'pm', 'it'] },
 ];
 
-const LoginScreen = ({ onSelect }) => {
+const LoginScreen = ({ onSelect, onSignOut }) => {
   const [hovered, setHovered] = useState(null);
   const [activeGroup, setActiveGroup] = useState('leadership');
 
@@ -13498,6 +13498,11 @@ const LoginScreen = ({ onSelect }) => {
             <FloatLogo size="xl" />
             <div className="text-xs" style={{ color: theme.gold, letterSpacing: '0.24em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Lake Volta · Ghana</div>
           </div>
+          {onSignOut && (
+            <button onClick={onSignOut} className="absolute top-6 right-6 md:top-10 md:right-16 flex items-center gap-2 px-3 py-2 transition-all z-10" style={{ background: 'transparent', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.25)', fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 600 }}>
+              <LogOut size={12} /> <span className="hidden sm:inline">Sign Out</span>
+            </button>
+          )}
           <div className="text-[10px] uppercase mb-3" style={{ color: theme.gold, letterSpacing: '0.28em', fontWeight: 700 }}>Hospitality Platform · v1.0.4</div>
           <h1 className="font-serif" style={{ fontSize: 'clamp(32px, 6vw, 52px)', letterSpacing: '-0.02em', lineHeight: 1.1, maxWidth: '720px', color: '#FFFFFF' }}>
             Akwaaba. Choose your workspace.
@@ -13574,16 +13579,1077 @@ const PersonaSwitcher = ({ onSwitch }) => (
   </button>
 );
 
+// ============================================================================
+// SIGN-IN & ONBOARDING — Form atoms
+// ============================================================================
+const Field = ({ label, hint, error, children, required, optional }) => (
+  <div>
+    <div className="flex items-baseline justify-between mb-1.5">
+      <label className="text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>
+        {label}
+        {required && <span style={{ color: theme.hibiscus, marginLeft: 4 }}>*</span>}
+      </label>
+      {optional && <span className="text-[10px] italic" style={{ color: theme.inkMute }}>optional</span>}
+    </div>
+    {children}
+    {hint && !error && <div className="text-[10px] mt-1" style={{ color: theme.inkMute }}>{hint}</div>}
+    {error && <div className="text-[10px] mt-1" style={{ color: theme.hibiscus }}>{error}</div>}
+  </div>
+);
+
+const Input = ({ ...props }) => (
+  <input
+    {...props}
+    className={`w-full px-3 py-2 text-sm outline-none transition-colors ${props.className || ''}`}
+    style={{
+      background: theme.bg,
+      border: `1px solid ${theme.rule}`,
+      color: theme.ink,
+      ...(props.style || {}),
+    }}
+  />
+);
+
+const Textarea = ({ ...props }) => (
+  <textarea
+    {...props}
+    className={`w-full px-3 py-2 text-sm outline-none transition-colors ${props.className || ''}`}
+    style={{
+      background: theme.bg,
+      border: `1px solid ${theme.rule}`,
+      color: theme.ink,
+      minHeight: 80,
+      resize: 'vertical',
+      ...(props.style || {}),
+    }}
+  />
+);
+
+const Select = ({ children, ...props }) => (
+  <select
+    {...props}
+    className={`w-full px-3 py-2 text-sm outline-none ${props.className || ''}`}
+    style={{
+      background: theme.bg,
+      border: `1px solid ${theme.rule}`,
+      color: theme.ink,
+      ...(props.style || {}),
+    }}
+  >
+    {children}
+  </select>
+);
+
+
+
+// ============================================================================
+// SIGN-IN SCREEN
+// ============================================================================
+const ACCOUNTS = [
+  {
+    id: 'thefloat',
+    email: 'admin@thefloat.com',
+    password: 'demo',
+    hotelName: 'The Float',
+    location: 'Akosombo, Lake Volta, Ghana',
+  },
+];
+
+const SignInScreen = ({ onSignIn, onStartOnboarding }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError('');
+    const account = ACCOUNTS.find(a => a.email.toLowerCase() === email.toLowerCase().trim());
+    if (!account) {
+      setError('No account found with that email.');
+      return;
+    }
+    if (account.password !== password) {
+      setError('Incorrect password. Try again.');
+      return;
+    }
+    onSignIn(account);
+  };
+
+  return (
+    <div className="min-h-screen w-full flex flex-col" style={{ background: theme.navBg, color: '#FBF7EE', fontFamily: '"Inter", system-ui, sans-serif' }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+        * { font-family: 'Inter', sans-serif; }
+        .font-serif { font-family: 'Cormorant Garamond', serif !important; }
+        .font-mono { font-family: 'JetBrains Mono', monospace !important; }
+      `}</style>
+
+      {/* Top bar */}
+      <div className="px-6 md:px-10 py-5 flex items-center justify-between" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 flex items-center justify-center" style={{ background: theme.gold, color: theme.navBg, fontWeight: 700, fontSize: '15px' }}>H</div>
+          <div className="font-serif" style={{ fontSize: '20px', letterSpacing: '-0.01em', color: '#FFFFFF' }}>Hospitality Platform</div>
+        </div>
+        <div className="text-[10px] uppercase" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>v1.0.4 · for hoteliers</div>
+      </div>
+
+      {/* Hero + sign-in form */}
+      <div className="flex-1 flex items-center justify-center px-6 py-10">
+        <div className="w-full max-w-md">
+          <div className="text-center mb-8">
+            <div className="text-[10px] uppercase mb-3" style={{ color: theme.gold, letterSpacing: '0.28em', fontWeight: 700 }}>Welcome back</div>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(32px, 5vw, 44px)', color: '#FFFFFF', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+              Sign in to your hotel
+            </h1>
+            <p className="text-sm mt-3" style={{ color: '#FFFFFF', opacity: 0.7 }}>
+              The complete back-of-house and front-of-house platform, tailored to your property.
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="p-6 space-y-4" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)' }}>
+            <div>
+              <label className="text-[10px] uppercase block mb-1.5" style={{ color: 'rgba(255,255,255,0.6)', letterSpacing: '0.14em', fontWeight: 600 }}>Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="admin@yourhotel.com"
+                autoFocus
+                className="w-full px-3 py-2.5 text-sm outline-none"
+                style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.15)', color: '#FFFFFF' }}
+              />
+            </div>
+            <div>
+              <label className="text-[10px] uppercase block mb-1.5" style={{ color: 'rgba(255,255,255,0.6)', letterSpacing: '0.14em', fontWeight: 600 }}>Password</label>
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full px-3 py-2.5 text-sm outline-none pr-10"
+                  style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.15)', color: '#FFFFFF' }}
+                />
+                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  {showPassword ? <EyeOff size={14} /> : <Eye size={14} />}
+                </button>
+              </div>
+            </div>
+            {error && (
+              <div className="p-3 flex items-start gap-2" style={{ background: 'rgba(160,72,72,0.15)', border: '1px solid rgba(160,72,72,0.3)' }}>
+                <AlertCircle size={14} style={{ color: theme.hibiscus, marginTop: 1, flexShrink: 0 }} />
+                <div className="text-xs" style={{ color: '#FFFFFF' }}>{error}</div>
+              </div>
+            )}
+            <button
+              type="submit"
+              className="w-full py-3 flex items-center justify-center gap-2 transition-all"
+              style={{ background: theme.gold, color: theme.navBg, fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 700 }}
+            >
+              <LogIn size={14} /> Sign In
+            </button>
+            <div className="text-[10px] text-center" style={{ color: 'rgba(255,255,255,0.5)' }}>
+              <button type="button" className="underline">Forgot password?</button>
+            </div>
+          </form>
+
+          {/* Demo credentials hint */}
+          <div className="mt-4 p-4" style={{ background: 'rgba(185,135,64,0.08)', border: '1px solid rgba(185,135,64,0.25)' }}>
+            <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.18em', fontWeight: 700 }}>Demo credentials</div>
+            <div className="text-xs space-y-1 font-mono" style={{ color: '#FFFFFF', opacity: 0.85 }}>
+              <div>Email: <span style={{ color: theme.gold }}>admin@thefloat.com</span></div>
+              <div>Password: <span style={{ color: theme.gold }}>demo</span></div>
+            </div>
+            <div className="text-[10px] mt-2 italic" style={{ color: 'rgba(255,255,255,0.5)' }}>This logs you into "The Float" — a fully operational demo property in Akosombo, Ghana.</div>
+          </div>
+
+          {/* New hotel CTA */}
+          <div className="mt-6 pt-6 text-center" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+            <p className="text-xs mb-3" style={{ color: 'rgba(255,255,255,0.65)' }}>First time? Set up your hotel account.</p>
+            <button
+              onClick={onStartOnboarding}
+              className="inline-flex items-center gap-2 px-5 py-2.5 transition-all"
+              style={{ background: 'transparent', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.25)', fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 600 }}
+            >
+              <Plus size={12} /> Set up new property
+              <ChevronRight size={12} />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="px-6 md:px-10 py-4 flex items-center justify-between text-[10px]" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+        <div>© 2026 Hospitality Platform · All rights reserved</div>
+        <div className="hidden md:block">Privacy · Terms · Support</div>
+      </div>
+    </div>
+  );
+};
+
+
+
+// ============================================================================
+// ONBOARDING WIZARD — 9 Steps
+// ============================================================================
+const WIZARD_STEPS = [
+  { id: 'profile', label: 'Hotel Profile', icon: Hotel },
+  { id: 'branding', label: 'Branding', icon: Palette },
+  { id: 'currency', label: 'Currency & Tax', icon: DollarSign },
+  { id: 'coa', label: 'Chart of Accounts', icon: BookOpen },
+  { id: 'departments', label: 'Departments', icon: Building2 },
+  { id: 'rooms', label: 'Room Types', icon: Bed },
+  { id: 'rates', label: 'Rate Plans', icon: Tag },
+  { id: 'users', label: 'User Invitations', icon: Users },
+  { id: 'integrations', label: 'Integrations', icon: Plug },
+];
+
+// === Step 1: Hotel Profile ===
+const Step1Profile = ({ data, setData }) => (
+  <div className="space-y-4">
+    <div>
+      <h2 className="font-serif" style={{ fontSize: '28px', color: theme.ink, letterSpacing: '-0.01em' }}>Tell us about your hotel</h2>
+      <p className="text-sm mt-1" style={{ color: theme.inkSoft }}>The basics — what your property is and where it lives.</p>
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <Field label="Hotel name" required>
+        <Input value={data.hotelName || ''} onChange={(e) => setData({ ...data, hotelName: e.target.value })} placeholder="e.g. Hotel Kemet" />
+      </Field>
+      <Field label="Property type" required>
+        <Select value={data.propertyType || 'boutique'} onChange={(e) => setData({ ...data, propertyType: e.target.value })}>
+          <option value="boutique">Boutique resort</option>
+          <option value="urban">Urban hotel</option>
+          <option value="lodge">Safari lodge / eco-lodge</option>
+          <option value="villa">Private villa / retreat</option>
+          <option value="business">Business / convention hotel</option>
+          <option value="aparthotel">Apart-hotel</option>
+        </Select>
+      </Field>
+    </div>
+
+    <Field label="Location" required hint="City and country">
+      <Input value={data.location || ''} onChange={(e) => setData({ ...data, location: e.target.value })} placeholder="e.g. Cairo, Egypt" />
+    </Field>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <Field label="Star rating" required>
+        <Select value={data.starRating || '4'} onChange={(e) => setData({ ...data, starRating: e.target.value })}>
+          <option value="3">★★★ — 3 star</option>
+          <option value="4">★★★★ — 4 star</option>
+          <option value="5">★★★★★ — 5 star</option>
+          <option value="luxury">★★★★★⁺ — Luxury / 6 star</option>
+          <option value="unrated">Unrated</option>
+        </Select>
+      </Field>
+      <Field label="Total rooms" required hint="Including suites and villas">
+        <Input type="number" min="1" value={data.totalRooms || ''} onChange={(e) => setData({ ...data, totalRooms: e.target.value })} placeholder="e.g. 32" />
+      </Field>
+      <Field label="Year established" optional>
+        <Input type="number" min="1800" max="2030" value={data.yearEstablished || ''} onChange={(e) => setData({ ...data, yearEstablished: e.target.value })} placeholder="2024" />
+      </Field>
+    </div>
+
+    <Field label="Brief description" hint="One paragraph about what makes your property special. Used in reports and marketing.">
+      <Textarea value={data.description || ''} onChange={(e) => setData({ ...data, description: e.target.value })} placeholder="A boutique 32-room resort overlooking Lake Volta with restaurant, bar, spa, and conference facilities..." />
+    </Field>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <Field label="Primary contact email" required>
+        <Input type="email" value={data.contactEmail || ''} onChange={(e) => setData({ ...data, contactEmail: e.target.value })} placeholder="reservations@yourhotel.com" />
+      </Field>
+      <Field label="Primary contact phone" required>
+        <Input value={data.contactPhone || ''} onChange={(e) => setData({ ...data, contactPhone: e.target.value })} placeholder="+233 ..." />
+      </Field>
+    </div>
+
+    <Field label="Hotel website" optional>
+      <Input value={data.website || ''} onChange={(e) => setData({ ...data, website: e.target.value })} placeholder="https://yourhotel.com" />
+    </Field>
+  </div>
+);
+
+// === Step 2: Branding ===
+const Step2Branding = ({ data, setData }) => {
+  const [primary, setPrimary] = useState(data.primaryColor || '#B98740');
+  const [secondary, setSecondary] = useState(data.secondaryColor || '#15201F');
+  React.useEffect(() => { setData({ ...data, primaryColor: primary, secondaryColor: secondary }); }, [primary, secondary]);
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <h2 className="font-serif" style={{ fontSize: '28px', color: theme.ink, letterSpacing: '-0.01em' }}>Make it yours</h2>
+        <p className="text-sm mt-1" style={{ color: theme.inkSoft }}>Logo and colors. These appear on every screen and in every report.</p>
+      </div>
+
+      <Field label="Logo" required hint="PNG or SVG, transparent background recommended. Max 2 MB.">
+        <button className="w-full p-8 flex flex-col items-center justify-center gap-3 transition-all" style={{ background: theme.bg, border: `2px dashed ${theme.rule}` }}>
+          <Upload size={28} style={{ color: theme.gold }} />
+          <div className="text-sm" style={{ color: theme.ink, fontWeight: 500 }}>Upload your logo</div>
+          <div className="text-xs" style={{ color: theme.inkMute }}>Drop a file or click to browse</div>
+        </button>
+      </Field>
+
+      <Field label="Tagline" optional hint="Short marketing line that appears below the logo">
+        <Input value={data.tagline || ''} onChange={(e) => setData({ ...data, tagline: e.target.value })} placeholder="e.g. Akosombo · Lake Volta · Ghana" />
+      </Field>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Field label="Primary brand color" hint="Used for buttons, accents, highlights">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-10 flex-shrink-0" style={{ background: primary, border: `1px solid ${theme.rule}` }} />
+            <Input value={primary} onChange={(e) => setPrimary(e.target.value)} className="font-mono" />
+          </div>
+        </Field>
+        <Field label="Secondary brand color" hint="Used for navigation, headers">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-10 flex-shrink-0" style={{ background: secondary, border: `1px solid ${theme.rule}` }} />
+            <Input value={secondary} onChange={(e) => setSecondary(e.target.value)} className="font-mono" />
+          </div>
+        </Field>
+      </div>
+
+      <Field label="Suggested palettes" hint="Click to apply">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+          {[
+            { name: 'Lakeside', primary: '#B98740', secondary: '#15201F' },
+            { name: 'Saharan', primary: '#C97D3A', secondary: '#3D2817' },
+            { name: 'Ocean', primary: '#1B7B86', secondary: '#0E2A33' },
+            { name: 'Forest', primary: '#5A7A4A', secondary: '#1F2B1F' },
+          ].map(p => (
+            <button key={p.name} onClick={() => { setPrimary(p.primary); setSecondary(p.secondary); }} className="p-3 transition-all" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}` }}>
+              <div className="flex gap-1 mb-2">
+                <div className="w-6 h-6" style={{ background: p.primary }} />
+                <div className="w-6 h-6" style={{ background: p.secondary }} />
+              </div>
+              <div className="text-xs" style={{ color: theme.ink, fontWeight: 500 }}>{p.name}</div>
+            </button>
+          ))}
+        </div>
+      </Field>
+
+      <div className="p-4" style={{ background: theme.tealSoft, border: `1px solid ${theme.teal}30`, borderLeft: `3px solid ${theme.teal}` }}>
+        <div className="flex items-center gap-2 mb-2">
+          <Eye size={14} style={{ color: theme.teal }} />
+          <span className="text-[10px] uppercase" style={{ color: theme.teal, letterSpacing: '0.16em', fontWeight: 700 }}>Live preview</span>
+        </div>
+        <div className="p-4 flex items-center gap-3" style={{ background: secondary, color: '#FFFFFF' }}>
+          <div className="w-10 h-10 flex items-center justify-center" style={{ background: primary, color: secondary, fontWeight: 700, fontSize: '18px' }}>{(data.hotelName || 'H')[0]}</div>
+          <div className="font-serif" style={{ fontSize: '20px', letterSpacing: '-0.01em' }}>{data.hotelName || 'Your Hotel'}</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// === Step 3: Currency & Tax ===
+const Step3Currency = ({ data, setData }) => {
+  const ccy = data.currency || 'GHS';
+  const sym = { GHS: '₵', USD: '$', EUR: '€', GBP: '£', NGN: '₦', KES: 'KSh', EGP: 'E£', ZAR: 'R' }[ccy] || ccy;
+  return (
+    <div className="space-y-4">
+      <div>
+        <h2 className="font-serif" style={{ fontSize: '28px', color: theme.ink, letterSpacing: '-0.01em' }}>Money & taxes</h2>
+        <p className="text-sm mt-1" style={{ color: theme.inkSoft }}>Set your operating currency and the tax structure for your jurisdiction.</p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Field label="Operating currency" required>
+          <Select value={ccy} onChange={(e) => setData({ ...data, currency: e.target.value })}>
+            <option value="GHS">GHS — Ghanaian Cedi (₵)</option>
+            <option value="USD">USD — US Dollar ($)</option>
+            <option value="EUR">EUR — Euro (€)</option>
+            <option value="GBP">GBP — British Pound (£)</option>
+            <option value="NGN">NGN — Nigerian Naira (₦)</option>
+            <option value="KES">KES — Kenyan Shilling (KSh)</option>
+            <option value="EGP">EGP — Egyptian Pound (E£)</option>
+            <option value="ZAR">ZAR — South African Rand (R)</option>
+          </Select>
+        </Field>
+        <Field label="Display format" required>
+          <Select value={data.currencyFormat || 'symbol_before'} onChange={(e) => setData({ ...data, currencyFormat: e.target.value })}>
+            <option value="symbol_before">{sym} 1,500 — symbol before</option>
+            <option value="symbol_after">1,500 {sym} — symbol after</option>
+            <option value="code">1,500 {ccy} — currency code</option>
+          </Select>
+        </Field>
+      </div>
+
+      <div className="pt-4" style={{ borderTop: `1px solid ${theme.ruleSoft}` }}>
+        <div className="text-[10px] uppercase mb-3" style={{ color: theme.gold, letterSpacing: '0.18em', fontWeight: 700 }}>Tax Configuration</div>
+
+        <div className="space-y-3">
+          <Field label="VAT / sales tax rate" required hint="Standard rate applied to room and F&B charges">
+            <div className="flex items-center gap-2">
+              <Input type="number" step="0.1" value={data.vatRate || '15'} onChange={(e) => setData({ ...data, vatRate: e.target.value })} className="w-32" />
+              <span className="text-sm" style={{ color: theme.inkSoft }}>%</span>
+            </div>
+          </Field>
+
+          <Field label="Tourism levy" optional hint="Some jurisdictions add a tourism levy on top of VAT">
+            <div className="flex items-center gap-2">
+              <Input type="number" step="0.1" value={data.tourismLevy || '1'} onChange={(e) => setData({ ...data, tourismLevy: e.target.value })} className="w-32" />
+              <span className="text-sm" style={{ color: theme.inkSoft }}>%</span>
+            </div>
+          </Field>
+
+          <Field label="Service charge" optional hint="Auto-applied to F&B bills (industry standard 10%)">
+            <div className="flex items-center gap-2">
+              <Input type="number" step="0.1" value={data.serviceCharge || '10'} onChange={(e) => setData({ ...data, serviceCharge: e.target.value })} className="w-32" />
+              <span className="text-sm" style={{ color: theme.inkSoft }}>%</span>
+            </div>
+          </Field>
+        </div>
+      </div>
+
+      {/* Calculator preview */}
+      <div className="p-4" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${theme.gold}` }}>
+        <div className="text-[10px] uppercase mb-3" style={{ color: theme.gold, letterSpacing: '0.16em', fontWeight: 700 }}>Sample bill preview</div>
+        <div className="space-y-1 text-sm">
+          <div className="flex justify-between"><span style={{ color: theme.inkSoft }}>Room (1 night)</span><span className="font-mono">{sym} 1,000</span></div>
+          <div className="flex justify-between"><span style={{ color: theme.inkSoft }}>VAT ({data.vatRate || 15}%)</span><span className="font-mono">{sym} {(1000 * (parseFloat(data.vatRate || 15) / 100)).toFixed(0)}</span></div>
+          <div className="flex justify-between"><span style={{ color: theme.inkSoft }}>Tourism levy ({data.tourismLevy || 1}%)</span><span className="font-mono">{sym} {(1000 * (parseFloat(data.tourismLevy || 1) / 100)).toFixed(0)}</span></div>
+          <div className="flex justify-between pt-2 mt-2" style={{ borderTop: `1px solid ${theme.ruleSoft}` }}>
+            <span className="font-medium" style={{ color: theme.ink }}>Total guest pays</span>
+            <span className="font-mono font-bold" style={{ color: theme.gold }}>
+              {sym} {(1000 * (1 + parseFloat(data.vatRate || 15) / 100 + parseFloat(data.tourismLevy || 1) / 100)).toFixed(0)}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// === Step 4: Chart of Accounts ===
+const Step4COA = ({ data, setData }) => {
+  const accounts = data.coa || [
+    { code: '4000', name: 'Room Revenue', type: 'Revenue' },
+    { code: '4100', name: 'F&B Revenue — Restaurant', type: 'Revenue' },
+    { code: '4150', name: 'F&B Revenue — Bar', type: 'Revenue' },
+    { code: '4200', name: 'Other Revenue', type: 'Revenue' },
+    { code: '5000', name: 'Cost of Goods Sold — F&B', type: 'COGS' },
+    { code: '5100', name: 'Payroll & Wages', type: 'OpEx' },
+    { code: '5200', name: 'Utilities', type: 'OpEx' },
+    { code: '5300', name: 'Maintenance & Repairs', type: 'OpEx' },
+    { code: '5400', name: 'Marketing & Distribution', type: 'OpEx' },
+    { code: '5500', name: 'Administrative', type: 'OpEx' },
+  ];
+  React.useEffect(() => { if (!data.coa) setData({ ...data, coa: accounts }); }, []);
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <h2 className="font-serif" style={{ fontSize: '28px', color: theme.ink, letterSpacing: '-0.01em' }}>Chart of Accounts</h2>
+        <p className="text-sm mt-1" style={{ color: theme.inkSoft }}>We've set up a standard hotel CoA. You can edit each account or add your own.</p>
+      </div>
+
+      <div className="flex items-center gap-2 p-3" style={{ background: theme.tealSoft + '50', border: `1px solid ${theme.teal}30` }}>
+        <Check size={14} style={{ color: theme.teal, flexShrink: 0 }} />
+        <div className="text-xs" style={{ color: theme.ink }}>Standard Hospitality CoA loaded · {accounts.length} accounts created</div>
+      </div>
+
+      <div style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}` }}>
+        <table className="w-full text-sm">
+          <thead>
+            <tr style={{ borderBottom: `1px solid ${theme.rule}`, background: theme.bg }}>
+              <th className="text-left py-2.5 px-4 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600, width: 100 }}>Code</th>
+              <th className="text-left py-2.5 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Account Name</th>
+              <th className="text-left py-2.5 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600, width: 120 }}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            {accounts.map((a, i) => (
+              <tr key={a.code} style={{ borderBottom: i < accounts.length - 1 ? `1px solid ${theme.ruleSoft}` : 'none' }}>
+                <td className="py-2.5 px-4 font-mono text-xs" style={{ color: theme.inkSoft }}>{a.code}</td>
+                <td className="py-2.5 px-3" style={{ color: theme.ink, fontWeight: 500 }}>{a.name}</td>
+                <td className="py-2.5 px-3">
+                  <span className="text-[10px] px-2 py-0.5" style={{ background: a.type === 'Revenue' ? theme.leafSoft : a.type === 'COGS' ? theme.claySoft : theme.tealSoft, color: a.type === 'Revenue' ? theme.leaf : a.type === 'COGS' ? theme.clay : theme.teal, fontWeight: 600, letterSpacing: '0.04em' }}>{a.type}</span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <Btn variant="secondary" icon={Plus}>Add custom account</Btn>
+        <Btn variant="ghost" icon={Upload}>Import from QuickBooks/Xero</Btn>
+      </div>
+    </div>
+  );
+};
+
+// === Step 5: Departments & Outlets ===
+const Step5Departments = ({ data, setData }) => {
+  const defaults = data.departments || [
+    { id: 'fo', name: 'Front Office', icon: 'Bed', color: theme.teal, enabled: true },
+    { id: 'hk', name: 'Housekeeping', icon: 'Bath', color: theme.dusk, enabled: true },
+    { id: 'fb-r', name: 'Restaurant', icon: 'ChefHat', color: theme.gold, enabled: true },
+    { id: 'fb-b', name: 'Bar', icon: 'Wine', color: theme.hibiscus, enabled: true },
+    { id: 'mt', name: 'Maintenance', icon: 'Wrench', color: theme.clay, enabled: true },
+    { id: 'sp', name: 'Spa & Wellness', icon: 'Sparkles', color: theme.leaf, enabled: false },
+    { id: 'ev', name: 'Events & Conferencing', icon: 'Briefcase', color: theme.dusk, enabled: false },
+    { id: 'rt', name: 'Retail Shop', icon: 'ShoppingCart', color: theme.gold, enabled: false },
+  ];
+  React.useEffect(() => { if (!data.departments) setData({ ...data, departments: defaults }); }, []);
+
+  const toggle = (id) => {
+    const updated = defaults.map(d => d.id === id ? { ...d, enabled: !d.enabled } : d);
+    setData({ ...data, departments: updated });
+  };
+
+  const iconMap = { Bed, Bath, ChefHat, Wine, Wrench, Sparkles, Briefcase, ShoppingCart };
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <h2 className="font-serif" style={{ fontSize: '28px', color: theme.ink, letterSpacing: '-0.01em' }}>Your operating departments</h2>
+        <p className="text-sm mt-1" style={{ color: theme.inkSoft }}>Select which departments your property operates. Each becomes a P&L line, a workspace, and a budget center.</p>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        {(data.departments || defaults).map(d => {
+          const Icon = iconMap[d.icon] || Building2;
+          return (
+            <button key={d.id} onClick={() => toggle(d.id)} className="p-4 text-left transition-all" style={{ background: d.enabled ? theme.bgPanel : theme.bgPanelAlt, border: `1px solid ${d.enabled ? d.color : theme.rule}`, borderLeft: `3px solid ${d.enabled ? d.color : theme.rule}`, opacity: d.enabled ? 1 : 0.5 }}>
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 flex items-center justify-center" style={{ background: d.enabled ? d.color : theme.rule, color: '#FFFFFF' }}>
+                    <Icon size={18} />
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium" style={{ color: theme.ink }}>{d.name}</div>
+                    <div className="text-[10px] mt-0.5" style={{ color: theme.inkMute }}>{d.enabled ? 'Active' : 'Disabled — click to enable'}</div>
+                  </div>
+                </div>
+                <div className="w-5 h-5 flex items-center justify-center" style={{ background: d.enabled ? d.color : 'transparent', border: `1.5px solid ${d.enabled ? d.color : theme.rule}` }}>
+                  {d.enabled && <Check size={12} style={{ color: '#FFFFFF' }} />}
+                </div>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="text-xs" style={{ color: theme.inkSoft }}>
+        {(data.departments || defaults).filter(d => d.enabled).length} departments enabled
+      </div>
+    </div>
+  );
+};
+
+// === Step 6: Room Types & Inventory ===
+const Step6Rooms = ({ data, setData }) => {
+  const rooms = data.roomTypes || [
+    { id: 'std', name: 'Standard', description: 'Comfortable double room', count: 12, baseRate: 800, maxGuests: 2 },
+    { id: 'dlx', name: 'Deluxe', description: 'Upgraded room with view', count: 8, baseRate: 1200, maxGuests: 2 },
+    { id: 'suite', name: 'Junior Suite', description: 'Separate sitting area', count: 4, baseRate: 1800, maxGuests: 3 },
+  ];
+  React.useEffect(() => { if (!data.roomTypes) setData({ ...data, roomTypes: rooms }); }, []);
+
+  const total = rooms.reduce((s, r) => s + (parseInt(r.count) || 0), 0);
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <h2 className="font-serif" style={{ fontSize: '28px', color: theme.ink, letterSpacing: '-0.01em' }}>Room types & inventory</h2>
+        <p className="text-sm mt-1" style={{ color: theme.inkSoft }}>Define the products you sell. Each room type has its own base rate and inventory pool.</p>
+      </div>
+
+      <div className="space-y-3">
+        {rooms.map((r, idx) => (
+          <div key={r.id} className="p-4" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${theme.gold}` }}>
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
+              <div className="md:col-span-3">
+                <Field label="Room type name" required>
+                  <Input value={r.name} onChange={(e) => {
+                    const updated = [...rooms]; updated[idx].name = e.target.value; setData({ ...data, roomTypes: updated });
+                  }} />
+                </Field>
+              </div>
+              <div className="md:col-span-4">
+                <Field label="Description" optional>
+                  <Input value={r.description} onChange={(e) => {
+                    const updated = [...rooms]; updated[idx].description = e.target.value; setData({ ...data, roomTypes: updated });
+                  }} />
+                </Field>
+              </div>
+              <div className="md:col-span-2">
+                <Field label="Count" required>
+                  <Input type="number" value={r.count} onChange={(e) => {
+                    const updated = [...rooms]; updated[idx].count = parseInt(e.target.value) || 0; setData({ ...data, roomTypes: updated });
+                  }} />
+                </Field>
+              </div>
+              <div className="md:col-span-2">
+                <Field label="Base rate / night" required>
+                  <Input type="number" value={r.baseRate} onChange={(e) => {
+                    const updated = [...rooms]; updated[idx].baseRate = parseInt(e.target.value) || 0; setData({ ...data, roomTypes: updated });
+                  }} />
+                </Field>
+              </div>
+              <div className="md:col-span-1 flex items-end">
+                <button onClick={() => {
+                  const updated = rooms.filter((_, i) => i !== idx); setData({ ...data, roomTypes: updated });
+                }} className="w-full p-2 transition-all" style={{ background: 'transparent', border: `1px solid ${theme.rule}`, color: theme.hibiscus }}>
+                  <Trash2 size={14} className="mx-auto" />
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <Btn variant="secondary" icon={Plus} onClick={() => {
+        setData({ ...data, roomTypes: [...rooms, { id: `rt-${Date.now()}`, name: 'New Room Type', description: '', count: 0, baseRate: 0, maxGuests: 2 }] });
+      }}>Add room type</Btn>
+
+      <div className="p-4" style={{ background: theme.goldSoft + '40', border: `1px solid ${theme.gold}30`, borderLeft: `3px solid ${theme.gold}` }}>
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="text-[10px] uppercase mb-1" style={{ color: theme.gold, letterSpacing: '0.18em', fontWeight: 700 }}>Total inventory</div>
+            <div className="font-serif" style={{ fontSize: '28px', color: theme.ink, letterSpacing: '-0.02em' }}>{total} rooms</div>
+          </div>
+          <div className="text-right">
+            <div className="text-[10px] uppercase mb-1" style={{ color: theme.gold, letterSpacing: '0.18em', fontWeight: 700 }}>Avg base rate</div>
+            <div className="font-mono" style={{ fontSize: '20px', color: theme.ink }}>{cedi(Math.round(rooms.reduce((s, r) => s + r.baseRate * r.count, 0) / Math.max(total, 1)))}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// === Step 7: Rate Plans ===
+const Step7Rates = ({ data, setData }) => {
+  const plans = data.ratePlans || [
+    { id: 'bar', name: 'BAR — Best Available Rate', adjustment: 0, channels: ['direct', 'all'], cancellation: '24h before' },
+    { id: 'direct', name: 'Direct Booking · 10% Off', adjustment: -10, channels: ['direct'], cancellation: '48h before' },
+    { id: 'corporate', name: 'Corporate Negotiated · 15% Off', adjustment: -15, channels: ['corporate'], cancellation: 'Flexible' },
+    { id: 'group', name: 'Group · 20% Off (10+ rooms)', adjustment: -20, channels: ['direct', 'travel-agent'], cancellation: 'Custom' },
+  ];
+  React.useEffect(() => { if (!data.ratePlans) setData({ ...data, ratePlans: plans }); }, []);
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <h2 className="font-serif" style={{ fontSize: '28px', color: theme.ink, letterSpacing: '-0.01em' }}>Rate plans</h2>
+        <p className="text-sm mt-1" style={{ color: theme.inkSoft }}>Pricing variations applied to your base rates. You can add seasonal or event-based plans later.</p>
+      </div>
+
+      <div className="space-y-2">
+        {plans.map((p, i) => (
+          <div key={p.id} className="p-3 flex items-center gap-3" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${theme.teal}` }}>
+            <div className="w-10 h-10 flex items-center justify-center" style={{ background: theme.tealSoft, color: theme.teal }}>
+              <Tag size={16} />
+            </div>
+            <div className="flex-1">
+              <div className="text-sm font-medium" style={{ color: theme.ink }}>{p.name}</div>
+              <div className="text-[10px] mt-0.5" style={{ color: theme.inkMute }}>
+                Cancellation: {p.cancellation} · Channels: {p.channels.join(', ')}
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="font-mono text-sm" style={{ color: p.adjustment === 0 ? theme.ink : theme.gold, fontWeight: 600 }}>
+                {p.adjustment === 0 ? 'Base' : `${p.adjustment > 0 ? '+' : ''}${p.adjustment}%`}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <Btn variant="secondary" icon={Plus}>Add custom rate plan</Btn>
+        <Btn variant="ghost" icon={Calendar}>Set seasonal rates</Btn>
+      </div>
+    </div>
+  );
+};
+
+// === Step 8: User Invitations ===
+const Step8Users = ({ data, setData }) => {
+  const users = data.users || [
+    { email: '', role: 'managing-director', name: '' },
+  ];
+  React.useEffect(() => { if (!data.users) setData({ ...data, users: users }); }, []);
+
+  const ROLES = [
+    { value: 'managing-director', label: 'Managing Director', desc: 'Owner-level access · sees Performance Pack' },
+    { value: 'general-manager', label: 'General Manager', desc: 'Full operational oversight' },
+    { value: 'fom', label: 'Front Office Manager', desc: 'Reservations & front desk' },
+    { value: 'receptionist', label: 'Receptionist', desc: 'Check-in / check-out only' },
+    { value: 'fb-manager', label: 'F&B Manager', desc: 'Restaurant & bar' },
+    { value: 'waiter', label: 'Waiter · POS', desc: 'Restaurant floor service' },
+    { value: 'chef', label: 'Executive Chef', desc: 'Kitchen & menu engineering' },
+    { value: 'hk-manager', label: 'Housekeeping Manager', desc: 'Room cleaning & inspections' },
+    { value: 'hr-manager', label: 'HR Manager', desc: 'Roster, payroll, leave' },
+    { value: 'accountant', label: 'Chief Accountant', desc: 'AP/AR, GL, statutory' },
+    { value: 'purchasing', label: 'Purchasing Manager', desc: 'Procurement & inventory' },
+    { value: 'it', label: 'IT Manager', desc: 'Integrations & system health' },
+  ];
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <h2 className="font-serif" style={{ fontSize: '28px', color: theme.ink, letterSpacing: '-0.01em' }}>Invite your team</h2>
+        <p className="text-sm mt-1" style={{ color: theme.inkSoft }}>Add users by email. We'll send each person an invite to set their password and pick their persona.</p>
+      </div>
+
+      <div className="space-y-2">
+        {users.map((u, i) => (
+          <div key={i} className="p-3 grid grid-cols-1 md:grid-cols-12 gap-2 items-center" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}` }}>
+            <div className="md:col-span-3">
+              <Input placeholder="Full name" value={u.name} onChange={(e) => {
+                const updated = [...users]; updated[i].name = e.target.value; setData({ ...data, users: updated });
+              }} />
+            </div>
+            <div className="md:col-span-4">
+              <Input type="email" placeholder="email@example.com" value={u.email} onChange={(e) => {
+                const updated = [...users]; updated[i].email = e.target.value; setData({ ...data, users: updated });
+              }} />
+            </div>
+            <div className="md:col-span-4">
+              <Select value={u.role} onChange={(e) => {
+                const updated = [...users]; updated[i].role = e.target.value; setData({ ...data, users: updated });
+              }}>
+                {ROLES.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
+              </Select>
+            </div>
+            <div className="md:col-span-1">
+              {users.length > 1 && (
+                <button onClick={() => {
+                  const updated = users.filter((_, idx) => idx !== i); setData({ ...data, users: updated });
+                }} className="w-full p-2 transition-all" style={{ background: 'transparent', border: `1px solid ${theme.rule}`, color: theme.hibiscus }}>
+                  <Trash2 size={12} className="mx-auto" />
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex items-center gap-2">
+        <Btn variant="secondary" icon={Plus} onClick={() => {
+          setData({ ...data, users: [...users, { email: '', role: 'general-manager', name: '' }] });
+        }}>Add another user</Btn>
+        <Btn variant="ghost" icon={Upload}>Bulk import CSV</Btn>
+      </div>
+
+      <div className="p-3 flex items-start gap-2" style={{ background: theme.tealSoft + '50', border: `1px solid ${theme.teal}30` }}>
+        <Mail size={14} style={{ color: theme.teal, marginTop: 2 }} />
+        <div className="text-xs" style={{ color: theme.inkSoft }}>
+          We'll send each user a welcome email with a 24-hour password setup link. They can change their role assignment later.
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// === Step 9: Integrations ===
+const Step9Integrations = ({ data, setData }) => {
+  const integrations = data.integrations || [
+    { id: 'channel-manager', name: 'Channel Manager', desc: 'Sync rates and inventory with Booking.com, Expedia, Hotels.com', vendor: 'SiteMinder', enabled: true, category: 'Distribution' },
+    { id: 'payments', name: 'Payment Gateway', desc: 'Process credit cards from guests', vendor: 'Stripe', enabled: true, category: 'Payments' },
+    { id: 'momo', name: 'Mobile Money', desc: 'Accept MTN MoMo and Vodafone Cash', vendor: 'Hubtel', enabled: false, category: 'Payments' },
+    { id: 'sms', name: 'SMS Notifications', desc: 'Booking confirmations, check-in reminders', vendor: 'Twilio', enabled: true, category: 'Communication' },
+    { id: 'email', name: 'Transactional Email', desc: 'Receipts, invoices, marketing', vendor: 'SendGrid', enabled: true, category: 'Communication' },
+    { id: 'accounting', name: 'Accounting Sync', desc: 'Push GL entries to your accounting software', vendor: 'QuickBooks Online', enabled: false, category: 'Finance' },
+    { id: 'pos', name: 'Restaurant POS', desc: 'Native POS for waiters', vendor: 'Built-in', enabled: true, category: 'Operations' },
+    { id: 'pms-gds', name: 'GDS Connection', desc: 'Amadeus, Sabre, Travelport for travel agents', vendor: 'Sabre Hospitality', enabled: false, category: 'Distribution' },
+    { id: 'door-locks', name: 'Door Lock System', desc: 'Generate guest key cards from check-in', vendor: 'Salto / Assa Abloy', enabled: false, category: 'Operations' },
+    { id: 'iptv', name: 'In-Room TV / Cast', desc: 'Welcome screens, room service ordering', vendor: 'Otrum', enabled: false, category: 'Guest experience' },
+  ];
+  React.useEffect(() => { if (!data.integrations) setData({ ...data, integrations: integrations }); }, []);
+
+  const toggle = (id) => {
+    const updated = (data.integrations || integrations).map(it => it.id === id ? { ...it, enabled: !it.enabled } : it);
+    setData({ ...data, integrations: updated });
+  };
+
+  const cats = ['Distribution', 'Payments', 'Communication', 'Finance', 'Operations', 'Guest experience'];
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <h2 className="font-serif" style={{ fontSize: '28px', color: theme.ink, letterSpacing: '-0.01em' }}>Connect your tools</h2>
+        <p className="text-sm mt-1" style={{ color: theme.inkSoft }}>Toggle integrations on now. We'll guide you through credentials for each one after setup.</p>
+      </div>
+
+      {cats.map(cat => {
+        const items = (data.integrations || integrations).filter(i => i.category === cat);
+        if (items.length === 0) return null;
+        return (
+          <div key={cat}>
+            <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.18em', fontWeight: 700 }}>{cat}</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {items.map(it => (
+                <div key={it.id} className="p-4 flex items-start gap-3" style={{ background: it.enabled ? theme.bgPanel : theme.bgPanelAlt, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${it.enabled ? theme.teal : theme.rule}`, opacity: it.enabled ? 1 : 0.6 }}>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <div className="text-sm font-medium" style={{ color: theme.ink }}>{it.name}</div>
+                      <span className="text-[10px]" style={{ color: theme.inkMute }}>· {it.vendor}</span>
+                    </div>
+                    <div className="text-xs mt-1" style={{ color: theme.inkSoft }}>{it.desc}</div>
+                  </div>
+                  <button onClick={() => toggle(it.id)} className="flex-shrink-0 transition-all">
+                    <div className="w-9 h-5 rounded-full relative transition-all" style={{ background: it.enabled ? theme.teal : theme.rule }}>
+                      <div className="w-4 h-4 rounded-full absolute top-0.5 transition-all" style={{ background: '#FFFFFF', left: it.enabled ? 18 : 2 }} />
+                    </div>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+
+      <div className="p-3 flex items-start gap-2" style={{ background: theme.goldSoft + '60', border: `1px solid ${theme.gold}30` }}>
+        <Sparkles size={14} style={{ color: theme.gold, marginTop: 2 }} />
+        <div className="text-xs" style={{ color: theme.inkSoft }}>
+          You can add or remove integrations any time from the IT Manager workspace.
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// === Welcome / Done Screen ===
+const StepDone = ({ data, onFinish }) => (
+  <div className="text-center py-8">
+    <div className="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center" style={{ background: theme.leafSoft, color: theme.leaf }}>
+      <Check size={40} strokeWidth={2.5} />
+    </div>
+    <div className="text-[10px] uppercase mb-3" style={{ color: theme.gold, letterSpacing: '0.28em', fontWeight: 700 }}>Setup Complete</div>
+    <h2 className="font-serif" style={{ fontSize: 'clamp(32px, 5vw, 44px)', color: theme.ink, letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+      Welcome to {data.hotelName || 'your hotel'}
+    </h2>
+    <p className="text-sm mt-3 max-w-md mx-auto" style={{ color: theme.inkSoft }}>
+      We've created your account, set up {(data.departments || []).filter(d => d.enabled).length} departments, {(data.roomTypes || []).reduce((s, r) => s + (parseInt(r.count) || 0), 0)} rooms, and queued invitations to {(data.users || []).filter(u => u.email).length} team members.
+    </p>
+
+    <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto">
+      {[
+        { label: 'Hotel created', value: '✓' },
+        { label: 'Branding applied', value: '✓' },
+        { label: 'Tax configured', value: '✓' },
+        { label: 'Departments active', value: (data.departments || []).filter(d => d.enabled).length },
+        { label: 'Room inventory', value: (data.roomTypes || []).reduce((s, r) => s + (parseInt(r.count) || 0), 0) },
+        { label: 'Rate plans', value: (data.ratePlans || []).length },
+        { label: 'Team invites', value: (data.users || []).filter(u => u.email).length },
+        { label: 'Integrations', value: (data.integrations || []).filter(i => i.enabled).length },
+      ].map((s, i) => (
+        <div key={i} className="p-3" style={{ background: theme.bgPanel, border: `1px solid ${theme.ruleSoft}` }}>
+          <div className="text-[10px] uppercase mb-1" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>{s.label}</div>
+          <div className="font-serif" style={{ fontSize: '24px', color: theme.gold, letterSpacing: '-0.01em' }}>{s.value}</div>
+        </div>
+      ))}
+    </div>
+
+    <div className="mt-8 flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
+      <Btn variant="secondary" icon={Mail} size="lg">Email setup summary</Btn>
+      <Btn variant="primary" icon={ArrowRight} size="lg" onClick={onFinish}>Take me to my dashboard</Btn>
+    </div>
+
+    <div className="mt-6 text-xs" style={{ color: theme.inkMute }}>
+      A welcome email with login details has been sent to {data.contactEmail || 'your inbox'}.
+    </div>
+  </div>
+);
+
+// ============================================================================
+// MAIN ONBOARDING FLOW CONTROLLER
+// ============================================================================
+const OnboardingWizard = ({ onClose, onComplete }) => {
+  const [step, setStep] = useState(0);
+  const [done, setDone] = useState(false);
+  const [data, setData] = useState({});
+
+  const totalSteps = WIZARD_STEPS.length;
+  const progress = ((step + 1) / totalSteps) * 100;
+
+  const next = () => {
+    if (step < totalSteps - 1) setStep(step + 1);
+    else setDone(true);
+  };
+  const back = () => {
+    if (step > 0) setStep(step - 1);
+  };
+
+  if (done) {
+    return (
+      <div className="min-h-screen w-full" style={{ background: theme.bg, fontFamily: '"Inter", system-ui, sans-serif', color: theme.ink }}>
+        <style>{`
+          @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+          * { font-family: 'Inter', sans-serif; }
+          .font-serif { font-family: 'Cormorant Garamond', serif !important; }
+          .font-mono { font-family: 'JetBrains Mono', monospace !important; }
+        `}</style>
+        <div className="max-w-3xl mx-auto px-4 md:px-8 py-12">
+          <StepDone data={data} onFinish={onComplete} />
+        </div>
+      </div>
+    );
+  }
+
+  const stepContent = (() => {
+    switch (step) {
+      case 0: return <Step1Profile data={data} setData={setData} />;
+      case 1: return <Step2Branding data={data} setData={setData} />;
+      case 2: return <Step3Currency data={data} setData={setData} />;
+      case 3: return <Step4COA data={data} setData={setData} />;
+      case 4: return <Step5Departments data={data} setData={setData} />;
+      case 5: return <Step6Rooms data={data} setData={setData} />;
+      case 6: return <Step7Rates data={data} setData={setData} />;
+      case 7: return <Step8Users data={data} setData={setData} />;
+      case 8: return <Step9Integrations data={data} setData={setData} />;
+      default: return null;
+    }
+  })();
+
+  const currentStep = WIZARD_STEPS[step];
+  const StepIcon = currentStep.icon;
+
+  return (
+    <div className="min-h-screen w-full flex flex-col" style={{ background: theme.bg, fontFamily: '"Inter", system-ui, sans-serif', color: theme.ink }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+        * { font-family: 'Inter', sans-serif; }
+        .font-serif { font-family: 'Cormorant Garamond', serif !important; }
+        .font-mono { font-family: 'JetBrains Mono', monospace !important; }
+      `}</style>
+
+      {/* Header */}
+      <div className="px-4 md:px-8 py-4" style={{ background: theme.navBg, color: '#FBF7EE' }}>
+        <div className="flex items-center justify-between max-w-5xl mx-auto">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 flex items-center justify-center" style={{ background: theme.gold, color: theme.navBg, fontWeight: 700 }}>H</div>
+            <div className="font-serif" style={{ fontSize: '18px', letterSpacing: '-0.01em' }}>Hospitality Platform</div>
+            <div className="text-[10px] uppercase ml-2" style={{ color: theme.gold, letterSpacing: '0.18em', fontWeight: 700 }}>· Setup Wizard</div>
+          </div>
+          <button onClick={onClose} className="text-xs flex items-center gap-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
+            <X size={14} /> Save & exit
+          </button>
+        </div>
+      </div>
+
+      {/* Progress */}
+      <div className="px-4 md:px-8 py-3" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.18em', fontWeight: 700 }}>Step {step + 1} of {totalSteps}</div>
+            <div className="text-[10px] uppercase" style={{ color: theme.gold, letterSpacing: '0.18em', fontWeight: 700 }}>{Math.round(progress)}% complete</div>
+          </div>
+          <div className="h-1 w-full overflow-hidden" style={{ background: theme.ruleSoft }}>
+            <div className="h-full transition-all" style={{ background: theme.gold, width: `${progress}%` }} />
+          </div>
+          <div className="hidden md:flex items-center gap-1 mt-3 overflow-x-auto">
+            {WIZARD_STEPS.map((s, i) => {
+              const Icon = s.icon;
+              const completed = i < step;
+              const current = i === step;
+              return (
+                <button key={s.id} onClick={() => i <= step && setStep(i)} disabled={i > step} className="flex items-center gap-1.5 px-2 py-1 transition-all whitespace-nowrap" style={{ color: completed ? theme.leaf : current ? theme.gold : theme.inkMute, fontSize: '11px', fontWeight: current ? 700 : 500, opacity: i > step ? 0.5 : 1, cursor: i <= step ? 'pointer' : 'default' }}>
+                  {completed ? <Check size={12} /> : <Icon size={12} />}
+                  {s.label}
+                  {i < WIZARD_STEPS.length - 1 && <ChevronRight size={10} style={{ color: theme.inkMute, marginLeft: 2 }} />}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 overflow-y-auto px-4 md:px-8 py-6 md:py-10">
+        <div className="max-w-3xl mx-auto">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 flex items-center justify-center" style={{ background: theme.goldSoft, color: theme.gold }}>
+              <StepIcon size={18} />
+            </div>
+            <div className="text-[10px] uppercase" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>{currentStep.label}</div>
+          </div>
+          {stepContent}
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="px-4 md:px-8 py-4" style={{ background: theme.bgPanel, borderTop: `1px solid ${theme.rule}` }}>
+        <div className="max-w-3xl mx-auto flex items-center justify-between">
+          <Btn variant="ghost" icon={ArrowLeft} onClick={back} disabled={step === 0}>Back</Btn>
+          <div className="text-[10px] uppercase hidden sm:block" style={{ color: theme.inkMute, letterSpacing: '0.16em', fontWeight: 600 }}>
+            {step + 1} / {totalSteps} · {currentStep.label}
+          </div>
+          <Btn variant="primary" iconRight={step === totalSteps - 1 ? Check : ArrowRight} onClick={next}>
+            {step === totalSteps - 1 ? 'Complete Setup' : 'Continue'}
+          </Btn>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+
+
 const App = () => {
+  // Stage: 'signin' | 'wizard' | 'app'
+  const [stage, setStage] = useState(() => {
+    try {
+      return sessionStorage.getItem('platform_signed_in') === 'true' ? 'app' : 'signin';
+    } catch (e) { return 'signin'; }
+  });
+  const [signedInAccount, setSignedInAccount] = useState(() => {
+    try {
+      const stored = sessionStorage.getItem('platform_account');
+      return stored ? JSON.parse(stored) : null;
+    } catch (e) { return null; }
+  });
   const [active, setActive] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   
   // Close drawer when persona changes
   useEffect(() => { setDrawerOpen(false); }, [active]);
   
-  if (!active) return <LoginScreen onSelect={setActive} />;
+  const handleSignIn = (acct) => {
+    setSignedInAccount(acct);
+    setStage('app');
+    setActive(null);
+    try {
+      sessionStorage.setItem('platform_signed_in', 'true');
+      sessionStorage.setItem('platform_account', JSON.stringify(acct));
+    } catch (e) {}
+  };
+  
+  const handleSignOut = () => {
+    setStage('signin');
+    setSignedInAccount(null);
+    setActive(null);
+    try {
+      sessionStorage.removeItem('platform_signed_in');
+      sessionStorage.removeItem('platform_account');
+    } catch (e) {}
+  };
+  
+  const handleStartOnboarding = () => setStage('wizard');
+  const handleCompleteOnboarding = () => {
+    // After onboarding, return to signin (in real product would create account)
+    setStage('signin');
+  };
+  
+  if (stage === 'signin') {
+    return <SignInScreen onSignIn={handleSignIn} onStartOnboarding={handleStartOnboarding} />;
+  }
+  
+  if (stage === 'wizard') {
+    return <OnboardingWizard onClose={() => setStage('signin')} onComplete={handleCompleteOnboarding} />;
+  }
+  
+  // stage === 'app' - signed in, show persona picker or workspace
+  if (!active) return <LoginScreen onSelect={setActive} onSignOut={handleSignOut} />;
   const p = PERSONA_REGISTRY.find(x => x.id === active);
-  if (!p) return <LoginScreen onSelect={setActive} />;
+  if (!p) return <LoginScreen onSelect={setActive} onSignOut={handleSignOut} />;
   const Workspace = p.Component;
   
   return (
@@ -13624,12 +14690,20 @@ const App = () => {
         {drawerOpen ? <X size={18} /> : <Menu size={18} />}
       </button>
       
-      <button
-        onClick={() => setActive(null)}
-        className="fixed top-3 right-3 md:top-4 md:right-6 z-[70] flex items-center gap-2 px-3 py-2 transition-all"
-        style={{ background: theme.gold, color: theme.navBg, border: `1px solid ${theme.gold}`, fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 600 }}>
-        <ArrowLeft size={12} /> <span className="hidden sm:inline">Switch Persona</span><span className="sm:hidden">Switch</span>
-      </button>
+      <div className="fixed top-3 right-3 md:top-4 md:right-6 z-[70] flex items-center gap-2">
+        <button
+          onClick={() => setActive(null)}
+          className="flex items-center gap-2 px-3 py-2 transition-all"
+          style={{ background: 'transparent', color: theme.gold, border: `1px solid ${theme.gold}`, fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 600 }}>
+          <ArrowLeft size={12} /> <span className="hidden sm:inline">Personas</span>
+        </button>
+        <button
+          onClick={handleSignOut}
+          className="flex items-center gap-2 px-3 py-2 transition-all"
+          style={{ background: theme.gold, color: theme.navBg, border: `1px solid ${theme.gold}`, fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 600 }}>
+          <LogOut size={12} /> <span className="hidden sm:inline">Sign Out</span>
+        </button>
+      </div>
       
       <div className={`platform-sidebar-wrapper ${drawerOpen ? 'drawer-open' : ''}`}>
         <Workspace />
