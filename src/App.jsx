@@ -1,15 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import {
-  Bed, Users, Utensils, Wrench, ClipboardList, BookOpen, Settings, LayoutDashboard,
-  ChevronRight, ChevronLeft, ChevronDown, Search, Bell, LogOut, Plus, Check, X, AlertCircle,
-  AlertTriangle, Calendar, Clock, ArrowUpRight, ArrowDownRight, Sparkles, FileText,
-  DollarSign, Mail, Phone, Filter, Download, Printer, ArrowRight, CircleCheck,
-  CircleAlert, Hotel, BarChart3, Receipt, Building2, UserCircle, RefreshCw, Wine,
-  ChefHat, Award, Trash2, Percent, Activity, Leaf, Eye, Star, Globe, Heart,
-  CreditCard, Briefcase, Key, FileSignature, PenLine, Car, Ban, Clock3, CalendarDays,
-  BadgeCheck, LayoutGrid, Hammer, Bath, Package, Camera, MessageSquare, MapPin, Send, TrendingUp,
-  TrendingDown, Coffee, Moon, ShoppingCart, Truck, CheckCircle2, ArrowLeft, Minus, Hash
-} from 'lucide-react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Bed, Users, Utensils, Wrench, ClipboardList, BookOpen, Settings, LayoutDashboard, ChevronRight, ChevronLeft, ChevronDown, Search, Bell, LogOut, Plus, Check, X, AlertCircle, AlertTriangle, Calendar, Clock, ArrowUpRight, ArrowDownRight, Sparkles, FileText, DollarSign, Mail, Phone, Filter, Download, Printer, ArrowRight, CircleCheck, CircleAlert, Hotel, BarChart3, Receipt, Building2, UserCircle, RefreshCw, Wine, ChefHat, Award, Trash2, Percent, Activity, Leaf, Eye, Star, Globe, Heart, CreditCard, Briefcase, Key, FileSignature, PenLine, Car, Ban, Clock3, CalendarDays, BadgeCheck, LayoutGrid, Hammer, Bath, Package, Camera, MessageSquare, MapPin, Send, TrendingUp, TrendingDown, Coffee, Moon, ShoppingCart, Truck, CheckCircle2, ArrowLeft, Minus, Hash, Menu } from 'lucide-react';
 import {
   LineChart, Line, AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, ScatterChart, Scatter,
@@ -154,7 +144,7 @@ const MD_NAV = [
 // SIDEBAR — Managing Director
 // ============================================================================
 const MdSidebar = ({ activeNav, setActiveNav }) => (
-  <aside className="w-64 flex-shrink-0 flex flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
+  <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
@@ -198,12 +188,12 @@ const MdSidebar = ({ activeNav, setActiveNav }) => (
 );
 
 const MdTopBar = () => (
-  <div className="flex items-center justify-between px-8 py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+  <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
-      <Calendar size={14} />Saturday, 25 April 2026
-    </div>
+      <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026
+    </span><span className="md:hidden">Sat 25 Apr</span></div>
     <div className="flex items-center gap-3">
-      <div className="flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
+      <div className="hidden md:flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
         <Search size={13} style={{ color: theme.inkMute }} />
         <input placeholder="Search…" className="bg-transparent outline-none text-sm w-48" style={{ color: theme.ink }} />
       </div>
@@ -299,7 +289,7 @@ const MDPack = () => {
     { label: 'Cash Position', value: cedi(2400000), delta: 'healthy' },
   ];
   return (
-    <div className="p-8 space-y-8" style={{ background: theme.bg, minHeight: '100%' }}>
+    <div className="p-4 md:p-6 space-y-6" style={{ background: theme.bg, minHeight: '100%' }}>
       <SectionHeader overline="Monthly Performance Pack" title="April 2026 — The Float"
         action={<div className="flex gap-2"><Btn variant="secondary" icon={Printer}>Print A4</Btn><Btn variant="primary" icon={Download}>Download PDF</Btn></div>} />
       <div className="p-6" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${theme.gold}` }}>
@@ -311,7 +301,7 @@ const MDPack = () => {
           Hello Charles — this pack summarises April&apos;s performance. Delivered to you on the 1st of every month and again at quarter-end.
         </p>
       </div>
-      <div className="grid grid-cols-7 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
         {KPIS.map(k => (
           <div key={k.label} className="p-4" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}` }}>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em' }}>{k.label}</div>
@@ -371,10 +361,10 @@ const MDBudgetModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Owner · Annual Approval</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Annual Budget · FY 2026/27</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Annual Budget · FY 2026/27</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Submitted by Jana Kruger (GM) on 15 March 2026 · Awaiting MD approval</div>
           </div>
           <div className="flex items-center gap-2">
@@ -384,7 +374,7 @@ const MDBudgetModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         {/* Banner — the big context */}
         <div className="p-6" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${theme.gold}` }}>
           <div className="flex items-start gap-4">
@@ -403,7 +393,7 @@ const MDBudgetModule = () => {
         </div>
 
         {/* High-level summary */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <KpiTile label="Total Revenue" value={cedi(totals.revenue.proposed)}
             sublabel={`+${(((totals.revenue.proposed - totals.revenue.lastYear) / totals.revenue.lastYear) * 100).toFixed(1)}% vs last year`}
             icon={TrendingUp} tone={theme.leaf} />
@@ -577,7 +567,7 @@ const MDBudgetModule = () => {
             Any changes during the year above ₵10,000 require your separate ratification (these flow through Approvals).
           </p>
           {decision === null ? (
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               <button onClick={() => setDecision('approve')}
                 className="p-5 text-left transition-all hover:translate-y-[-1px]"
                 style={{ background: theme.leafSoft, border: `1px solid ${theme.leaf}40`, borderLeft: `3px solid ${theme.leaf}` }}>
@@ -655,10 +645,10 @@ const MDReportsModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Library · On-Demand</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Reports Library</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Reports Library</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>All scheduled and on-demand reports across the platform</div>
           </div>
           <div className="flex items-center gap-2">
@@ -668,8 +658,8 @@ const MDReportsModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-4 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <KpiTile label="Total Reports" value={stats.total} sublabel="across the platform" icon={FileText} />
           <KpiTile label="Your Subscriptions" value={stats.favorites} sublabel="emailed automatically" icon={Mail} tone={theme.gold} />
           <KpiTile label="Daily Reports" value={stats.daily} sublabel="scheduled" icon={Calendar} tone={theme.teal} />
@@ -703,7 +693,7 @@ const MDReportsModule = () => {
         </div>
 
         {/* Reports grid */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {filtered.map(r => {
             const catColor = r.category === 'Strategic' ? theme.gold : r.category === 'Operational' ? theme.teal : theme.dusk;
             return (
@@ -778,7 +768,7 @@ const MDReportsModule = () => {
 // ============================================================================
 
 const MdComingSoon = ({ title }) => (
-  <div className="p-8" style={{ background: theme.bg, minHeight: '100%' }}>
+  <div className="p-4 md:p-6" style={{ background: theme.bg, minHeight: '100%' }}>
     <SectionHeader overline="Module" title={title} />
     <div className="p-12 text-center" style={{ background: theme.bgPanel, border: `1px dashed ${theme.rule}` }}>
       <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center" style={{ background: theme.tealSoft, color: theme.teal }}><Sparkles size={20} /></div>
@@ -824,18 +814,27 @@ const MdApp = () => {
 // GM · DAILY · Jana Kruger
 // ============================================================================
 const GM_NAV = [
+  { type: 'header', label: 'Daily' },
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'morning-brief', label: 'Morning Brief', icon: Coffee },
   { id: 'arrivals', label: 'Arrivals & Departures', icon: Bed },
   { id: 'rooms', label: 'Room Status', icon: Hotel },
+  { id: 'channels', label: 'Channel Manager', icon: Globe },
   { id: 'approvals', label: 'Approvals', icon: ClipboardList, badge: 4 },
   { id: 'procurement', label: 'Procurement & Inventory', icon: ShoppingCart },
+  { type: 'header', label: 'Periodic' },
+  { id: 'fb', label: 'F&B Performance', icon: Utensils },
+  { id: 'maintenance', label: 'Maintenance', icon: Wrench, badge: 3 },
+  { id: 'budget', label: 'Budget vs. Actuals', icon: DollarSign },
+  { id: 'night-audit', label: 'Night Audit', icon: Clock },
+  { type: 'header', label: 'Reports' },
+  { id: 'reports', label: 'Reports Library', icon: FileText },
 ];
 // ============================================================================
 // SIDEBAR — General Manager
 // ============================================================================
 const GmSidebar = ({ activeNav, setActiveNav }) => (
-  <aside className="w-64 flex-shrink-0 flex flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
+  <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
@@ -855,7 +854,14 @@ const GmSidebar = ({ activeNav, setActiveNav }) => (
       </div>
     </div>
     <nav className="flex-1 px-3 py-3 overflow-y-auto">
-      {GM_NAV.map(item => {
+      {GM_NAV.map((item, idx) => {
+        if (item.type === 'header') {
+          return (
+            <div key={'h-' + idx} className="px-3 pt-4 pb-1.5 first:pt-1" style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px', letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 700 }}>
+              {item.label}
+            </div>
+          );
+        }
         const Icon = item.icon;
         const active = activeNav === item.id;
         return (
@@ -879,12 +885,12 @@ const GmSidebar = ({ activeNav, setActiveNav }) => (
 );
 
 const GmTopBar = () => (
-  <div className="flex items-center justify-between px-8 py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+  <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
-      <Calendar size={14} />Saturday, 25 April 2026
-    </div>
+      <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026
+    </span><span className="md:hidden">Sat 25 Apr</span></div>
     <div className="flex items-center gap-3">
-      <div className="flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
+      <div className="hidden md:flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
         <Search size={13} style={{ color: theme.inkMute }} />
         <input placeholder="Search…" className="bg-transparent outline-none text-sm w-48" style={{ color: theme.ink }} />
       </div>
@@ -1106,10 +1112,10 @@ const GMDashboard = ({ setActiveNav }) => {
     { id: 'WO-338', room: '112', issue: 'Wardrobe door loose', priority: 'med', age: '1d' },
   ];
   return (
-    <div className="p-8 space-y-8" style={{ background: theme.bg, minHeight: '100%' }}>
+    <div className="p-4 md:p-6 space-y-6" style={{ background: theme.bg, minHeight: '100%' }}>
       <SectionHeader overline="Operational Lead — Today" title="Good morning, Jana"
         action={<Btn variant="primary" icon={ArrowRight} onClick={() => setActiveNav('morning-brief')}>Morning Briefing</Btn>} />
-      <div className="grid grid-cols-6 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         <KpiCard kpi={KPIS_TODAY.occupancy} format="percent" />
         <KpiCard kpi={KPIS_TODAY.adr} format="currency" />
         <KpiCard kpi={KPIS_TODAY.revpar} format="currency" />
@@ -1117,7 +1123,7 @@ const GMDashboard = ({ setActiveNav }) => {
         <KpiCard kpi={KPIS_TODAY.revenue} format="currency" />
         <KpiCard kpi={KPIS_TODAY.arrivals} format="number" />
       </div>
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="col-span-2">
           <Card title="Revenue This Week" accent={theme.gold} action={<Pill tone="leaf">+12.3% vs budget</Pill>}>
             <ResponsiveContainer width="100%" height={240}>
@@ -1151,7 +1157,7 @@ const GMDashboard = ({ setActiveNav }) => {
           </div>
         </Card>
       </div>
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card title="Pending Approvals" accent={theme.gold} action={<Pill tone="gold">{APPROVALS.length} waiting</Pill>}>
           <div className="space-y-2">
             {APPROVALS.map(a => (
@@ -1190,7 +1196,7 @@ const GMDashboard = ({ setActiveNav }) => {
           </div>
         </Card>
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {[
           { id: 'arrivals', label: 'Arrivals & Departures', sub: `${ARRIVALS.length} arrivals · ${DEPARTURES.length} departures`, color: theme.dusk },
           { id: 'rooms', label: 'Room Status', sub: '32 rooms · 1 OOO', color: theme.teal },
@@ -1227,10 +1233,10 @@ const MorningBriefModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Start of Day · 06:00</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Morning Brief</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Morning Brief</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday, 25 April 2026 · Everything Jana needs before stepping onto the floor</div>
           </div>
           <div className="flex items-center gap-2">
@@ -1240,10 +1246,10 @@ const MorningBriefModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-8 max-w-6xl">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-6 md:space-y-8">
 
         {/* Greeting + weather */}
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="col-span-2 p-6" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${theme.gold}` }}>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.18em', fontWeight: 700 }}>Akwaaba</div>
             <div className="font-serif" style={{ fontSize: '26px', color: theme.ink, letterSpacing: '-0.01em', lineHeight: 1.2 }}>Good morning, Jana</div>
@@ -1288,7 +1294,7 @@ const MorningBriefModule = () => {
             <div className="flex-1 h-px" style={{ background: theme.rule }} />
             <span className="text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.16em', fontWeight: 600 }}>Overnight 21:00 → 06:00</span>
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="p-4" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${theme.leaf}` }}>
               <div className="flex items-center gap-2 mb-2">
                 <CircleCheck size={14} style={{ color: theme.leaf }} />
@@ -1431,7 +1437,7 @@ const MorningBriefModule = () => {
             <h2 className="font-serif" style={{ fontSize: '22px', color: theme.ink, letterSpacing: '-0.01em' }}>On duty today</h2>
             <div className="flex-1 h-px" style={{ background: theme.rule }} />
           </div>
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { dept: 'Front Office', lead: 'Amani Mlangeni', staff: 'Amani M. (08-16) → Kwame A. (16-00) → Esi O. (00-08)' },
               { dept: 'Housekeeping', lead: 'Akua Mensah', staff: '4 attendants · 14 arrivals + 6 departures' },
@@ -1478,10 +1484,10 @@ const ArrivalsModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Front Desk</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Arrivals & Departures</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Arrivals & Departures</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday, 25 April 2026 · Today&apos;s movements</div>
           </div>
           <div className="flex items-center gap-2">
@@ -1489,12 +1495,12 @@ const ArrivalsModule = () => {
             <Btn variant="primary" icon={Download}>Export A4</Btn>
           </div>
         </div>
-        <div className="px-8 flex gap-1" style={{ borderTop: `1px solid ${theme.ruleSoft}` }}>
+        <div className="px-4 md:px-8 flex gap-1 overflow-x-auto" style={{ borderTop: `1px solid ${theme.ruleSoft}` }}>
           {tabs.map(t => {
             const Icon = t.icon;
             const active = tab === t.id;
             return (
-              <button key={t.id} onClick={() => setTab(t.id)} className="flex items-center gap-2 px-4 py-3 text-sm transition-all"
+              <button key={t.id} onClick={() => setTab(t.id)} className="flex items-center gap-2 px-3 md:px-4 py-3 text-sm transition-all whitespace-nowrap"
                 style={{ color: active ? theme.ink : theme.inkSoft, fontWeight: active ? 600 : 400, borderBottom: active ? `2px solid ${theme.gold}` : '2px solid transparent', marginBottom: '-1px' }}>
                 <Icon size={14} />{t.label}
               </button>
@@ -1522,8 +1528,8 @@ const ArrivalsTab = ({ onCheckIn }) => {
     vip: ARRIVALS.filter(a => a.vip).length,
   };
   return (
-    <div className="px-8 py-6 space-y-6">
-      <div className="grid grid-cols-5 gap-3">
+    <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
         <KpiTile label="Expected Today" value={stats.total} sublabel={`${stats.arrived} arrived`} icon={CalendarDays} />
         <KpiTile label="Still Expected" value={stats.expected} sublabel="awaiting check-in" icon={Clock3} tone={theme.dusk} />
         <KpiTile label="Unassigned" value={stats.unassigned} sublabel="rooms not allocated" icon={AlertTriangle} tone={theme.gold} />
@@ -1622,8 +1628,8 @@ const DeparturesTab = ({ onFolio }) => {
     outstanding: DEPARTURES.reduce((s, d) => s + d.folioBalance, 0),
   };
   return (
-    <div className="px-8 py-6 space-y-6">
-      <div className="grid grid-cols-4 gap-4">
+    <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiTile label="Departures Today" value={stats.total} sublabel={`${stats.departed} departed`} icon={CalendarDays} />
         <KpiTile label="Awaiting Payment" value={stats.pending} sublabel={cedi(stats.outstanding) + ' open'} icon={DollarSign} tone={theme.clay} />
         <KpiTile label="Ready" value={1} sublabel="folios settled" icon={CircleCheck} tone={theme.leaf} />
@@ -1687,15 +1693,15 @@ const DeparturesTab = ({ onFolio }) => {
 };
 
 const WalkInTab = ({ onCheckIn }) => (
-  <div className="px-8 py-6 space-y-6">
-    <div className="grid grid-cols-3 gap-4">
+  <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <KpiTile label="Walk-ins Today" value={2} sublabel="2 converted" icon={UserCircle} tone={theme.gold} />
       <KpiTile label="Conversion Rate" value="100%" sublabel="enquiries to bookings" icon={BadgeCheck} tone={theme.leaf} />
       <KpiTile label="Walk-in Revenue" value={cedi(3460)} sublabel="today, taxes inclusive" icon={DollarSign} />
     </div>
     <Card title="Register a Walk-In Guest" accent={theme.gold}>
       <p className="text-sm mb-5" style={{ color: theme.inkSoft }}>A guest at the desk without a reservation. Capture details, check availability, assign a room, take payment — all in one flow.</p>
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
           <div className="text-[10px] uppercase mb-3" style={{ color: theme.gold, letterSpacing: '0.18em', fontWeight: 700 }}>Stay</div>
           <div className="grid grid-cols-2 gap-3 text-sm">
@@ -1744,8 +1750,8 @@ const NoShowTab = () => {
     { id: 'R1018', guest: 'Henrik Olsen', date: '22 Apr', source: 'Booking.com', charge: 1240, status: 'charged' },
   ];
   return (
-    <div className="px-8 py-6 space-y-6">
-      <div className="grid grid-cols-4 gap-4">
+    <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiTile label="No-shows · Today" value={1} sublabel="auto-flagged" icon={Ban} tone={theme.clay} />
         <KpiTile label="No-show Rate · MTD" value="2.1%" sublabel="of confirmed" icon={AlertTriangle} tone={theme.gold} />
         <KpiTile label="Charges Applied" value={cedi(3460)} sublabel="MTD recovered" icon={DollarSign} tone={theme.leaf} />
@@ -1801,8 +1807,8 @@ const GroupsTab = () => {
     { id: 'GRP-2026-0011', name: 'Volta Yacht Club', arrival: '12 May', departure: '14 May', rooms: 6, guests: 12, contact: 'Capt. James Sallah', total: 19800, status: 'tentative' },
   ];
   return (
-    <div className="px-8 py-6 space-y-6">
-      <div className="grid grid-cols-3 gap-4">
+    <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <KpiTile label="Group Arrivals Today" value={1} sublabel="8 guests, 4 rooms" icon={Users} tone={theme.teal} />
         <KpiTile label="Confirmed · 30d" value={2} sublabel={cedi(52800) + ' value'} icon={CalendarDays} />
         <KpiTile label="Tentative" value={1} sublabel="awaiting follow-up" icon={Clock3} tone={theme.gold} />
@@ -1890,7 +1896,7 @@ const CheckInModal = ({ arrival, onClose }) => {
           {step === 2 && (
             <div className="space-y-4">
               <h3 className="font-serif" style={{ fontSize: '20px', color: theme.ink }}>Guest details & ID</h3>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                 {[['Full name', arrival.guest], ['Reservation', arrival.id], ['Nationality', arrival.nationality || '—'], ['Source', arrival.source], ['Passport / ID', 'Scan or type'], ['ID expiry', 'DD/MM/YYYY']].map(([l, v]) => (
                   <div key={l}>
                     <div className="text-[10px] uppercase mb-1" style={{ color: theme.inkMute, letterSpacing: '0.14em' }}>{l}</div>
@@ -1898,7 +1904,7 @@ const CheckInModal = ({ arrival, onClose }) => {
                   </div>
                 ))}
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                 <button className="flex flex-col items-center gap-2 p-4" style={{ border: `1px dashed ${theme.gold}`, color: theme.gold }}>
                   <Camera size={20} /><div className="text-sm font-medium">Scan Passport / ID</div>
                 </button>
@@ -2065,16 +2071,16 @@ const RoomStatusModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Housekeeping</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Room Status</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Room Status</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Live updates · 32 rooms</div>
           </div>
           <Btn variant="primary" icon={Download}>Export A4</Btn>
         </div>
       </div>
-      <div className="px-8 py-6">
+      <div className="px-4 md:px-8 py-4 md:py-6">
         <div className="grid grid-cols-7 gap-3 mb-6">
           {['VC', 'IN', 'OC', 'OD', 'VD', 'OOO', 'OOS'].map(code => {
             const s = STATUSES[code];
@@ -2116,7 +2122,7 @@ const RoomStatusModule = () => {
                   <div className="text-[10px] uppercase" style={{ color: theme.gold, letterSpacing: '0.2em', fontWeight: 700 }}>Floor {floor}</div>
                   <h3 className="font-serif text-lg" style={{ color: theme.ink, letterSpacing: '-0.01em' }}>{labels[floor]}</h3>
                 </div>
-                <div className="grid grid-cols-7 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
                   {rooms.map(r => {
                     const s = STATUSES[r.status];
                     return (
@@ -2171,7 +2177,7 @@ const RoomStatusModule = () => {
               )}
               <div>
                 <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Update Status</div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
                   {Object.values(STATUSES).filter(st => st.code !== drawerRoom.status).map(st => (
                     <button key={st.code} className="flex items-center gap-2 p-2.5"
                       style={{ background: theme.bg, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${st.color}` }}>
@@ -2210,10 +2216,10 @@ const ApprovalsModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Workflow · Manager Inbox</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Approvals</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Approvals</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Purchase requisitions, orders, and journal vouchers awaiting your decision</div>
           </div>
           <div className="flex items-center gap-2">
@@ -2223,8 +2229,8 @@ const ApprovalsModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-4 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <KpiTile label="Pending Decisions" value={stats.pending} sublabel="awaiting your review" icon={ClipboardList} tone={theme.gold} />
           <KpiTile label="Total Value" value={cedi(stats.totalValue)} sublabel="across all pending" icon={DollarSign} />
           <KpiTile label="High Priority" value={stats.high} sublabel="needs urgent action" icon={AlertTriangle} tone={theme.clay} />
@@ -2450,10 +2456,10 @@ const ProcurementModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Supply Chain · Backend</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Procurement & Inventory</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Procurement & Inventory</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{SUPPLIERS.length} active suppliers · {INVENTORY.length} SKUs tracked · {openPOs} POs in flight</div>
           </div>
           <div className="flex items-center gap-2">
@@ -2476,15 +2482,15 @@ const ProcurementModule = () => {
       </div>
 
       {tab === 'overview' && (
-        <div className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-4 gap-4">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <KpiTile label="Stock Value · On Hand" value={cedi(totalStockValue)} sublabel={`${INVENTORY.length} SKUs`} icon={Package} tone={theme.gold} />
             <KpiTile label="Critical Stock" value={criticalItems} sublabel="order immediately" icon={AlertTriangle} tone={theme.clay} />
             <KpiTile label="Low Stock" value={lowItems} sublabel="approaching reorder" icon={AlertCircle} tone={theme.gold} />
             <KpiTile label="Pending PO Value" value={cedi(pendingPOValue)} sublabel="awaiting GM approval" icon={FileSignature} tone={theme.dusk} />
           </div>
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card title="Stock Status by Category" accent={theme.teal}>
               <div className="space-y-3">
                 {[...new Set(INVENTORY.map(i => i.category.split(' · ')[0]))].map(cat => {
@@ -2584,8 +2590,8 @@ const ProcurementModule = () => {
       )}
 
       {tab === 'suppliers' && (
-        <div className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-4 gap-4">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <KpiTile label="Active Suppliers" value={SUPPLIERS.length} sublabel="across all categories" icon={Building2} tone={theme.teal} />
             <KpiTile label="Preferred Vendors" value={SUPPLIERS.filter(s => s.preferred).length} sublabel="quality & terms approved" icon={Star} tone={theme.gold} />
             <KpiTile label="YTD Total Spend" value={cedi(SUPPLIERS.reduce((s, x) => s + x.ytdSpend, 0))} sublabel="across all suppliers" icon={DollarSign} />
@@ -2645,8 +2651,8 @@ const ProcurementModule = () => {
       )}
 
       {tab === 'pos' && (
-        <div className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-4 gap-4">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <KpiTile label="Awaiting Approval" value={PURCHASE_ORDERS.filter(p => p.status === 'awaiting-approval').length} sublabel={cedi(pendingPOValue) + ' total'} icon={Clock3} tone={theme.gold} />
             <KpiTile label="In Transit" value={PURCHASE_ORDERS.filter(p => p.status === 'in-transit').length} sublabel="awaiting delivery" icon={Truck} tone={theme.teal} />
             <KpiTile label="Delivered (this month)" value={PURCHASE_ORDERS.filter(p => p.status === 'delivered').length} sublabel="GRN issued" icon={CircleCheck} tone={theme.leaf} />
@@ -2698,8 +2704,8 @@ const ProcurementModule = () => {
       )}
 
       {tab === 'inventory' && (
-        <div className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-4 gap-4">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <KpiTile label="Total SKUs" value={INVENTORY.length} sublabel="actively tracked" icon={Package} />
             <KpiTile label="Stock Value" value={cedi(totalStockValue)} sublabel="across all categories" icon={DollarSign} tone={theme.gold} />
             <KpiTile label="Critical" value={criticalItems} sublabel="immediate action" icon={AlertTriangle} tone={theme.clay} />
@@ -2769,8 +2775,8 @@ const ProcurementModule = () => {
       )}
 
       {tab === 'deliveries' && (
-        <div className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-3 gap-4">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <KpiTile label="Expected Today" value={2} sublabel="Akosombo Fresh + 1" icon={Truck} tone={theme.teal} />
             <KpiTile label="Received This Week" value={4} sublabel="3 OK · 1 with discrepancy" icon={CircleCheck} tone={theme.leaf} />
             <KpiTile label="Discrepancies · MTD" value={1} sublabel="resolved with credit notes" icon={AlertTriangle} tone={theme.gold} />
@@ -2837,7 +2843,7 @@ const ProcurementModule = () => {
             <div className="p-6 space-y-5">
               <div>
                 <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Order Details</div>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                   <InfoTile label="Date raised" value={selectedPO.dateRaised} />
                   <InfoTile label="Expected delivery" value={selectedPO.expectedDelivery} />
                   <InfoTile label="Requester" value={selectedPO.requester} />
@@ -2900,7 +2906,7 @@ const ProcurementModule = () => {
 // ============================================================================
 
 const GmComingSoon = ({ title }) => (
-  <div className="p-8" style={{ background: theme.bg, minHeight: '100%' }}>
+  <div className="p-4 md:p-6" style={{ background: theme.bg, minHeight: '100%' }}>
     <SectionHeader overline="Module" title={title} />
     <div className="p-12 text-center" style={{ background: theme.bgPanel, border: `1px dashed ${theme.rule}` }}>
       <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center" style={{ background: theme.tealSoft, color: theme.teal }}><Sparkles size={20} /></div>
@@ -2913,16 +2919,518 @@ const GmComingSoon = ({ title }) => (
 // ============================================================================
 // APP
 // ============================================================================
+// ============================================================================
+// CHANNEL MANAGER MODULE · For Jana Kruger
+// ============================================================================
+// ============================================================================
+// CHANNEL MANAGER · Jana Kruger
+// ============================================================================
+const CHANNELS = [
+  { id: 'direct',     name: 'Direct (thefloatgh.com)', commission: 0,    color: theme.gold,     status: 'connected', lastSync: '06:42', bookings30d: 84,  revenue30d: 184800 },
+  { id: 'booking',    name: 'Booking.com',              commission: 0.15, color: theme.teal,     status: 'connected', lastSync: '06:42', bookings30d: 142, revenue30d: 268400 },
+  { id: 'expedia',    name: 'Expedia',                  commission: 0.18, color: theme.dusk,     status: 'connected', lastSync: '06:38', bookings30d: 64,  revenue30d: 128200 },
+  { id: 'hotels',     name: 'Hotels.com',               commission: 0.18, color: theme.hibiscus, status: 'connected', lastSync: '06:38', bookings30d: 28,  revenue30d: 52400 },
+  { id: 'hotelbeds',  name: 'Hotelbeds (B2B)',          commission: 0.22, color: theme.clay,     status: 'connected', lastSync: '06:30', bookings30d: 18,  revenue30d: 38600 },
+];
+
+const ROOM_TYPES = [
+  { id: 'std',    name: 'Standard Lakeside', baseRate: 1450, count: 18 },
+  { id: 'dlx',    name: 'Deluxe Lake View',  baseRate: 1850, count: 8 },
+  { id: 'fam',   name: 'Family Suite',      baseRate: 2400, count: 4 },
+  { id: 'pres', name: 'Presidential Suite', baseRate: 4200, count: 2 },
+];
+
+// 14-day rate calendar — generate mock data
+const generateCalendar = () => {
+  const days = [];
+  const start = new Date(2026, 3, 25);
+  for (let i = 0; i < 14; i++) {
+    const d = new Date(start);
+    d.setDate(d.getDate() + i);
+    const isWeekend = d.getDay() === 0 || d.getDay() === 6;
+    days.push({
+      date: d,
+      label: d.toLocaleDateString('en', { day: '2-digit', month: 'short', weekday: 'short' }),
+      isWeekend,
+      multiplier: isWeekend ? 1.25 : 1.0,
+    });
+  }
+  return days;
+};
+
+const ChannelOverviewModule = () => {
+  const totalBookings = CHANNELS.reduce((s, c) => s + c.bookings30d, 0);
+  const totalRevenue = CHANNELS.reduce((s, c) => s + c.revenue30d, 0);
+  const directBookings = CHANNELS.find(c => c.id === 'direct').bookings30d;
+  const directShare = (directBookings / totalBookings) * 100;
+  const totalCommissionPaid = CHANNELS.reduce((s, c) => s + (c.revenue30d * c.commission), 0);
+
+  return (
+    <div style={{ background: theme.bg, minHeight: '100%' }}>
+      <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
+          <div>
+            <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Distribution · Last 30 days</div>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Channel Manager</h1>
+            <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>5 channels connected · all syncing · last sync 06:42</div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Btn variant="secondary" icon={RefreshCw}>Force Sync All</Btn>
+            <Btn variant="primary" icon={Send}>Push Rates</Btn>
+          </div>
+        </div>
+      </div>
+
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <KpiTile label="Total Bookings · 30d" value={totalBookings} sublabel="across all channels" icon={Calendar} tone={theme.gold} />
+          <KpiTile label="Direct Share" value={pct(directShare)} sublabel="vs OTA" icon={TrendingUp} tone={directShare > 25 ? theme.leaf : theme.gold} />
+          <KpiTile label="Revenue · 30d" value={cedi(totalRevenue)} sublabel="all channels" icon={DollarSign} tone={theme.teal} />
+          <KpiTile label="OTA Commissions Paid" value={cedi(totalCommissionPaid)} sublabel={pct(totalCommissionPaid/totalRevenue*100) + ' of revenue'} icon={Percent} tone={theme.clay} />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <Card title="Channel Mix · Last 30 days" accent={theme.gold}>
+            <div className="space-y-3">
+              {CHANNELS.map(c => {
+                const sharePct = (c.bookings30d / totalBookings) * 100;
+                return (
+                  <div key={c.id}>
+                    <div className="flex items-center justify-between text-sm mb-1.5">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2.5 h-2.5 rounded-full" style={{ background: c.color }} />
+                        <span style={{ color: theme.ink, fontWeight: 500 }}>{c.name}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="font-mono text-xs" style={{ color: theme.inkMute }}>{c.bookings30d} bookings</span>
+                        <span className="font-mono" style={{ color: theme.ink, fontWeight: 600 }}>{cedi(c.revenue30d)}</span>
+                      </div>
+                    </div>
+                    <div className="h-2 w-full overflow-hidden" style={{ background: theme.ruleSoft }}>
+                      <div className="h-full" style={{ width: `${sharePct}%`, background: c.color }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </Card>
+
+          <Card title="Channel Health" accent={theme.teal}>
+            <div className="space-y-2">
+              {CHANNELS.map(c => (
+                <div key={c.id} className="flex items-center justify-between p-3" style={{ background: theme.bg, border: `1px solid ${theme.ruleSoft}`, borderLeft: `3px solid ${c.color}` }}>
+                  <div className="flex-1">
+                    <div className="text-sm" style={{ color: theme.ink, fontWeight: 500 }}>{c.name}</div>
+                    <div className="text-[10px]" style={{ color: theme.inkMute }}>
+                      Commission: {pct(c.commission * 100)} · Last sync: {c.lastSync}
+                    </div>
+                  </div>
+                  <Pill tone="leaf" size="sm"><Check size={9} /> {c.status}</Pill>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+
+        <div className="p-4 flex items-start gap-3" style={{ background: theme.goldSoft + '40', border: `1px solid ${theme.gold}30`, borderLeft: `3px solid ${theme.gold}` }}>
+          <Sparkles size={16} style={{ color: theme.gold, marginTop: 2 }} />
+          <div className="flex-1 text-sm">
+            <span style={{ color: theme.ink, fontWeight: 600 }}>Direct booking opportunity: </span>
+            <span style={{ color: theme.inkSoft }}>
+              Direct share is {pct(directShare)} but commission costs are {cedi(totalCommissionPaid)}/month.
+              A 5% shift from OTA to direct would save approximately {cedi(totalCommissionPaid * 0.30)} per month.
+              Consider adding a direct-booking promo code or improving website conversion.
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ChannelRatesModule = () => {
+  const [selectedRoomType, setSelectedRoomType] = useState('std');
+  const [selectedChannel, setSelectedChannel] = useState('all');
+  const calendar = generateCalendar();
+  const room = ROOM_TYPES.find(r => r.id === selectedRoomType);
+
+  return (
+    <div style={{ background: theme.bg, minHeight: '100%' }}>
+      <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
+          <div>
+            <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Rate Management</div>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Rate Calendar · 14 days</h1>
+            <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Drag-select dates to bulk update rates across channels · weekend pricing applied automatically</div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Btn variant="secondary" icon={Plus}>Add Promotion</Btn>
+            <Btn variant="primary" icon={Send}>Push to Channels</Btn>
+          </div>
+        </div>
+      </div>
+
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="flex items-center gap-2 p-3 flex-wrap" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}` }}>
+          <span className="text-[10px] uppercase mr-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Room Type</span>
+          {ROOM_TYPES.map(r => (
+            <button key={r.id} onClick={() => setSelectedRoomType(r.id)} className="text-xs px-3 py-1.5"
+              style={{ background: selectedRoomType === r.id ? theme.ink : 'transparent', color: selectedRoomType === r.id ? theme.bgPanel : theme.inkSoft, border: `1px solid ${selectedRoomType === r.id ? theme.ink : theme.rule}`, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+              {r.name}
+            </button>
+          ))}
+        </div>
+
+        <Card title={`${room.name} · 14-Day Rate Grid`} accent={theme.gold} padded={false}>
+          <table className="w-full text-sm">
+            <thead>
+              <tr style={{ borderBottom: `1px solid ${theme.rule}`, background: theme.bg }}>
+                <th className="text-left py-3 px-5 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Date</th>
+                {CHANNELS.map(c => (
+                  <th key={c.id} className="text-right py-3 px-3 text-[10px] uppercase" style={{ color: c.color, letterSpacing: '0.14em', fontWeight: 700 }}>{c.name.split(' ')[0]}</th>
+                ))}
+                <th className="text-right py-3 px-5 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Avail</th>
+              </tr>
+            </thead>
+            <tbody>
+              {calendar.map((d, i) => {
+                const baseRate = Math.round(room.baseRate * d.multiplier);
+                return (
+                  <tr key={i} style={{ borderBottom: i < calendar.length - 1 ? `1px solid ${theme.ruleSoft}` : 'none', background: d.isWeekend ? theme.goldSoft + '20' : 'transparent' }}>
+                    <td className="py-3 px-5">
+                      <div style={{ color: theme.ink, fontWeight: 500 }}>{d.label}</div>
+                      {d.isWeekend && <div className="text-[10px] italic" style={{ color: theme.gold }}>Weekend +25%</div>}
+                    </td>
+                    {CHANNELS.map((c, ci) => {
+                      // Slight rate variation per channel to show parity
+                      const channelRate = ci === 0 ? baseRate : ci === 4 ? Math.round(baseRate * 0.95) : baseRate;
+                      const isParity = channelRate === baseRate;
+                      return (
+                        <td key={c.id} className="py-3 px-3 text-right">
+                          <div className="font-mono" style={{ color: isParity ? theme.ink : theme.clay, fontWeight: 600 }}>₵{fmt(channelRate)}</div>
+                          {!isParity && <div className="text-[10px]" style={{ color: theme.clay }}>parity warning</div>}
+                        </td>
+                      );
+                    })}
+                    <td className="py-3 px-5 text-right font-mono" style={{ color: theme.ink, fontWeight: 600 }}>{room.count}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </Card>
+
+        <div className="p-4 flex items-start gap-3" style={{ background: theme.duskSoft + '40', border: `1px solid ${theme.dusk}30`, borderLeft: `3px solid ${theme.dusk}` }}>
+          <AlertCircle size={16} style={{ color: theme.dusk, marginTop: 2 }} />
+          <div className="flex-1 text-sm">
+            <span style={{ color: theme.ink, fontWeight: 600 }}>Rate parity warning: </span>
+            <span style={{ color: theme.inkSoft }}>
+              Hotelbeds is showing rates 5% below other channels for {room.name}. This violates Booking.com and Expedia parity clauses.
+              Either match parity or use Hotelbeds' opaque-rate channel routing.
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ChannelInventoryModule = () => {
+  return (
+    <div style={{ background: theme.bg, minHeight: '100%' }}>
+      <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
+          <div>
+            <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Inventory & Restrictions</div>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Inventory Controls</h1>
+            <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Min/max stays · closed-to-arrival · stop-sells · all channels at once</div>
+          </div>
+          <Btn variant="primary" icon={Ban}>Stop Sell · All Channels</Btn>
+        </div>
+      </div>
+
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <Card title="Active Restrictions" accent={theme.dusk} padded={false}>
+          <table className="w-full text-sm">
+            <thead>
+              <tr style={{ borderBottom: `1px solid ${theme.rule}`, background: theme.bg }}>
+                <th className="text-left py-3 px-5 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Date Range</th>
+                <th className="text-left py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Room Type</th>
+                <th className="text-left py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Restriction</th>
+                <th className="text-left py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Channels</th>
+                <th className="text-left py-3 px-5 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Reason</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style={{ borderBottom: `1px solid ${theme.ruleSoft}` }}>
+                <td className="py-3 px-5" style={{ color: theme.ink }}>2 May - 6 May</td>
+                <td className="py-3 px-3" style={{ color: theme.ink, fontWeight: 500 }}>All Room Types</td>
+                <td className="py-3 px-3"><Pill tone="gold" size="sm">Min Stay 3 nights</Pill></td>
+                <td className="py-3 px-3 text-xs" style={{ color: theme.inkSoft }}>All OTAs</td>
+                <td className="py-3 px-5 text-xs italic" style={{ color: theme.inkSoft }}>Easter long weekend · maximize occupancy value</td>
+              </tr>
+              <tr style={{ borderBottom: `1px solid ${theme.ruleSoft}` }}>
+                <td className="py-3 px-5" style={{ color: theme.ink }}>15 Jul - 30 Jul</td>
+                <td className="py-3 px-3" style={{ color: theme.ink, fontWeight: 500 }}>Presidential Suite</td>
+                <td className="py-3 px-3"><Pill tone="clay" size="sm">Closed to arrival</Pill></td>
+                <td className="py-3 px-3 text-xs" style={{ color: theme.inkSoft }}>All channels</td>
+                <td className="py-3 px-5 text-xs italic" style={{ color: theme.inkSoft }}>Annual maintenance · refurbishment scheduled</td>
+              </tr>
+              <tr style={{ borderBottom: `1px solid ${theme.ruleSoft}` }}>
+                <td className="py-3 px-5" style={{ color: theme.ink }}>22 Dec - 02 Jan</td>
+                <td className="py-3 px-3" style={{ color: theme.ink, fontWeight: 500 }}>All Room Types</td>
+                <td className="py-3 px-3"><Pill tone="gold" size="sm">Min Stay 4 nights</Pill></td>
+                <td className="py-3 px-3 text-xs" style={{ color: theme.inkSoft }}>All channels</td>
+                <td className="py-3 px-5 text-xs italic" style={{ color: theme.inkSoft }}>Christmas / New Year · premium pricing window</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-5" style={{ color: theme.ink }}>Every Sunday</td>
+                <td className="py-3 px-3" style={{ color: theme.ink, fontWeight: 500 }}>Family Suite</td>
+                <td className="py-3 px-3"><Pill tone="dusk" size="sm">Closed to departure</Pill></td>
+                <td className="py-3 px-3 text-xs" style={{ color: theme.inkSoft }}>Booking.com, Expedia</td>
+                <td className="py-3 px-5 text-xs italic" style={{ color: theme.inkSoft }}>Encourage Sunday-night stays · weekend pickup</td>
+              </tr>
+            </tbody>
+          </table>
+        </Card>
+
+        <Card title="Quick Actions · Stop-Sell Controls" accent={theme.clay}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <button className="p-4 text-left transition-all" style={{ background: theme.claySoft + '40', border: `1px solid ${theme.clay}30`, borderLeft: `3px solid ${theme.clay}` }}>
+              <div className="flex items-center gap-2 mb-2">
+                <Ban size={16} style={{ color: theme.clay }} />
+                <span className="font-serif" style={{ fontSize: '17px', color: theme.ink, fontWeight: 600 }}>Stop Sell · All Channels</span>
+              </div>
+              <p className="text-xs" style={{ color: theme.inkSoft }}>Immediately close all rooms across all channels for a date range. Direct bookings remain open.</p>
+            </button>
+            <button className="p-4 text-left transition-all" style={{ background: theme.goldSoft + '60', border: `1px solid ${theme.gold}30`, borderLeft: `3px solid ${theme.gold}` }}>
+              <div className="flex items-center gap-2 mb-2">
+                <RefreshCw size={16} style={{ color: theme.gold }} />
+                <span className="font-serif" style={{ fontSize: '17px', color: theme.ink, fontWeight: 600 }}>Reopen All Channels</span>
+              </div>
+              <p className="text-xs" style={{ color: theme.inkSoft }}>Lift all stop-sells. Rates and inventory return to standard distribution.</p>
+            </button>
+          </div>
+        </Card>
+      </div>
+    </div>
+  );
+};
+
+const ChannelPerformanceModule = () => {
+  const totalRevenue = CHANNELS.reduce((s, c) => s + c.revenue30d, 0);
+  const totalCommissionPaid = CHANNELS.reduce((s, c) => s + (c.revenue30d * c.commission), 0);
+
+  return (
+    <div style={{ background: theme.bg, minHeight: '100%' }}>
+      <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
+          <div>
+            <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Channel Performance</div>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Performance Analysis</h1>
+            <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Last 30 days · contribution by channel · commission costs · ADR comparison</div>
+          </div>
+          <Btn variant="secondary" icon={Download}>Export Report</Btn>
+        </div>
+      </div>
+
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <Card title="Channel Performance · Last 30 days" accent={theme.gold} padded={false}>
+          <table className="w-full text-sm">
+            <thead>
+              <tr style={{ borderBottom: `1px solid ${theme.rule}`, background: theme.bg }}>
+                <th className="text-left py-3 px-5 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Channel</th>
+                <th className="text-right py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Bookings</th>
+                <th className="text-right py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Revenue</th>
+                <th className="text-right py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>ADR</th>
+                <th className="text-right py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Commission</th>
+                <th className="text-right py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Commission Paid</th>
+                <th className="text-right py-3 px-5 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Net Revenue</th>
+              </tr>
+            </thead>
+            <tbody>
+              {CHANNELS.sort((a, b) => b.revenue30d - a.revenue30d).map((c, i, arr) => {
+                const adr = c.revenue30d / c.bookings30d;
+                const commissionPaid = c.revenue30d * c.commission;
+                const netRevenue = c.revenue30d - commissionPaid;
+                return (
+                  <tr key={c.id} style={{ borderBottom: i < arr.length - 1 ? `1px solid ${theme.ruleSoft}` : 'none' }}>
+                    <td className="py-3 px-5">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2.5 h-2.5 rounded-full" style={{ background: c.color }} />
+                        <span style={{ color: theme.ink, fontWeight: 500 }}>{c.name}</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-right font-mono" style={{ color: theme.ink }}>{c.bookings30d}</td>
+                    <td className="py-3 px-3 text-right font-mono" style={{ color: theme.ink }}>{cedi(c.revenue30d)}</td>
+                    <td className="py-3 px-3 text-right font-mono" style={{ color: theme.gold, fontWeight: 600 }}>{cedi(adr)}</td>
+                    <td className="py-3 px-3 text-right font-mono" style={{ color: c.commission > 0 ? theme.clay : theme.leaf }}>{c.commission > 0 ? pct(c.commission * 100) : '—'}</td>
+                    <td className="py-3 px-3 text-right font-mono" style={{ color: theme.clay }}>{commissionPaid > 0 ? cedi(commissionPaid) : '—'}</td>
+                    <td className="py-3 px-5 text-right font-mono" style={{ color: theme.leaf, fontWeight: 700 }}>{cedi(netRevenue)}</td>
+                  </tr>
+                );
+              })}
+              <tr style={{ borderTop: `2px solid ${theme.ink}`, background: theme.bgPanelAlt }}>
+                <td className="py-3 px-5 font-serif" style={{ color: theme.ink, fontWeight: 700 }}>Total</td>
+                <td className="py-3 px-3 text-right font-mono" style={{ color: theme.ink, fontWeight: 700 }}>{CHANNELS.reduce((s, c) => s + c.bookings30d, 0)}</td>
+                <td className="py-3 px-3 text-right font-mono" style={{ color: theme.ink, fontWeight: 700 }}>{cedi(totalRevenue)}</td>
+                <td className="py-3 px-3"></td>
+                <td className="py-3 px-3"></td>
+                <td className="py-3 px-3 text-right font-mono" style={{ color: theme.clay, fontWeight: 700 }}>{cedi(totalCommissionPaid)}</td>
+                <td className="py-3 px-5 text-right font-mono" style={{ color: theme.leaf, fontWeight: 700, fontSize: '15px' }}>{cedi(totalRevenue - totalCommissionPaid)}</td>
+              </tr>
+            </tbody>
+          </table>
+        </Card>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="p-5" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${theme.leaf}` }}>
+            <div className="text-[10px] uppercase mb-2" style={{ color: theme.leaf, letterSpacing: '0.16em', fontWeight: 700 }}>Best Performing Channel</div>
+            <div className="font-serif" style={{ fontSize: '20px', color: theme.ink, letterSpacing: '-0.01em' }}>Booking.com</div>
+            <p className="text-sm mt-2" style={{ color: theme.inkSoft }}>
+              142 bookings · {cedi(268400)} revenue · highest volume by far. Despite 15% commission, contributes the largest net revenue ({cedi(228140)}). Maintain rate parity strictly.
+            </p>
+          </div>
+          <div className="p-5" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${theme.gold}` }}>
+            <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.16em', fontWeight: 700 }}>Highest ADR Channel</div>
+            <div className="font-serif" style={{ fontSize: '20px', color: theme.ink, letterSpacing: '-0.01em' }}>Direct (thefloatgh.com)</div>
+            <p className="text-sm mt-2" style={{ color: theme.inkSoft }}>
+              {cedi(2200)} ADR vs ₵1,890 OTA average. Direct bookings carry 0% commission and reflect the brand's premium positioning. Push direct booking incentives.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ChannelPromotionsModule = () => {
+  const promos = [
+    { code: 'EASTER25', name: 'Easter Long Weekend', discount: 15, type: 'percentage', applies: '2 May - 6 May 2026', channels: 'Direct only', usage: 8, status: 'active' },
+    { code: 'STAY3SAVE', name: 'Stay 3+ Save', discount: 10, type: 'percentage', applies: 'Year-round', channels: 'All channels', usage: 42, status: 'active' },
+    { code: 'EARLYBIRD60', name: 'Book 60 days ahead', discount: 12, type: 'percentage', applies: 'Year-round', channels: 'Direct only', usage: 18, status: 'active' },
+    { code: 'GHANA50', name: 'Local Resident · 50% off', discount: 50, type: 'percentage', applies: 'Sunday-Thursday', channels: 'Direct only', usage: 24, status: 'active' },
+    { code: 'CHRISTMAS26', name: 'Christmas / NYE', discount: 0, type: 'minimum-stay', applies: '22 Dec - 2 Jan', channels: 'All channels', usage: 0, status: 'scheduled' },
+    { code: 'SUMMER15', name: 'Summer Family Special', discount: 15, type: 'percentage', applies: '1 Jul - 31 Aug', channels: 'All channels', usage: 0, status: 'scheduled' },
+    { code: 'VOLTAFEST', name: 'Volta Trade Fair', discount: 8, type: 'percentage', applies: '15-20 Sep', channels: 'Direct + Booking.com', usage: 0, status: 'draft' },
+  ];
+
+  return (
+    <div style={{ background: theme.bg, minHeight: '100%' }}>
+      <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
+          <div>
+            <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Promotions & Discounts</div>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Promotions</h1>
+            <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{promos.filter(p => p.status === 'active').length} active · {promos.filter(p => p.status === 'scheduled').length} scheduled · {promos.filter(p => p.status === 'draft').length} draft</div>
+          </div>
+          <Btn variant="primary" icon={Plus}>Create Promotion</Btn>
+        </div>
+      </div>
+
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <Card title="All Promotions" accent={theme.hibiscus} padded={false}>
+          <table className="w-full text-sm">
+            <thead>
+              <tr style={{ borderBottom: `1px solid ${theme.rule}`, background: theme.bg }}>
+                <th className="text-left py-3 px-5 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Code</th>
+                <th className="text-left py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Name</th>
+                <th className="text-right py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Discount</th>
+                <th className="text-left py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Applies</th>
+                <th className="text-left py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Channels</th>
+                <th className="text-right py-3 px-3 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Used</th>
+                <th className="text-left py-3 px-5 text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {promos.map((p, i) => {
+                const tone = p.status === 'active' ? 'leaf' : p.status === 'scheduled' ? 'gold' : 'neutral';
+                return (
+                  <tr key={p.code} style={{ borderBottom: i < promos.length - 1 ? `1px solid ${theme.ruleSoft}` : 'none' }}>
+                    <td className="py-3 px-5"><span className="font-mono text-xs" style={{ color: theme.ink, fontWeight: 600 }}>{p.code}</span></td>
+                    <td className="py-3 px-3" style={{ color: theme.ink, fontWeight: 500 }}>{p.name}</td>
+                    <td className="py-3 px-3 text-right font-mono" style={{ color: theme.gold, fontWeight: 600 }}>{p.type === 'minimum-stay' ? 'Min stay' : `-${p.discount}%`}</td>
+                    <td className="py-3 px-3 text-xs" style={{ color: theme.inkSoft }}>{p.applies}</td>
+                    <td className="py-3 px-3 text-xs" style={{ color: theme.inkSoft }}>{p.channels}</td>
+                    <td className="py-3 px-3 text-right font-mono" style={{ color: theme.ink }}>{p.usage > 0 ? p.usage : '—'}</td>
+                    <td className="py-3 px-5"><Pill tone={tone} size="sm">{p.status}</Pill></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </Card>
+
+        <div className="p-4 flex items-start gap-3" style={{ background: theme.leafSoft + '40', border: `1px solid ${theme.leaf}30`, borderLeft: `3px solid ${theme.leaf}` }}>
+          <Sparkles size={16} style={{ color: theme.leaf, marginTop: 2 }} />
+          <div className="flex-1 text-sm">
+            <span style={{ color: theme.ink, fontWeight: 600 }}>Top performing promo: </span>
+            <span style={{ color: theme.inkSoft }}>
+              <span className="font-mono" style={{ color: theme.gold, fontWeight: 600 }}>STAY3SAVE</span> has driven 42 bookings — your best converting promotion. Consider extending it to all channels and increasing the discount to 12% for shoulder season.
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ChannelManagerModule = () => {
+  const [tab, setTab] = useState('overview');
+  const tabs = [
+    { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+    { id: 'rates', label: 'Rate Calendar', icon: Calendar },
+    { id: 'inventory', label: 'Inventory & Restrictions', icon: Hotel },
+    { id: 'performance', label: 'Performance', icon: Activity },
+    { id: 'promotions', label: 'Promotions', icon: Sparkles },
+  ];
+
+  return (
+    <div style={{ background: theme.bg, minHeight: '100%' }}>
+      <div style={{ background: theme.bgPanelAlt, borderBottom: `1px solid ${theme.rule}` }}>
+        <div className="px-4 md:px-8 flex gap-1 overflow-x-auto">
+          {tabs.map(t => {
+            const TabIcon = t.icon;
+            const active = tab === t.id;
+            return (
+              <button key={t.id} onClick={() => setTab(t.id)}
+                className="px-4 py-3 flex items-center gap-2 transition-all whitespace-nowrap"
+                style={{ color: active ? theme.ink : theme.inkSoft, fontWeight: active ? 600 : 400, borderBottom: active ? `2px solid ${theme.gold}` : '2px solid transparent', marginBottom: '-1px', fontSize: '13px' }}>
+                <TabIcon size={14} />
+                {t.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      {tab === 'overview' && <ChannelOverviewModule />}
+      {tab === 'rates' && <ChannelRatesModule />}
+      {tab === 'inventory' && <ChannelInventoryModule />}
+      {tab === 'performance' && <ChannelPerformanceModule />}
+      {tab === 'promotions' && <ChannelPromotionsModule />}
+    </div>
+  );
+};
+
 const GmApp = () => {
   const [activeNav, setActiveNav] = useState('dashboard');
   let content;
   
+  // Daily
   if (activeNav === 'dashboard') content = <GMDashboard setActiveNav={setActiveNav} />;
   else if (activeNav === 'morning-brief') content = <MorningBriefModule />;
   else if (activeNav === 'arrivals') content = <ArrivalsModule />;
   else if (activeNav === 'rooms') content = <RoomStatusModule />;
+  else if (activeNav === 'channels') content = <ChannelManagerModule />;
   else if (activeNav === 'approvals') content = <ApprovalsModule />;
   else if (activeNav === 'procurement') content = <ProcurementModule />;
+  // Periodic
+  else if (activeNav === 'fb') content = <FBModule />;
+  else if (activeNav === 'maintenance') content = <MaintenanceModule />;
+  else if (activeNav === 'budget') content = <BudgetModule />;
+  else if (activeNav === 'night-audit') content = <NightAuditModule />;
+  // Reports
+  else if (activeNav === 'reports') content = <GMReportsModule />;
   else content = <GmComingSoon title="Module" />;
   return (
     <div className="flex h-screen w-full overflow-hidden" style={{ background: theme.bg, fontFamily: '"Inter", system-ui, sans-serif', color: theme.ink }}>
@@ -2958,7 +3466,7 @@ const GM_NAV_gmperiodic = [
 // SIDEBAR — General Manager
 // ============================================================================
 const GmperiodicSidebar = ({ activeNav, setActiveNav }) => (
-  <aside className="w-64 flex-shrink-0 flex flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
+  <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
@@ -3002,12 +3510,12 @@ const GmperiodicSidebar = ({ activeNav, setActiveNav }) => (
 );
 
 const GmperiodicTopBar = () => (
-  <div className="flex items-center justify-between px-8 py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+  <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
-      <Calendar size={14} />Saturday, 25 April 2026
-    </div>
+      <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026
+    </span><span className="md:hidden">Sat 25 Apr</span></div>
     <div className="flex items-center gap-3">
-      <div className="flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
+      <div className="hidden md:flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
         <Search size={13} style={{ color: theme.inkMute }} />
         <input placeholder="Search…" className="bg-transparent outline-none text-sm w-48" style={{ color: theme.ink }} />
       </div>
@@ -3147,10 +3655,10 @@ const FBModule = ({ initialTab }) => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Food & Beverage</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>F&B Performance</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>F&B Performance</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Five outlets, lakeside service · Live</div>
           </div>
           <Btn variant="primary" icon={Download}>Export A4</Btn>
@@ -3169,14 +3677,14 @@ const FBModule = ({ initialTab }) => {
         </div>
       </div>
       {tab === 'overview' && (
-        <div className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-4 gap-3">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <KpiCard kpi={FB_KPIS.revenue} format="currency" />
             <KpiCard kpi={FB_KPIS.costPct} format="percent" />
             <KpiCard kpi={FB_KPIS.covers} format="number" />
             <KpiCard kpi={FB_KPIS.avgSpend} format="currency" />
           </div>
-          <div className="grid grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="col-span-2">
               <Card title="Revenue & F&B Cost % — Last 7 Days" accent={theme.gold}>
                 <ResponsiveContainer width="100%" height={260}>
@@ -3213,8 +3721,8 @@ const FBModule = ({ initialTab }) => {
         </div>
       )}
       {tab === 'outlets' && (
-        <div className="px-8 py-6">
-          <div className="grid grid-cols-2 gap-4">
+        <div className="px-4 md:px-8 py-4 md:py-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {OUTLETS.map(o => (
               <div key={o.id} className="p-6" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderTop: `3px solid ${o.color}` }}>
                 <div className="flex items-start justify-between mb-4">
@@ -3223,7 +3731,7 @@ const FBModule = ({ initialTab }) => {
                   </div>
                   <Pill tone={o.vsBudget > 0 ? 'leaf' : 'clay'}>{o.vsBudget > 0 ? '+' : ''}{o.vsBudget}% vs budget</Pill>
                 </div>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   <div><div className="text-[10px] uppercase mb-1" style={{ color: theme.inkMute, letterSpacing: '0.14em' }}>Revenue</div><div className="font-serif text-xl" style={{ color: theme.ink }}>{cedi(o.revenue)}</div></div>
                   <div><div className="text-[10px] uppercase mb-1" style={{ color: theme.inkMute, letterSpacing: '0.14em' }}>Covers</div><div className="font-serif text-xl" style={{ color: theme.ink }}>{o.covers}</div></div>
                   <div><div className="text-[10px] uppercase mb-1" style={{ color: theme.inkMute, letterSpacing: '0.14em' }}>Cost %</div><div className="font-serif text-xl" style={{ color: o.costPct > 32 ? theme.clay : theme.ink }}>{pct(o.costPct)}</div></div>
@@ -3234,7 +3742,7 @@ const FBModule = ({ initialTab }) => {
         </div>
       )}
       {tab === 'menu' && (
-        <div className="px-8 py-6 space-y-6">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
           <Card title="Menu Engineering — Quadrants" accent={theme.gold}>
             <p className="text-sm mb-4" style={{ color: theme.inkSoft }}>Each dish positioned by popularity and contribution margin. Bubble size = units sold.</p>
             <div style={{ position: 'relative', height: 360 }}>
@@ -3291,10 +3799,10 @@ const MaintenanceModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Engineering & Estate</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Maintenance</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Maintenance</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday, 25 April 2026 · Live work orders, PM schedule, assets</div>
           </div>
           <div className="flex items-center gap-2">
@@ -3317,8 +3825,8 @@ const MaintenanceModule = () => {
       </div>
 
       {tab === 'workorders' && (
-        <div className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-4 gap-4">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <KpiTile label="Open Work Orders" value={stats.open} sublabel="awaiting assignment" icon={AlertCircle} tone={theme.gold} />
             <KpiTile label="In Progress" value={stats.inProgress} sublabel="being worked on" icon={Activity} tone={theme.teal} />
             <KpiTile label="High Priority" value={stats.high} sublabel="needing immediate attention" icon={AlertTriangle} tone={theme.clay} />
@@ -3405,8 +3913,8 @@ const MaintenanceModule = () => {
       )}
 
       {tab === 'pm' && (
-        <div className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-4 gap-4">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <KpiTile label="Total PM Tasks" value={PM_SCHEDULE.length} sublabel="across all assets" icon={ClipboardList} />
             <KpiTile label="Due This Week" value={PM_SCHEDULE.filter(p => p.status === 'due-soon').length} sublabel="schedule attention" icon={Clock3} tone={theme.gold} />
             <KpiTile label="Overdue" value={PM_SCHEDULE.filter(p => p.status === 'overdue').length} sublabel="action required" icon={AlertTriangle} tone={theme.clay} />
@@ -3457,8 +3965,8 @@ const MaintenanceModule = () => {
       )}
 
       {tab === 'assets' && (
-        <div className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-4 gap-4">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <KpiTile label="Total Assets" value={ASSETS.length} sublabel="tracked in register" icon={Package} />
             <KpiTile label="Total Value" value={cedi(ASSETS.reduce((s, a) => s + a.value, 0))} sublabel="net book value" icon={DollarSign} tone={theme.gold} />
             <KpiTile label="Warranty Expired" value={ASSETS.filter(a => a.warranty === 'Expired').length} sublabel="renewal needed" icon={AlertTriangle} tone={theme.clay} />
@@ -3509,14 +4017,14 @@ const MaintenanceModule = () => {
       )}
 
       {tab === 'utilities' && (
-        <div className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-4 gap-4">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <KpiTile label="Power · This Month" value="92 MWh" sublabel="+4.5% vs last month" icon={Activity} tone={theme.gold} />
             <KpiTile label="Water · This Month" value="1,410 m³" sublabel="+6.8% vs last month" icon={Activity} tone={theme.teal} />
             <KpiTile label="Solar Generated" value="14 MWh" sublabel="15% of consumption" icon={Leaf} tone={theme.leaf} />
             <KpiTile label="Cost This Month" value={cedi(48200)} sublabel="ECG + water utility" icon={DollarSign} />
           </div>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card title="Power Consumption · Last 6 Months" accent={theme.gold}>
               <ResponsiveContainer width="100%" height={240}>
                 <AreaChart data={UTILITY_TREND}>
@@ -3578,7 +4086,7 @@ const MaintenanceModule = () => {
                 <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Description</div>
                 <p className="text-sm leading-relaxed" style={{ color: theme.ink }}>{drawerWO.description}</p>
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                 <InfoTile label="Reported" value={drawerWO.reported} />
                 <InfoTile label="Source" value={drawerWO.source} />
                 <InfoTile label="Assignee" value={drawerWO.assignee || 'Unassigned'} />
@@ -3640,10 +4148,10 @@ const BudgetModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Finance · Operational</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Budget vs. Actuals</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Budget vs. Actuals</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>April 2026 — Month to date · Variance analysis & trends</div>
           </div>
           <div className="flex items-center gap-2">
@@ -3663,9 +4171,9 @@ const BudgetModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         {/* Top metrics */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <KpiTile label="Total Revenue" value={cedi(totals.revenue.actual)}
             sublabel={`+${variancePct(totals.revenue.actual, totals.revenue.budget).toFixed(1)}% vs budget`}
             icon={TrendingUp} tone={theme.leaf} />
@@ -3695,7 +4203,7 @@ const BudgetModule = () => {
         </Card>
 
         {/* Category summary cards */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {Object.entries(CATEGORY_META).map(([key, meta]) => {
             const t = totals[key];
             const v = variance(t.actual, t.budget);
@@ -3822,7 +4330,7 @@ const BudgetModule = () => {
         </Card>
 
         {/* Notes & flags */}
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="p-5 flex items-start gap-3" style={{ background: theme.bgPanelAlt, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${theme.leaf}` }}>
             <CircleCheck size={16} style={{ color: theme.leaf, marginTop: 2 }} />
             <div className="text-sm" style={{ color: theme.inkSoft }}>
@@ -3850,10 +4358,10 @@ const NightAuditModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>End-of-Day Reconciliation</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Night Audit</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Night Audit</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Latest run: 25 Apr 2026 at 03:02 · Completed in 20 minutes</div>
           </div>
           <div className="flex items-center gap-2">
@@ -3864,7 +4372,7 @@ const NightAuditModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         {/* Status banner */}
         <div className="p-5 flex items-center gap-4" style={{ background: theme.leafSoft + '60', border: `1px solid ${theme.leaf}40`, borderLeft: `3px solid ${theme.leaf}` }}>
           <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: theme.leaf, color: '#FBF7EE' }}>
@@ -3909,7 +4417,7 @@ const NightAuditModule = () => {
           </div>
           <div className="pt-5" style={{ borderTop: `1px solid ${theme.ruleSoft}` }}>
             <div className="text-[10px] uppercase mb-3" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Revenue Breakdown</div>
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {[
                 { label: 'Rooms', value: AUDIT_FLASH.rooms_revenue, color: theme.teal },
                 { label: 'Restaurant', value: AUDIT_FLASH.fb_revenue, color: theme.gold },
@@ -3949,7 +4457,7 @@ const NightAuditModule = () => {
         </Card>
 
         {/* Reconciliation summary */}
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card title="Cashier Reconciliation" accent={theme.dusk} padded={false}>
             <table className="w-full text-sm">
               <thead>
@@ -4058,7 +4566,7 @@ const NightAuditModule = () => {
 // ============================================================================
 
 const GmperiodicComingSoon = ({ title }) => (
-  <div className="p-8" style={{ background: theme.bg, minHeight: '100%' }}>
+  <div className="p-4 md:p-6" style={{ background: theme.bg, minHeight: '100%' }}>
     <SectionHeader overline="Module" title={title} />
     <div className="p-12 text-center" style={{ background: theme.bgPanel, border: `1px dashed ${theme.rule}` }}>
       <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center" style={{ background: theme.tealSoft, color: theme.teal }}><Sparkles size={20} /></div>
@@ -4111,7 +4619,7 @@ const GM_NAV_gmreports = [
 // SIDEBAR — General Manager
 // ============================================================================
 const GmreportsSidebar = ({ activeNav, setActiveNav }) => (
-  <aside className="w-64 flex-shrink-0 flex flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
+  <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
@@ -4155,12 +4663,12 @@ const GmreportsSidebar = ({ activeNav, setActiveNav }) => (
 );
 
 const GmreportsTopBar = () => (
-  <div className="flex items-center justify-between px-8 py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+  <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
-      <Calendar size={14} />Saturday, 25 April 2026
-    </div>
+      <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026
+    </span><span className="md:hidden">Sat 25 Apr</span></div>
     <div className="flex items-center gap-3">
-      <div className="flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
+      <div className="hidden md:flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
         <Search size={13} style={{ color: theme.inkMute }} />
         <input placeholder="Search…" className="bg-transparent outline-none text-sm w-48" style={{ color: theme.ink }} />
       </div>
@@ -4210,8 +4718,193 @@ const REPORT_BUILDER_FIELDS = [
 
 
 // MODULES
+
+// ============================================================================
+// EXPANDED REPORTS CATALOG — 28 reports across 5 categories
+// ============================================================================
+const REPORT_CATALOG = [
+  // === OPERATIONAL (8) ===
+  { id: 'rep-op-flash', category: 'Operational', name: "Today's Manager Flash", description: 'Single-page snapshot — occupancy, ADR, RevPAR, F&B cost, by-department revenue', frequency: 'Daily 06:00', lastRun: '25 Apr 06:00', subscribers: 4, autoEmail: true, popular: true, icon: 'BarChart3' },
+  { id: 'rep-op-arr',   category: 'Operational', name: 'Arrivals & Departures', description: "Today's expected arrivals and departures with VIP flags, special requests, folio status", frequency: 'Daily 07:00', lastRun: '25 Apr 07:00', subscribers: 5, autoEmail: true, popular: true, icon: 'Bed' },
+  { id: 'rep-op-rooms', category: 'Operational', name: 'Room Status', description: 'Live snapshot of all 32 rooms with occupancy and HK status', frequency: 'On-demand', lastRun: '24 Apr 14:22', subscribers: 3, autoEmail: false, popular: true, icon: 'Hotel' },
+  { id: 'rep-op-house', category: 'Operational', name: 'In-House Guests', description: 'Currently in-house guests with stay history, balance, and special needs', frequency: 'On-demand', lastRun: '24 Apr 18:00', subscribers: 2, autoEmail: false, icon: 'Users' },
+  { id: 'rep-op-cancel', category: 'Operational', name: 'Cancellations & No-shows', description: 'Cancelled bookings and no-shows with revenue impact', frequency: 'Weekly Mon', lastRun: '21 Apr', subscribers: 3, autoEmail: true, icon: 'Ban' },
+  { id: 'rep-op-blocks', category: 'Operational', name: 'Group Block Status', description: 'Active group bookings and corporate accounts with pickup performance', frequency: 'Weekly Mon', lastRun: '21 Apr', subscribers: 2, autoEmail: true, icon: 'Users' },
+  { id: 'rep-op-fcst',  category: 'Operational', name: 'Forecasted Occupancy 14-day', description: 'Pickup-weighted forecast with confidence intervals', frequency: 'Daily 06:00', lastRun: '25 Apr 06:00', subscribers: 3, autoEmail: true, icon: 'TrendingUp' },
+  { id: 'rep-op-walkin', category: 'Operational', name: 'Walk-in Conversion', description: 'Walk-in inquiries vs converted bookings, by source and time of day', frequency: 'Monthly', lastRun: '01 Apr', subscribers: 2, autoEmail: true, icon: 'Activity' },
+  // === FINANCIAL (7) ===
+  { id: 'rep-fin-fb',   category: 'Financial', name: 'F&B Summary', description: 'F&B by outlet, by daypart with covers, average check, theoretical-vs-actual cost', frequency: 'Daily 11:00', lastRun: '25 Apr 11:00', subscribers: 6, autoEmail: true, popular: true, icon: 'Utensils' },
+  { id: 'rep-fin-revdept', category: 'Financial', name: 'Revenue by Department', description: 'All revenue lines with budget comparison and variance alerts', frequency: 'Daily 11:00', lastRun: '25 Apr 11:00', subscribers: 4, autoEmail: true, popular: true, icon: 'DollarSign' },
+  { id: 'rep-fin-daily', category: 'Financial', name: 'Daily Revenue Report', description: 'Detailed daily revenue with breakouts by service charge, complimentary, allowances', frequency: 'Daily 11:00', lastRun: '25 Apr 11:00', subscribers: 3, autoEmail: true, icon: 'Receipt' },
+  { id: 'rep-fin-folio', category: 'Financial', name: 'Folio Audit', description: 'Daily audit of all guest folios with charge posting trace', frequency: 'Daily 03:00', lastRun: '25 Apr 03:00', subscribers: 2, autoEmail: true, icon: 'FileText' },
+  { id: 'rep-fin-cash', category: 'Financial', name: 'Cashier Shift Reports', description: 'End-of-shift cash and card reconciliation per cashier', frequency: 'Per shift', lastRun: '24 Apr 23:30', subscribers: 4, autoEmail: false, icon: 'CreditCard' },
+  { id: 'rep-fin-gltrace', category: 'Financial', name: 'GL Posting Trace', description: 'PMS to GL posting reconciliation with unposted items', frequency: 'Daily 03:30', lastRun: '25 Apr 03:30', subscribers: 2, autoEmail: true, icon: 'FileSignature' },
+  { id: 'rep-fin-folio-out', category: 'Financial', name: 'Outstanding Folios', description: 'Open folios with city-ledger transfers and direct billing balances', frequency: 'Weekly Mon', lastRun: '21 Apr', subscribers: 2, autoEmail: true, icon: 'AlertCircle' },
+  // === MARKETING (4) ===
+  { id: 'rep-mkt-mix',  category: 'Marketing', name: 'Channel Mix Analysis', description: 'Bookings by channel · ADR · commission cost · contribution margin', frequency: 'Weekly Mon', lastRun: '21 Apr', subscribers: 3, autoEmail: true, popular: true, icon: 'Globe' },
+  { id: 'rep-mkt-pace', category: 'Marketing', name: 'Booking Pace', description: 'On-the-books pickup pace vs same time last year, broken by segment', frequency: 'Weekly Mon', lastRun: '21 Apr', subscribers: 3, autoEmail: true, icon: 'Activity' },
+  { id: 'rep-mkt-geo',  category: 'Marketing', name: 'Geographic Source', description: 'Bookings by guest origin country/region with revenue contribution', frequency: 'Monthly', lastRun: '01 Apr', subscribers: 2, autoEmail: true, icon: 'MapPin' },
+  { id: 'rep-mkt-lead', category: 'Marketing', name: 'Lead Time Analysis', description: 'Days-to-arrival distribution by channel and segment', frequency: 'Monthly', lastRun: '01 Apr', subscribers: 2, autoEmail: true, icon: 'Calendar' },
+  // === STATUTORY (5) ===
+  { id: 'rep-stat-vat', category: 'Statutory', name: 'VAT Return Summary', description: 'VAT output and input by tax period, ready for Ghana Revenue Authority', frequency: 'Monthly · 5th', lastRun: '05 Apr', subscribers: 2, autoEmail: true, popular: true, icon: 'FileSignature' },
+  { id: 'rep-stat-tour', category: 'Statutory', name: 'Tourism Levy', description: 'Tourism Levy collected and payable by month', frequency: 'Monthly · 5th', lastRun: '05 Apr', subscribers: 2, autoEmail: true, icon: 'FileSignature' },
+  { id: 'rep-stat-wage', category: 'Statutory', name: 'Statutory Wage Report', description: 'PAYE, SSNIT employer + employee, employee count by tax bracket', frequency: 'Monthly · 5th', lastRun: '05 Apr', subscribers: 2, autoEmail: true, icon: 'Users' },
+  { id: 'rep-stat-occ', category: 'Statutory', name: 'Occupancy Tax Return', description: 'Volta Region tourism occupancy tax · monthly remittance', frequency: 'Monthly · 5th', lastRun: '05 Apr', subscribers: 2, autoEmail: true, icon: 'Receipt' },
+  { id: 'rep-stat-gra', category: 'Statutory', name: 'GRA Submission Pack', description: 'Bundled monthly tax filing pack for GRA portal upload', frequency: 'Monthly · 12th', lastRun: '12 Apr', subscribers: 1, autoEmail: false, icon: 'FileText' },
+  // === HOUSEKEEPING (2) ===
+  { id: 'rep-hk-prod',  category: 'Housekeeping', name: 'HK Productivity', description: 'Rooms cleaned per attendant per day with average minutes per room', frequency: 'Daily 11:00', lastRun: '25 Apr 11:00', subscribers: 3, autoEmail: true, popular: true, icon: 'Bath' },
+  { id: 'rep-hk-mini', category: 'Housekeeping', name: 'Mini-Bar & Linen Variance', description: 'Mini-bar postings vs inventory · linen losses', frequency: 'Weekly Mon', lastRun: '21 Apr', subscribers: 2, autoEmail: true, icon: 'Package' },
+  // === CUSTOM (2) ===
+  { id: 'rep-cust-saved', category: 'Custom', name: 'Saved Custom Reports', description: 'Reports built with the Custom Builder · saved to your library', frequency: 'On-demand', lastRun: '20 Apr', subscribers: 2, autoEmail: false, icon: 'Star' },
+  { id: 'rep-cust-sched', category: 'Custom', name: 'Scheduled Custom', description: 'Custom reports running on a schedule · email distribution', frequency: 'Various', lastRun: '21 Apr', subscribers: 2, autoEmail: true, icon: 'Calendar' },
+];
+
+const REPORT_CATEGORY_META = {
+  'Operational': { tone: 'gold', icon: 'LayoutDashboard' },
+  'Financial':   { tone: 'teal', icon: 'DollarSign' },
+  'Marketing':   { tone: 'dusk', icon: 'TrendingUp' },
+  'Statutory':   { tone: 'clay', icon: 'FileSignature' },
+  'Housekeeping':{ tone: 'leaf', icon: 'Bath' },
+  'Custom':      { tone: 'gold', icon: 'Star' },
+};
+
+const ReportsLibraryView = ({ runReport }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterCategory, setFilterCategory] = useState('all');
+  const [filterAuto, setFilterAuto] = useState('all');
+
+  const categories = ['all', ...Object.keys(REPORT_CATEGORY_META)];
+
+  const filtered = REPORT_CATALOG.filter(r => {
+    if (filterCategory !== 'all' && r.category !== filterCategory) return false;
+    if (filterAuto === 'auto' && !r.autoEmail) return false;
+    if (filterAuto === 'manual' && r.autoEmail) return false;
+    if (searchTerm && !r.name.toLowerCase().includes(searchTerm.toLowerCase()) && !r.description.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+    return true;
+  });
+
+  // Group by category
+  const grouped = filtered.reduce((acc, r) => {
+    if (!acc[r.category]) acc[r.category] = [];
+    acc[r.category].push(r);
+    return acc;
+  }, {});
+
+  return (
+    <div className="space-y-4 md:space-y-6">
+      {/* Search + Filters */}
+      <div className="p-4" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}` }}>
+        <div className="flex flex-col md:flex-row gap-3">
+          <div className="flex-1">
+            <div className="flex items-center gap-2 px-3 py-2" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
+              <Search size={14} style={{ color: theme.inkMute }} />
+              <input
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search 28 reports by name or description..."
+                className="bg-transparent outline-none text-sm flex-1"
+                style={{ color: theme.ink }}
+              />
+              {searchTerm && (
+                <button onClick={() => setSearchTerm('')} className="opacity-60 hover:opacity-100">
+                  <X size={12} />
+                </button>
+              )}
+            </div>
+          </div>
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Delivery</span>
+            {[
+              { id: 'all', label: 'All' },
+              { id: 'auto', label: 'Auto-emailed' },
+              { id: 'manual', label: 'On-demand' },
+            ].map(f => (
+              <button key={f.id} onClick={() => setFilterAuto(f.id)} className="text-xs px-2.5 py-1"
+                style={{ background: filterAuto === f.id ? theme.ink : 'transparent', color: filterAuto === f.id ? theme.bgPanel : theme.inkSoft, border: `1px solid ${filterAuto === f.id ? theme.ink : theme.rule}`, letterSpacing: '0.04em' }}>
+                {f.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="flex items-center gap-2 mt-3 flex-wrap">
+          <span className="text-[10px] uppercase mr-1" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Category</span>
+          {categories.map(c => {
+            const isActive = filterCategory === c;
+            const count = c === 'all' ? REPORT_CATALOG.length : REPORT_CATALOG.filter(r => r.category === c).length;
+            return (
+              <button key={c} onClick={() => setFilterCategory(c)} className="text-xs px-2.5 py-1"
+                style={{ background: isActive ? theme.ink : 'transparent', color: isActive ? theme.bgPanel : theme.inkSoft, border: `1px solid ${isActive ? theme.ink : theme.rule}`, letterSpacing: '0.04em' }}>
+                {c === 'all' ? 'All' : c} <span style={{ opacity: 0.6 }}>· {count}</span>
+              </button>
+            );
+          })}
+          <div className="flex-1" />
+          <span className="text-xs" style={{ color: theme.inkMute }}>{filtered.length} of {REPORT_CATALOG.length}</span>
+        </div>
+      </div>
+
+      {/* KPIs */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <KpiTile label="Reports Available" value={REPORT_CATALOG.length} sublabel="across 6 categories" icon={FileText} tone={theme.gold} />
+        <KpiTile label="Auto-emailed" value={REPORT_CATALOG.filter(r => r.autoEmail).length} sublabel="scheduled deliveries" icon={Mail} tone={theme.teal} />
+        <KpiTile label="Run Today" value={5} sublabel="across the platform" icon={Activity} tone={theme.leaf} />
+        <KpiTile label="Custom Reports" value={REPORT_CATALOG.filter(r => r.category === 'Custom').length} sublabel="user-built" icon={Star} tone={theme.dusk} />
+      </div>
+
+      {/* Grouped reports */}
+      {Object.keys(grouped).length === 0 ? (
+        <div className="p-12 text-center" style={{ background: theme.bgPanel, border: `1px dashed ${theme.rule}` }}>
+          <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center" style={{ background: theme.tealSoft, color: theme.teal }}><Search size={20} /></div>
+          <p className="font-serif text-lg mb-2" style={{ color: theme.ink, letterSpacing: '-0.01em' }}>No reports match those filters</p>
+          <p className="text-sm" style={{ color: theme.inkSoft }}>Try clearing the search or selecting "All" categories.</p>
+        </div>
+      ) : (
+        Object.entries(grouped).map(([cat, reports]) => {
+          const meta = REPORT_CATEGORY_META[cat];
+          const accent = meta.tone === 'gold' ? theme.gold : meta.tone === 'teal' ? theme.teal : meta.tone === 'leaf' ? theme.leaf : meta.tone === 'clay' ? theme.clay : theme.dusk;
+          return (
+            <div key={cat}>
+              <div className="flex items-center gap-2 mb-3 pb-2" style={{ borderBottom: `1px solid ${theme.ruleSoft}` }}>
+                <div className="w-1.5 h-6" style={{ background: accent }} />
+                <h3 className="font-serif" style={{ fontSize: '20px', color: theme.ink, letterSpacing: '-0.01em' }}>{cat}</h3>
+                <span className="text-[10px] uppercase" style={{ color: theme.inkMute, letterSpacing: '0.14em' }}>· {reports.length} report{reports.length !== 1 ? 's' : ''}</span>
+              </div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                {reports.map(r => (
+                  <div key={r.id} className="p-4 transition-all"
+                    style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${accent}` }}>
+                    <div className="flex items-start gap-3">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h4 className="font-serif" style={{ fontSize: '17px', color: theme.ink, letterSpacing: '-0.01em', fontWeight: 600 }}>{r.name}</h4>
+                          {r.popular && <Pill tone="gold" size="sm">Popular</Pill>}
+                        </div>
+                        <p className="text-xs mb-3" style={{ color: theme.inkSoft, lineHeight: 1.5 }}>{r.description}</p>
+                        <div className="flex items-center gap-3 flex-wrap text-[10px]" style={{ color: theme.inkMute }}>
+                          <span className="flex items-center gap-1"><Clock size={10} /> {r.frequency}</span>
+                          <span className="flex items-center gap-1"><Calendar size={10} /> Last: {r.lastRun}</span>
+                          {r.autoEmail && <span className="flex items-center gap-1"><Mail size={10} /> {r.subscribers} subscribers</span>}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-3 pt-3 flex items-center gap-2 flex-wrap" style={{ borderTop: `1px solid ${theme.ruleSoft}` }}>
+                      <Btn variant="primary" size="sm" icon={ArrowRight} onClick={() => runReport({ id: r.id, name: r.name, kind: 'flash' })}>Run Now</Btn>
+                      <Btn variant="ghost" size="sm" icon={Calendar}>Schedule</Btn>
+                      {r.autoEmail && <Btn variant="ghost" size="sm" icon={Mail}>Subscribers</Btn>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })
+      )}
+    </div>
+  );
+};
+
 const GMReportsModule = () => {
-  const [tab, setTab] = useState('quick');
+  const [tab, setTab] = useState('library');
   const [builderSelected, setBuilderSelected] = useState(['Date range', 'Total revenue', 'Occupancy %', 'ADR']);
   const [runningReport, setRunningReport] = useState(null); // { id, name, stage: 'generating' | 'ready' }
 
@@ -4226,10 +4919,10 @@ const GMReportsModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Reporting · Operational</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Reports</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Reports</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Run, schedule, and build the reports you need to run the property</div>
           </div>
           <div className="flex items-center gap-2">
@@ -4239,10 +4932,11 @@ const GMReportsModule = () => {
         </div>
         <div className="px-8 flex gap-1" style={{ borderTop: `1px solid ${theme.ruleSoft}` }}>
           {[
+            { id: 'library', label: 'Reports Library', icon: BookOpen },
             { id: 'quick', label: 'Quick Run', icon: ArrowRight },
             { id: 'scheduled', label: 'Scheduled', icon: Calendar },
             { id: 'history', label: 'Recent Runs', icon: Clock },
-            { id: 'builder', label: 'Custom Report Builder', icon: LayoutGrid },
+            { id: 'builder', label: 'Custom Builder', icon: LayoutGrid },
           ].map(t => {
             const Icon = t.icon;
             const active = tab === t.id;
@@ -4256,9 +4950,10 @@ const GMReportsModule = () => {
         </div>
       </div>
 
+      {tab === 'library' && <ReportsLibraryView runReport={runReport} />}
       {tab === 'quick' && (
-        <div className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-4 gap-4">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <KpiTile label="Reports Run · Today" value={5} sublabel="across the platform" icon={FileText} tone={theme.teal} />
             <KpiTile label="Auto-Sent · Today" value={4} sublabel="scheduled deliveries" icon={Mail} tone={theme.leaf} />
             <KpiTile label="Manual Runs · Today" value={1} sublabel="on-demand" icon={ArrowRight} tone={theme.gold} />
@@ -4270,7 +4965,7 @@ const GMReportsModule = () => {
               <h2 className="font-serif" style={{ fontSize: '20px', color: theme.ink, letterSpacing: '-0.01em' }}>Most-used reports</h2>
               <div className="flex-1 h-px" style={{ background: theme.rule }} />
             </div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {GM_QUICK_REPORTS.map(r => {
                 const Icon = r.icon;
                 return (
@@ -4314,8 +5009,8 @@ const GMReportsModule = () => {
       )}
 
       {tab === 'scheduled' && (
-        <div className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-3 gap-4">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <KpiTile label="Active Schedules" value={SCHEDULED_REPORTS.filter(s => s.active).length} sublabel="auto-delivering" icon={Mail} tone={theme.leaf} />
             <KpiTile label="Paused" value={SCHEDULED_REPORTS.filter(s => !s.active).length} sublabel="not currently sent" icon={Ban} tone={theme.inkMute} />
             <KpiTile label="Distribution List" value={9} sublabel="unique recipients" icon={Users} tone={theme.teal} />
@@ -4370,8 +5065,8 @@ const GMReportsModule = () => {
       )}
 
       {tab === 'history' && (
-        <div className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-4 gap-4">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <KpiTile label="Runs · Last 7 Days" value={48} sublabel="all reports" icon={FileText} />
             <KpiTile label="Successful" value={47} sublabel="98% success rate" icon={CircleCheck} tone={theme.leaf} />
             <KpiTile label="Warnings" value={1} sublabel="data sync issues" icon={AlertTriangle} tone={theme.gold} />
@@ -4427,7 +5122,7 @@ const GMReportsModule = () => {
       )}
 
       {tab === 'builder' && (
-        <div className="px-8 py-6 space-y-6">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
           <div className="p-5 flex items-start gap-3" style={{ background: theme.bgPanelAlt, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${theme.gold}` }}>
             <LayoutGrid size={16} style={{ color: theme.gold, marginTop: 2 }} />
             <div className="text-sm" style={{ color: theme.inkSoft }}>
@@ -4436,7 +5131,7 @@ const GMReportsModule = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="col-span-2 space-y-4">
               <Card title="1. Choose Fields" accent={theme.teal}>
                 <div className="space-y-4">
@@ -4469,7 +5164,7 @@ const GMReportsModule = () => {
               </Card>
 
               <Card title="2. Visualization Style" accent={theme.dusk}>
-                <div className="grid grid-cols-4 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                   {[
                     { id: 'table', label: 'Data Table', icon: LayoutGrid, def: true },
                     { id: 'line', label: 'Trend Lines', icon: Activity },
@@ -5124,7 +5819,7 @@ const ReportGeneric = ({ name }) => (
 // ============================================================================
 
 const GmreportsComingSoon = ({ title }) => (
-  <div className="p-8" style={{ background: theme.bg, minHeight: '100%' }}>
+  <div className="p-4 md:p-6" style={{ background: theme.bg, minHeight: '100%' }}>
     <SectionHeader overline="Module" title={title} />
     <div className="p-12 text-center" style={{ background: theme.bgPanel, border: `1px dashed ${theme.rule}` }}>
       <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center" style={{ background: theme.tealSoft, color: theme.teal }}><Sparkles size={20} /></div>
@@ -5176,7 +5871,7 @@ const FOM_NAV = [
 // SIDEBAR — Front Office Manager
 // ============================================================================
 const FomSidebar = ({ activeNav, setActiveNav }) => (
-  <aside className="w-64 flex-shrink-0 flex flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
+  <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
@@ -5220,12 +5915,12 @@ const FomSidebar = ({ activeNav, setActiveNav }) => (
 );
 
 const FomTopBar = () => (
-  <div className="flex items-center justify-between px-8 py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+  <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
-      <Calendar size={14} />Saturday, 25 April 2026
-    </div>
+      <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026
+    </span><span className="md:hidden">Sat 25 Apr</span></div>
     <div className="flex items-center gap-3">
-      <div className="flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
+      <div className="hidden md:flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
         <Search size={13} style={{ color: theme.inkMute }} />
         <input placeholder="Search…" className="bg-transparent outline-none text-sm w-48" style={{ color: theme.ink }} />
       </div>
@@ -5352,10 +6047,10 @@ const TapeChartModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Reservations</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Tape Chart</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Tape Chart</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>32 rooms · 14-day window · drag a reservation block to move it</div>
           </div>
           <div className="flex items-center gap-2">
@@ -5521,7 +6216,7 @@ const TapeChartModule = () => {
           </div>
         )}
 
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <KpiTile label="Today's Occupancy" value="87.5%" sublabel={`${ROOMS.filter(r => ['OC','OD','IN'].includes(r.status)).length} of ${ROOMS.length} rooms`} icon={Hotel} tone={theme.teal} />
           <KpiTile label="Arrivals Today" value={ARRIVALS.length} sublabel={`${ARRIVALS.filter(a => a.vip).length} VIP`} icon={ArrowDownRight} tone={theme.gold} />
           <KpiTile label="Departures Today" value={DEPARTURES.length} sublabel={`${DEPARTURES.filter(d => d.folioBalance > 0).length} pending payment`} icon={ArrowUpRight} />
@@ -5569,10 +6264,10 @@ const InHouseModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Front Desk</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>In-House Guests</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>In-House Guests</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{stats.total} guests currently staying · live folio status</div>
           </div>
           <div className="flex items-center gap-2">
@@ -5581,8 +6276,8 @@ const InHouseModule = () => {
           </div>
         </div>
       </div>
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-5 gap-3">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
           <KpiTile label="In-House" value={stats.total} sublabel="across 32 rooms" icon={Users} />
           <KpiTile label="VIP Guests" value={stats.vip} sublabel="anniversary, repeat" icon={Star} tone={theme.gold} />
           <KpiTile label="Departing Today" value={stats.departingToday} sublabel="check-out queue" icon={ArrowUpRight} tone={theme.dusk} />
@@ -5688,10 +6383,10 @@ const CashierModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Front Desk</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Cashier Shift</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Cashier Shift</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>
               Shift: <span style={{ color: theme.ink, fontWeight: 500 }}>Amani Mlangeni</span> · Started 08:00 · {shiftStarted ? 'In progress' : 'Closed'}
             </div>
@@ -5703,7 +6398,7 @@ const CashierModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         <div className="p-5 grid grid-cols-3 gap-6" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderTop: `3px solid ${theme.gold}` }}>
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.18em', fontWeight: 700 }}>Opening Float</div>
@@ -5722,7 +6417,7 @@ const CashierModule = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-5 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
           <div className="p-4" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${theme.teal}` }}>
             <div className="text-[10px] uppercase mb-1" style={{ color: theme.inkMute, letterSpacing: '0.14em' }}>Card</div>
             <div className="font-serif text-xl" style={{ color: theme.ink, letterSpacing: '-0.02em' }}>{cedi(totals.cardSettlements)}</div>
@@ -5792,7 +6487,7 @@ const CashierModule = () => {
 // ============================================================================
 
 const FomComingSoon = ({ title }) => (
-  <div className="p-8" style={{ background: theme.bg, minHeight: '100%' }}>
+  <div className="p-4 md:p-6" style={{ background: theme.bg, minHeight: '100%' }}>
     <SectionHeader overline="Module" title={title} />
     <div className="p-12 text-center" style={{ background: theme.bgPanel, border: `1px dashed ${theme.rule}` }}>
       <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center" style={{ background: theme.tealSoft, color: theme.teal }}><Sparkles size={20} /></div>
@@ -5849,7 +6544,7 @@ const FB_NAV = [
 // SIDEBAR — F&B Manager
 // ============================================================================
 const FbSidebar = ({ activeNav, setActiveNav }) => (
-  <aside className="w-64 flex-shrink-0 flex flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
+  <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
@@ -5893,12 +6588,12 @@ const FbSidebar = ({ activeNav, setActiveNav }) => (
 );
 
 const FbTopBar = () => (
-  <div className="flex items-center justify-between px-8 py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+  <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
-      <Calendar size={14} />Saturday, 25 April 2026
-    </div>
+      <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026
+    </span><span className="md:hidden">Sat 25 Apr</span></div>
     <div className="flex items-center gap-3">
-      <div className="flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
+      <div className="hidden md:flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
         <Search size={13} style={{ color: theme.inkMute }} />
         <input placeholder="Search…" className="bg-transparent outline-none text-sm w-48" style={{ color: theme.ink }} />
       </div>
@@ -6034,7 +6729,7 @@ const POSOrderEntry = ({ table, order, setOrder, onSendKOT, onClose, onPrintBill
   const newItems = order.filter(o => o.status === 'new');
 
   return (
-    <div className="grid grid-cols-3 gap-0" style={{ height: 'calc(100vh - 180px)' }}>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0" style={{ height: 'calc(100vh - 180px)' }}>
       <div className="col-span-2 flex flex-col" style={{ background: theme.bgPanel, borderRight: `1px solid ${theme.rule}` }}>
         <div className="p-5 flex items-center justify-between" style={{ borderBottom: `1px solid ${theme.rule}` }}>
           <div className="flex items-center gap-3">
@@ -6068,7 +6763,7 @@ const POSOrderEntry = ({ table, order, setOrder, onSendKOT, onClose, onPrintBill
           </div>
         </div>
         <div className="flex-1 p-5 overflow-y-auto">
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {items.map(m => (
               <button key={m.id} onClick={() => m.available && addItem(m)} disabled={!m.available}
                 className="p-4 text-left transition-all hover:translate-y-[-1px] disabled:opacity-40"
@@ -6159,7 +6854,7 @@ const POSOrderEntry = ({ table, order, setOrder, onSendKOT, onClose, onPrintBill
             </div>
             <div className="space-y-2">
               {newItems.length > 0 && <Btn variant="primary" icon={Send} onClick={() => onSendKOT(newItems)}>Send {newItems.length} item{newItems.length !== 1 ? 's' : ''} to kitchen</Btn>}
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
                 <Btn variant="secondary" size="md" icon={Receipt} onClick={onPrintBill}>Print Bill</Btn>
                 <Btn variant="ghost" size="md" icon={Hotel}>Charge to Room</Btn>
               </div>
@@ -6245,7 +6940,7 @@ const POSBillModal = ({ table, order, onClose }) => {
           </div>
         </div>
         <div className="px-7 py-4 space-y-2" style={{ borderTop: `1px solid ${theme.rule}` }}>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
             <Btn variant="secondary" size="md" icon={CreditCard}>Card</Btn>
             <Btn variant="secondary" size="md" icon={Phone}>Mobile Money</Btn>
             <Btn variant="secondary" size="md" icon={Hotel}>Charge to Room</Btn>
@@ -6293,10 +6988,10 @@ const POSModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Restaurant POS</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>{outlet.name}</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>{outlet.name}</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday Dinner Service · live floor plan</div>
           </div>
           <div className="flex items-center gap-2">
@@ -6323,8 +7018,8 @@ const POSModule = () => {
       {selectedTable ? (
         <POSOrderEntry table={selectedTable} order={order} setOrder={setOrder} onSendKOT={handleSendKOT} onClose={() => { setSelectedTable(null); setOrder([]); }} onPrintBill={() => setShowBill(true)} />
       ) : (
-        <div className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-5 gap-3">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
             <KpiTile label="Free Tables" value={stats.free} sublabel="available now" icon={CircleCheck} tone={theme.leaf} />
             <KpiTile label="Occupied" value={stats.occupied} sublabel={`${stats.covers} covers`} icon={Users} tone={theme.gold} />
             <KpiTile label="Reserved" value={stats.reserved} sublabel="next 2 hours" icon={Clock} tone={theme.dusk} />
@@ -6364,7 +7059,7 @@ const POSModule = () => {
 // ============================================================================
 
 const FbComingSoon = ({ title }) => (
-  <div className="p-8" style={{ background: theme.bg, minHeight: '100%' }}>
+  <div className="p-4 md:p-6" style={{ background: theme.bg, minHeight: '100%' }}>
     <SectionHeader overline="Module" title={title} />
     <div className="p-12 text-center" style={{ background: theme.bgPanel, border: `1px dashed ${theme.rule}` }}>
       <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center" style={{ background: theme.tealSoft, color: theme.teal }}><Sparkles size={20} /></div>
@@ -6425,7 +7120,7 @@ const chef_ME = { initials: 'CO', name: 'Chef Olamide Adeyemi', role: 'Executive
 // SIDEBAR — Executive Chef
 // ============================================================================
 const ChefSidebar = ({ activeNav, setActiveNav }) => (
-  <aside className="w-64 flex-shrink-0 flex flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
+  <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
@@ -6469,12 +7164,12 @@ const ChefSidebar = ({ activeNav, setActiveNav }) => (
 );
 
 const ChefTopBar = () => (
-  <div className="flex items-center justify-between px-8 py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+  <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
-      <Calendar size={14} />Saturday, 25 April 2026 · Service starts 18:00
-    </div>
+      <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026 · Service starts 18:00
+    </span><span className="md:hidden">Sat 25 Apr</span></div>
     <div className="flex items-center gap-3">
-      <div className="flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
+      <div className="hidden md:flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
         <Search size={13} style={{ color: theme.inkMute }} />
         <input placeholder="Search recipes, ingredients…" className="bg-transparent outline-none text-sm w-56" style={{ color: theme.ink }} />
       </div>
@@ -6677,25 +7372,25 @@ const KitchenOverview = ({ setActiveNav }) => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Kitchen · Pre-Service</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Good afternoon, Chef</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Good afternoon, Chef</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday dinner rush — service starts in 2h 15m</div>
           </div>
           <Btn variant="primary" icon={ClipboardList} onClick={() => setActiveNav('chef-production')}>Open Production Sheet</Btn>
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-4 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <KpiTile label="Active Recipes" value={totalRecipes} sublabel="across all menus" icon={BookOpen} tone={theme.teal} />
           <KpiTile label="Avg Cost %" value={pct(avgCostPct)} sublabel="theoretical · all recipes" icon={Percent} tone={theme.gold} />
           <KpiTile label="Tonight's Forecast" value={`${todayCovers} covers`} sublabel={cedi(todayRevenue) + ' projected'} icon={Activity} tone={theme.dusk} />
           <KpiTile label="Tonight's Cost %" value={pct(todayCostPct)} sublabel={cedi(todayTheoreticalCost) + ' raw'} icon={DollarSign} tone={todayCostPct > 32 ? theme.clay : theme.leaf} />
         </div>
 
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card title="Production Sheet · Status" accent={theme.gold} action={<Btn variant="ghost" size="sm" icon={ArrowRight} onClick={() => setActiveNav('chef-production')}>Open</Btn>}>
             <div className="space-y-2">
               {PRODUCTION.slice(0, 5).map(p => {
@@ -6817,10 +7512,10 @@ const RecipesModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Recipe Book</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Recipes & Cost</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Recipes & Cost</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{RECIPES.length} recipes · click any row for full BOM and cost breakdown</div>
           </div>
           <div className="flex items-center gap-2">
@@ -6830,7 +7525,7 @@ const RecipesModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         <div className="flex items-center gap-2 p-3 flex-wrap" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}` }}>
           <span className="text-[10px] uppercase mr-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Category</span>
           {categories.map(c => (
@@ -6989,7 +7684,7 @@ const RecipeDrawer = ({ recipe, onClose }) => {
           )}
           <div className="space-y-2">
             <Btn variant="primary" icon={PenLine}>Edit Recipe</Btn>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
               <Btn variant="secondary" size="md" icon={Printer}>Print Card</Btn>
               <Btn variant="ghost" size="md" icon={Download}>Export PDF</Btn>
             </div>
@@ -7018,10 +7713,10 @@ const ProductionModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Mise-en-Place</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Production Sheet</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Production Sheet</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday dinner · prep status by station · target full by 17:30</div>
           </div>
           <div className="flex items-center gap-2">
@@ -7031,8 +7726,8 @@ const ProductionModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-4 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <KpiTile label="Total Items" value={production.length} sublabel="prep tasks" icon={ClipboardList} />
           <KpiTile label="Complete" value={production.filter(p => p.currentBatch >= p.par).length} sublabel="at par" icon={CircleCheck} tone={theme.leaf} />
           <KpiTile label="In Progress" value={production.filter(p => p.currentBatch > 0 && p.currentBatch < p.par).length} sublabel="partial" icon={Clock3} tone={theme.gold} />
@@ -7112,10 +7807,10 @@ const VarianceModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Cost Control</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Theoretical vs Actual</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Theoretical vs Actual</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Daily food cost variance · MTD running 12% over budget</div>
           </div>
           <div className="flex items-center gap-2">
@@ -7125,8 +7820,8 @@ const VarianceModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-4 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <KpiTile label="Theoretical Cost" value={cedi(totalTheoretical)} sublabel="based on recipe BOMs" icon={BookOpen} tone={theme.teal} />
           <KpiTile label="Actual Cost" value={cedi(totalActual)} sublabel="from inventory issues" icon={Activity} tone={theme.dusk} />
           <KpiTile label="Variance" value={cedi(totalVariance)} sublabel={(totalVariance >= 0 ? 'over' : 'under') + ' theoretical'} icon={totalVariance >= 0 ? TrendingUp : TrendingDown} tone={totalVariance >= 0 ? theme.clay : theme.leaf} />
@@ -7207,18 +7902,18 @@ const WastageModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Quality Control</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Wastage Log</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Wastage Log</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Last 7 days · {cedi(totalWastageCost)} written off</div>
           </div>
           <Btn variant="primary" icon={Plus}>Log Wastage</Btn>
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-4 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <KpiTile label="Total Items" value={WASTAGE.length} sublabel="last 7 days" icon={Trash2} />
           <KpiTile label="Total Cost" value={cedi(totalWastageCost)} sublabel="written off" icon={DollarSign} tone={theme.clay} />
           <KpiTile label="Avg per Day" value={cedi(Math.round(totalWastageCost / 7))} sublabel="rolling 7-day" icon={Activity} tone={theme.gold} />
@@ -7286,23 +7981,23 @@ const WastageModule = () => {
 const StationsModule = () => (
   <div style={{ background: theme.bg, minHeight: '100%' }}>
     <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-      <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+      <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
         <div>
           <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Brigade · Tonight</div>
-          <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Stations & Team</h1>
+          <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Stations & Team</h1>
           <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday dinner service · 6 cooks on duty (1 vacancy)</div>
         </div>
       </div>
     </div>
 
-    <div className="px-8 py-6 space-y-6">
-      <div className="grid grid-cols-3 gap-4">
+    <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <KpiTile label="Stations Active" value={STATIONS.filter(s => s.status === 'on-duty').length} sublabel={`of ${STATIONS.length}`} icon={ChefHat} tone={theme.leaf} />
         <KpiTile label="Cooks on Duty" value={STATIONS.reduce((s, st) => s + st.cooks, 0)} sublabel="includes Chef" icon={Users} tone={theme.teal} />
         <KpiTile label="Coverage Gaps" value={STATIONS.filter(s => s.status !== 'on-duty').length} sublabel="being managed" icon={AlertCircle} tone={theme.gold} />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {STATIONS.map(s => {
           const tone = s.status === 'on-duty' ? 'leaf' : s.status === 'short-staffed' ? 'gold' : 'clay';
           const accent = s.status === 'on-duty' ? theme.leaf : s.status === 'short-staffed' ? theme.gold : theme.clay;
@@ -7356,7 +8051,7 @@ const StationsModule = () => (
 // COMING SOON
 // ============================================================================
 const ChefComingSoon = ({ title }) => (
-  <div className="p-8" style={{ background: theme.bg, minHeight: '100%' }}>
+  <div className="p-4 md:p-6" style={{ background: theme.bg, minHeight: '100%' }}>
     <SectionHeader overline="Module" title={title} />
     <div className="p-12 text-center" style={{ background: theme.bgPanel, border: `1px dashed ${theme.rule}` }}>
       <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center" style={{ background: theme.tealSoft, color: theme.teal }}><Sparkles size={20} /></div>
@@ -7416,7 +8111,7 @@ const HK_NAV = [
 // SIDEBAR — Executive Housekeeper
 // ============================================================================
 const HkSidebar = ({ activeNav, setActiveNav }) => (
-  <aside className="w-64 flex-shrink-0 flex flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
+  <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
@@ -7460,12 +8155,12 @@ const HkSidebar = ({ activeNav, setActiveNav }) => (
 );
 
 const HkTopBar = () => (
-  <div className="flex items-center justify-between px-8 py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+  <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
-      <Calendar size={14} />Saturday, 25 April 2026
-    </div>
+      <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026
+    </span><span className="md:hidden">Sat 25 Apr</span></div>
     <div className="flex items-center gap-3">
-      <div className="flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
+      <div className="hidden md:flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
         <Search size={13} style={{ color: theme.inkMute }} />
         <input placeholder="Search…" className="bg-transparent outline-none text-sm w-48" style={{ color: theme.ink }} />
       </div>
@@ -7541,10 +8236,10 @@ const HKAssignmentsModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Housekeeping</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Daily Assignments</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Daily Assignments</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday, 25 April 2026 · 4 attendants on duty · balanced by room credits</div>
           </div>
           <div className="flex items-center gap-2">
@@ -7555,7 +8250,7 @@ const HKAssignmentsModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         <div className="p-5" style={{ background: theme.goldSoft + '40', border: `1px solid ${theme.gold}30`, borderLeft: `3px solid ${theme.gold}` }}>
           <div className="flex items-start gap-3">
             <ClipboardList size={16} style={{ color: theme.gold, marginTop: 2 }} />
@@ -7566,7 +8261,7 @@ const HKAssignmentsModule = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {ATTENDANTS.map(att => {
             const myRoomNumbers = ROOM_ASSIGNMENTS[att.id] || [];
             const myRooms = ROOMS.filter(r => myRoomNumbers.includes(r.number));
@@ -7615,7 +8310,7 @@ const HKAssignmentsModule = () => {
         </div>
 
         <Card title="Productivity · Last 7 Days" accent={theme.teal}>
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {ATTENDANTS.map(att => (
               <div key={att.id} className="text-center p-4" style={{ background: theme.bg, border: `1px solid ${theme.ruleSoft}` }}>
                 <div className="text-xs" style={{ color: theme.inkMute }}>{att.name.split(' ')[0]}</div>
@@ -7644,10 +8339,10 @@ const HKMinibarModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Housekeeping · Revenue Capture</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Mini-Bar</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Mini-Bar</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Postings reported by attendants · charge to guest folio</div>
           </div>
           <div className="flex items-center gap-2">
@@ -7657,8 +8352,8 @@ const HKMinibarModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-3 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <KpiTile label="Pending Posting" value={pending.length} sublabel={cedi(totalPending) + ' value'} icon={AlertCircle} tone={theme.gold} />
           <KpiTile label="Posted Today" value={postings.filter(p => p.posted).length} sublabel={cedi(totalPostedToday) + ' charged to folios'} icon={CircleCheck} tone={theme.leaf} />
           <KpiTile label="Top Item · This Week" value="Sparkling Water" sublabel="34 units · ₵ 1,530" icon={Wine} tone={theme.teal} />
@@ -7725,10 +8420,10 @@ const HKLinenModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Housekeeping</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Linen & Supplies</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Linen & Supplies</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Last stock count: 22 April 2026 · Next: 29 April</div>
           </div>
           <div className="flex items-center gap-2">
@@ -7738,8 +8433,8 @@ const HKLinenModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-4 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <KpiTile label="Items Tracked" value={stats.items} sublabel="par-stocked categories" icon={Package} />
           <KpiTile label="Critical · Order Now" value={stats.critical} sublabel="below 25% par" icon={AlertTriangle} tone={theme.clay} />
           <KpiTile label="Low Stock" value={stats.low} sublabel="approaching reorder point" icon={AlertCircle} tone={theme.gold} />
@@ -7827,18 +8522,18 @@ const HKLostFoundModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Housekeeping</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Lost & Found</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Lost & Found</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Items found on property · 90-day holding period before disposal</div>
           </div>
           <Btn variant="primary" icon={Plus}>Log New Item</Btn>
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-4 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <KpiTile label="Currently Held" value={stats.held} sublabel="awaiting collection" icon={Package} tone={theme.gold} />
           <KpiTile label="Returned" value={stats.returned} sublabel="last 30 days" icon={CircleCheck} tone={theme.leaf} />
           <KpiTile label="Disposed" value={stats.disposed} sublabel="after 90 days" icon={Trash2} tone={theme.inkMute} />
@@ -7865,7 +8560,7 @@ const HKLostFoundModule = () => {
           <span className="text-xs" style={{ color: theme.inkMute }}>{filtered.length} of {LOST_FOUND_ITEMS.length} items</span>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
           {filtered.map(item => {
             const tone = item.status === 'returned' ? 'leaf' : item.status === 'disposed' ? 'neutral' : 'gold';
             const color = item.status === 'returned' ? theme.leaf : item.status === 'disposed' ? theme.inkMute : theme.gold;
@@ -7906,7 +8601,7 @@ const HKLostFoundModule = () => {
 // ============================================================================
 
 const HkComingSoon = ({ title }) => (
-  <div className="p-8" style={{ background: theme.bg, minHeight: '100%' }}>
+  <div className="p-4 md:p-6" style={{ background: theme.bg, minHeight: '100%' }}>
     <SectionHeader overline="Module" title={title} />
     <div className="p-12 text-center" style={{ background: theme.bgPanel, border: `1px dashed ${theme.rule}` }}>
       <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center" style={{ background: theme.tealSoft, color: theme.teal }}><Sparkles size={20} /></div>
@@ -7964,7 +8659,7 @@ const HR_NAV = [
 // SIDEBAR — HR Manager
 // ============================================================================
 const HrSidebar = ({ activeNav, setActiveNav }) => (
-  <aside className="w-64 flex-shrink-0 flex flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
+  <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
@@ -8008,12 +8703,12 @@ const HrSidebar = ({ activeNav, setActiveNav }) => (
 );
 
 const HrTopBar = () => (
-  <div className="flex items-center justify-between px-8 py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+  <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
-      <Calendar size={14} />Saturday, 25 April 2026
-    </div>
+      <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026
+    </span><span className="md:hidden">Sat 25 Apr</span></div>
     <div className="flex items-center gap-3">
-      <div className="flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
+      <div className="hidden md:flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
         <Search size={13} style={{ color: theme.inkMute }} />
         <input placeholder="Search…" className="bg-transparent outline-none text-sm w-48" style={{ color: theme.ink }} />
       </div>
@@ -8085,25 +8780,25 @@ const HRModule = ({ activeNav }) => {
     return (
       <div style={{ background: theme.bg, minHeight: '100%' }}>
         <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-          <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+          <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
             <div>
               <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>People & Payroll</div>
-              <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>HR Overview</h1>
+              <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>HR Overview</h1>
               <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday, 25 April 2026 · {total} employees on roll</div>
             </div>
             <Btn variant="primary" icon={Plus}>Add Employee</Btn>
           </div>
         </div>
 
-        <div className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-4 gap-4">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <KpiTile label="Total Headcount" value={total} sublabel="across 7 departments" icon={Users} tone={theme.teal} />
             <KpiTile label="On Leave Today" value={onLeave} sublabel="1 maternity" icon={CalendarDays} tone={theme.dusk} />
             <KpiTile label="On Probation" value={probation} sublabel="under review" icon={Clock3} tone={theme.gold} />
             <KpiTile label="Monthly Payroll" value={cedi(monthlyPayroll)} sublabel="gross · before taxes" icon={DollarSign} tone={theme.gold} />
           </div>
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card title="Headcount by Department" accent={theme.teal}>
               <div className="space-y-3">
                 {Object.entries(byDept).sort(([, a], [, b]) => b - a).map(([dept, count]) => {
@@ -8185,10 +8880,10 @@ const HRModule = ({ activeNav }) => {
     return (
       <div style={{ background: theme.bg, minHeight: '100%' }}>
         <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-          <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+          <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
             <div>
               <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>People</div>
-              <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Employees</h1>
+              <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Employees</h1>
               <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{EMPLOYEES.length} on roll · click any row for full record</div>
             </div>
             <div className="flex items-center gap-2">
@@ -8198,7 +8893,7 @@ const HRModule = ({ activeNav }) => {
           </div>
         </div>
 
-        <div className="px-8 py-6 space-y-6">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
           <div className="flex items-center gap-2 p-3 flex-wrap" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}` }}>
             <span className="text-[10px] uppercase mr-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Department</span>
             {depts.map(d => (
@@ -8296,7 +8991,7 @@ const HRModule = ({ activeNav }) => {
                 </div>
                 <div>
                   <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Employment</div>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                     <InfoTile label="Joined" value={selectedEmp.joined} />
                     <InfoTile label="Contract" value={selectedEmp.contract} />
                     <InfoTile label="Salary (gross)" value={cedi(selectedEmp.salary)} />
@@ -8328,18 +9023,18 @@ const HRModule = ({ activeNav }) => {
     return (
       <div style={{ background: theme.bg, minHeight: '100%' }}>
         <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-          <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+          <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
             <div>
               <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Attendance · Leave</div>
-              <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Attendance & Leave</h1>
+              <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Attendance & Leave</h1>
               <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Today's attendance · open leave requests</div>
             </div>
             <Btn variant="primary" icon={Plus}>Log Leave</Btn>
           </div>
         </div>
 
-        <div className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-4 gap-4">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <KpiTile label="Clocked In Today" value={EMPLOYEES.filter(e => e.status === 'active').length} sublabel={`of ${EMPLOYEES.length} on roll`} icon={CheckCircle2} tone={theme.leaf} />
             <KpiTile label="On Leave" value={1} sublabel="Ama Sarpong · maternity" icon={CalendarDays} tone={theme.dusk} />
             <KpiTile label="Pending Leave Requests" value={LEAVE_REQUESTS.filter(l => l.status === 'pending').length} sublabel="awaiting approval" icon={Clock3} tone={theme.gold} />
@@ -8432,10 +9127,10 @@ const HRModule = ({ activeNav }) => {
     return (
       <div style={{ background: theme.bg, minHeight: '100%' }}>
         <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-          <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+          <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
             <div>
               <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Payroll · {PAYROLL_SUMMARY.month}</div>
-              <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Payroll</h1>
+              <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Payroll</h1>
               <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Pay date: {PAYROLL_SUMMARY.payDate} · SSNIT due: {PAYROLL_SUMMARY.ssnitDue}</div>
             </div>
             <div className="flex items-center gap-2">
@@ -8445,7 +9140,7 @@ const HRModule = ({ activeNav }) => {
           </div>
         </div>
 
-        <div className="px-8 py-6 space-y-6">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
           <div className="p-5 flex items-center gap-4" style={{ background: theme.goldSoft + '40', border: `1px solid ${theme.gold}30`, borderLeft: `3px solid ${theme.gold}` }}>
             <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: theme.gold, color: '#FBF7EE' }}>
               <Clock size={24} />
@@ -8458,7 +9153,7 @@ const HRModule = ({ activeNav }) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <KpiTile label="Gross Pay" value={cedi(PAYROLL_SUMMARY.totalGross)} sublabel={`${EMPLOYEES.length} employees`} icon={DollarSign} />
             <KpiTile label="SSNIT (Employee 5.5%)" value={cedi(PAYROLL_SUMMARY.totalSSNIT)} sublabel="deducted" icon={ArrowDownRight} tone={theme.dusk} />
             <KpiTile label="Income Tax (PAYE)" value={cedi(PAYROLL_SUMMARY.totalIncomeTax)} sublabel="deducted" icon={ArrowDownRight} tone={theme.dusk} />
@@ -8508,7 +9203,7 @@ const HRModule = ({ activeNav }) => {
             </table>
           </Card>
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="p-5" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${theme.dusk}` }}>
               <div className="text-[10px] uppercase mb-2" style={{ color: theme.dusk, letterSpacing: '0.16em', fontWeight: 700 }}>Statutory Liabilities</div>
               <div className="space-y-2 text-sm">
@@ -8543,18 +9238,18 @@ const HRModule = ({ activeNav }) => {
     return (
       <div style={{ background: theme.bg, minHeight: '100%' }}>
         <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-          <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+          <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
             <div>
               <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Hiring Pipeline</div>
-              <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Recruitment</h1>
+              <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Recruitment</h1>
               <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{RECRUITMENT.length} open positions · 73 active applicants</div>
             </div>
             <Btn variant="primary" icon={Plus}>Post New Position</Btn>
           </div>
         </div>
 
-        <div className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-4 gap-4">
+        <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <KpiTile label="Open Positions" value={RECRUITMENT.length} sublabel="actively recruiting" icon={UserCircle} tone={theme.teal} />
             <KpiTile label="Total Applicants" value={73} sublabel="across all roles" icon={Users} />
             <KpiTile label="In Interview Stage" value={4} sublabel="shortlisted" icon={Activity} tone={theme.gold} />
@@ -8608,7 +9303,7 @@ const HRModule = ({ activeNav }) => {
 // ============================================================================
 
 const HrComingSoon = ({ title }) => (
-  <div className="p-8" style={{ background: theme.bg, minHeight: '100%' }}>
+  <div className="p-4 md:p-6" style={{ background: theme.bg, minHeight: '100%' }}>
     <SectionHeader overline="Module" title={title} />
     <div className="p-12 text-center" style={{ background: theme.bgPanel, border: `1px dashed ${theme.rule}` }}>
       <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center" style={{ background: theme.tealSoft, color: theme.teal }}><Sparkles size={20} /></div>
@@ -8667,7 +9362,7 @@ const ca_ME = { initials: 'AB', name: 'Adriaan van der Berg', role: 'Chief Accou
 // SIDEBAR — Chief Accountant
 // ============================================================================
 const CaSidebar = ({ activeNav, setActiveNav }) => (
-  <aside className="w-64 flex-shrink-0 flex flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
+  <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
@@ -8711,12 +9406,12 @@ const CaSidebar = ({ activeNav, setActiveNav }) => (
 );
 
 const CaTopBar = () => (
-  <div className="flex items-center justify-between px-8 py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+  <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
-      <Calendar size={14} />Saturday, 25 April 2026 · Period: April 2026 (open)
-    </div>
+      <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026 · Period: April 2026 (open)
+    </span><span className="md:hidden">Sat 25 Apr</span></div>
     <div className="flex items-center gap-3">
-      <div className="flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
+      <div className="hidden md:flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
         <Search size={13} style={{ color: theme.inkMute }} />
         <input placeholder="Search GL accounts, transactions…" className="bg-transparent outline-none text-sm w-56" style={{ color: theme.ink }} />
       </div>
@@ -8859,10 +9554,10 @@ const FinanceOverview = ({ setActiveNav }) => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Finance · April 2026</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Good morning, Adriaan</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Good morning, Adriaan</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>April period open · 5 days to month-end · April returns due 15 May</div>
           </div>
           <div className="flex items-center gap-2">
@@ -8872,15 +9567,15 @@ const FinanceOverview = ({ setActiveNav }) => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-4 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <KpiTile label="Cash Position" value={cedi(totalCash)} sublabel="across all bank accounts" icon={Building2} tone={theme.gold} />
           <KpiTile label="MTD Revenue" value={cedi(totalRevenueMTD)} sublabel="rooms + F&B + other" icon={TrendingUp} tone={theme.leaf} />
           <KpiTile label="MTD Gross Profit" value={cedi(grossProfitMTD)} sublabel={`${pct(grossProfitMTD / totalRevenueMTD * 100)} margin`} icon={Activity} tone={theme.teal} />
           <KpiTile label="Tax Liability" value={cedi(taxLiability)} sublabel="VAT + PAYE + SSNIT" icon={FileSignature} tone={theme.dusk} />
         </div>
 
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card title="Working Capital" accent={theme.teal}>
             <div className="space-y-3">
               <div className="flex items-center justify-between p-3" style={{ background: theme.bg, border: `1px solid ${theme.ruleSoft}` }}>
@@ -8987,10 +9682,10 @@ const LedgerModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Chart of Accounts</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>General Ledger</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>General Ledger</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>USALI-aligned · {COA.length} accounts · click any account for transaction history</div>
           </div>
           <div className="flex items-center gap-2">
@@ -9000,7 +9695,7 @@ const LedgerModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         <div className="flex items-center gap-2 p-3 flex-wrap" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}` }}>
           <span className="text-[10px] uppercase mr-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Type</span>
           {types.map(t => (
@@ -9076,10 +9771,10 @@ const StatementsModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Period · April 2026</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Trial Balance & P&amp;L</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Trial Balance & P&amp;L</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Period: 1–25 April 2026 (open) · vs prior month and budget</div>
           </div>
           <div className="flex items-center gap-2">
@@ -9105,7 +9800,7 @@ const StatementsModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6">
+      <div className="px-4 md:px-8 py-4 md:py-6">
         {view === 'pnl' && (
           <Card title="Profit &amp; Loss · April 2026 (1–25 Apr)" accent={theme.gold} padded={false}>
             <table className="w-full text-sm">
@@ -9235,7 +9930,7 @@ const StatementsModule = () => {
         )}
 
         {view === 'bs' && (
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card title="Assets · 25 April 2026" accent={theme.teal} padded={false}>
               <table className="w-full text-sm">
                 <tbody>
@@ -9322,10 +10017,10 @@ const ARModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>City Ledger</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Accounts Receivable</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Accounts Receivable</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{AR_LEDGER.length} open invoices · {cedi(total)} outstanding</div>
           </div>
           <div className="flex items-center gap-2">
@@ -9335,8 +10030,8 @@ const ARModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-4 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {buckets.map(b => {
             const tone = b === 'current' ? 'leaf' : b === '1-30' ? 'teal' : b === '31-60' ? 'gold' : 'clay';
             const accent = tone === 'leaf' ? theme.leaf : tone === 'teal' ? theme.teal : tone === 'gold' ? theme.gold : theme.clay;
@@ -9399,10 +10094,10 @@ const APModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Vendor Payments</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Accounts Payable</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Accounts Payable</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{AP_INVOICES.length} open invoices · {cedi(total)} due · 3-way match enforced</div>
           </div>
           <div className="flex items-center gap-2">
@@ -9412,8 +10107,8 @@ const APModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-4 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <KpiTile label="Open Invoices" value={AP_INVOICES.length} sublabel="this week" icon={FileText} tone={theme.dusk} />
           <KpiTile label="3-Way Matched" value={matched} sublabel="ready to pay" icon={CircleCheck} tone={theme.leaf} />
           <KpiTile label="Awaiting GRN" value={awaitingGRN} sublabel="need receiving" icon={Clock3} tone={theme.gold} />
@@ -9476,10 +10171,10 @@ const BankModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Bank Accounts</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Bank Reconciliation</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Bank Reconciliation</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Last statement import: 24 April 2026 · {UNMATCHED_BANK_ITEMS.length} items unmatched</div>
           </div>
           <div className="flex items-center gap-2">
@@ -9489,8 +10184,8 @@ const BankModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-2 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {BANK_ACCOUNTS.map(b => {
             const diff = b.statementBalance - b.glBalance;
             return (
@@ -9502,7 +10197,7 @@ const BankModule = () => {
                   </div>
                   {b.unmatched > 0 ? <Pill tone="gold">{b.unmatched} unmatched</Pill> : <Pill tone="leaf">Reconciled</Pill>}
                 </div>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   <div>
                     <div className="text-[10px] uppercase mb-1" style={{ color: theme.inkMute, letterSpacing: '0.14em' }}>Statement</div>
                     <div className="font-serif text-xl" style={{ color: theme.ink }}>{cedi(b.statementBalance)}</div>
@@ -9563,17 +10258,17 @@ const JVModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Manual Journals</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Journal Vouchers</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Journal Vouchers</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{JOURNAL_VOUCHERS.length} JVs this period · period April 2026 open</div>
           </div>
           <Btn variant="primary" icon={Plus}>New Journal Voucher</Btn>
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         <div className="p-4 flex items-start gap-3" style={{ background: theme.duskSoft + '40', border: `1px solid ${theme.dusk}30`, borderLeft: `3px solid ${theme.dusk}` }}>
           <Key size={14} style={{ color: theme.dusk, marginTop: 2 }} />
           <div className="text-sm" style={{ color: theme.inkSoft }}>
@@ -9624,17 +10319,17 @@ const TaxModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Statutory Filings</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Tax Returns</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Tax Returns</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>VAT + Tourism Levy · PAYE · SSNIT · Ghana Revenue Authority and SSNIT filings</div>
           </div>
           <Btn variant="primary" icon={Send}>File Current Period</Btn>
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         <Card title="Tax Periods" accent={theme.dusk} padded={false}>
           <table className="w-full text-sm">
             <thead>
@@ -9674,7 +10369,7 @@ const TaxModule = () => {
           </table>
         </Card>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="p-5" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${theme.gold}` }}>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.16em', fontWeight: 700 }}>April 2026 · Draft</div>
             <div className="font-serif" style={{ fontSize: '20px', color: theme.ink, letterSpacing: '-0.01em' }}>Returns due in 20 days</div>
@@ -9703,10 +10398,10 @@ const AssetsModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>PP&amp;E Register</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Fixed Assets</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Fixed Assets</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{FIXED_ASSETS.length} capitalized assets · NBV {cedi(totalNBV)}</div>
           </div>
           <div className="flex items-center gap-2">
@@ -9716,8 +10411,8 @@ const AssetsModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-3 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <KpiTile label="Total Cost" value={cedi(totalCost)} sublabel="acquisition value" icon={DollarSign} />
           <KpiTile label="Accumulated Depreciation" value={cedi(totalDepr)} sublabel={pct(totalDepr / totalCost * 100) + ' depreciated'} icon={TrendingDown} tone={theme.clay} />
           <KpiTile label="Net Book Value" value={cedi(totalNBV)} sublabel="on balance sheet" icon={Briefcase} tone={theme.gold} />
@@ -9770,7 +10465,7 @@ const AssetsModule = () => {
 // COMING SOON
 // ============================================================================
 const CaComingSoon = ({ title }) => (
-  <div className="p-8" style={{ background: theme.bg, minHeight: '100%' }}>
+  <div className="p-4 md:p-6" style={{ background: theme.bg, minHeight: '100%' }}>
     <SectionHeader overline="Module" title={title} />
     <div className="p-12 text-center" style={{ background: theme.bgPanel, border: `1px dashed ${theme.rule}` }}>
       <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center" style={{ background: theme.tealSoft, color: theme.teal }}><Sparkles size={20} /></div>
@@ -9839,7 +10534,7 @@ const pm_ME = { initials: 'KA', name: 'Kojo Asare', role: 'Purchasing Manager' }
 // SIDEBAR
 // ============================================================================
 const PmSidebar = ({ activeNav, setActiveNav }) => (
-  <aside className="w-64 flex-shrink-0 flex flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
+  <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
@@ -9883,12 +10578,12 @@ const PmSidebar = ({ activeNav, setActiveNav }) => (
 );
 
 const PmTopBar = () => (
-  <div className="flex items-center justify-between px-8 py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+  <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
-      <Calendar size={14} />Saturday, 25 April 2026 · 5 PRs awaiting action
-    </div>
+      <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026 · 5 PRs awaiting action
+    </span><span className="md:hidden">Sat 25 Apr</span></div>
     <div className="flex items-center gap-3">
-      <div className="flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
+      <div className="hidden md:flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
         <Search size={13} style={{ color: theme.inkMute }} />
         <input placeholder="Search PRs, POs, vendors…" className="bg-transparent outline-none text-sm w-56" style={{ color: theme.ink }} />
       </div>
@@ -10006,10 +10701,10 @@ const PMDashboard = ({ setActiveNav }) => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Procurement · Operations</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Good morning, Kojo</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Good morning, Kojo</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{openPRs} PRs awaiting RFQ · {activeRFQs} RFQs in flight · {pendingPOs} POs at GM</div>
           </div>
           <div className="flex items-center gap-2">
@@ -10019,9 +10714,9 @@ const PMDashboard = ({ setActiveNav }) => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         {/* Pipeline KPIs */}
-        <div className="grid grid-cols-5 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
           <KpiTile label="Open PRs" value={openPRs} sublabel="awaiting RFQ" icon={FileText} tone={theme.gold} />
           <KpiTile label="Active RFQs" value={activeRFQs} sublabel="comparing quotes" icon={BarChart3} tone={theme.teal} />
           <KpiTile label="POs at GM" value={pendingPOs} sublabel={cedi(POS.filter(p => p.status === 'awaiting-approval').reduce((s, p) => s + p.amount, 0)) + ' for approval'} icon={ClipboardList} tone={theme.dusk} />
@@ -10029,7 +10724,7 @@ const PMDashboard = ({ setActiveNav }) => {
           <KpiTile label="YTD Spend" value={cedi(ytdSpend)} sublabel={`${VENDORS.length} active vendors`} icon={DollarSign} />
         </div>
 
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card title="My Queue · Next Actions" accent={theme.gold} padded={false}>
             <div className="divide-y" style={{ borderColor: theme.ruleSoft }}>
               <div className="p-4 flex items-start gap-3" style={{ borderBottom: `1px solid ${theme.ruleSoft}` }}>
@@ -10127,17 +10822,17 @@ const PRsModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Demand · Intake</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Purchase Requisitions</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Purchase Requisitions</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Department requests waiting to be turned into RFQs or direct POs</div>
           </div>
           <Btn variant="primary" icon={Plus}>Raise PR for Department</Btn>
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         <div className="flex items-center gap-2 p-3" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}` }}>
           <span className="text-[10px] uppercase mr-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Status</span>
           {[
@@ -10215,17 +10910,17 @@ const RFQsModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Quotation Comparison</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>RFQ Comparison</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>RFQ Comparison</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{RFQS.length} active RFQs · pick a winning quote and convert to PO</div>
           </div>
           <Btn variant="primary" icon={Plus}>New RFQ</Btn>
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         {RFQS.map(rfq => {
           const cheapest = cheapestQuote(rfq);
           const fastest = fastestQuote(rfq);
@@ -10308,17 +11003,17 @@ const POsModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>POs · Lifecycle</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Purchase Orders</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Purchase Orders</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{POS.length} POs in current view · drag PRs to drafts or convert directly</div>
           </div>
           <Btn variant="primary" icon={Plus}>New PO</Btn>
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         <div className="flex items-center gap-2 p-3 flex-wrap" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}` }}>
           <span className="text-[10px] uppercase mr-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Status</span>
           {['all', 'awaiting-approval', 'in-transit', 'delivered', 'delivered-with-notes'].map(f => (
@@ -10381,18 +11076,18 @@ const GRNsModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Receiving</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Goods Received Notes</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Goods Received Notes</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Track deliveries · resolve discrepancies · feed three-way match in AP</div>
           </div>
           <Btn variant="primary" icon={Plus}>Record Receipt</Btn>
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-3 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <KpiTile label="Expected Today" value={POS.filter(p => p.status === 'in-transit').length} sublabel="awaiting GRN" icon={Truck} tone={theme.teal} />
           <KpiTile label="Received This Week" value={GRNS.filter(g => !g.received.includes('Feb')).length} sublabel={`${GRNS.filter(g => g.status === 'received-ok').length} clean`} icon={CircleCheck} tone={theme.leaf} />
           <KpiTile label="Discrepancies · MTD" value={GRNS.filter(g => g.status === 'received-discrepancy').length} sublabel="credit notes received" icon={AlertTriangle} tone={theme.gold} />
@@ -10447,17 +11142,17 @@ const VendorsModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Master Data</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Vendor Directory</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Vendor Directory</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{VENDORS.length} active vendors · {VENDORS.filter(v => v.preferred).length} preferred · contracts up to 2030</div>
           </div>
           <Btn variant="primary" icon={Plus}>Onboard Vendor</Btn>
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         <Card title="Vendor Master" accent={theme.teal} padded={false}>
           <table className="w-full text-sm">
             <thead>
@@ -10510,17 +11205,17 @@ const PerformanceModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Vendor Scorecards</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Vendor Performance</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Vendor Performance</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Rolling 12-month scorecards · on-time delivery · fill rate · quality</div>
           </div>
           <Btn variant="secondary" icon={Download}>Export Scorecards</Btn>
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         <Card title="12-Month Performance Scorecards" accent={theme.gold} padded={false}>
           <table className="w-full text-sm">
             <thead>
@@ -10567,7 +11262,7 @@ const PerformanceModule = () => {
           </table>
         </Card>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="p-5" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${theme.leaf}` }}>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.leaf, letterSpacing: '0.16em', fontWeight: 700 }}>Top Performer</div>
             <div className="font-serif" style={{ fontSize: '20px', color: theme.ink, letterSpacing: '-0.01em' }}>Volta Cooling Ltd</div>
@@ -10591,18 +11286,18 @@ const StockModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Inventory Health</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Stock Movements</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Stock Movements</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Slow-moving items · expiring stock · reorder critical · velocity analysis</div>
           </div>
           <Btn variant="primary" icon={Plus}>Stock Adjustment</Btn>
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-3 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <KpiTile label="Slow-Moving" value={STOCK_ALERTS.filter(s => s.velocity === 'slow').length} sublabel="needs sommelier/menu review" icon={Clock3} tone={theme.gold} />
           <KpiTile label="Critical Low" value={STOCK_ALERTS.filter(s => s.velocity === 'critical-low').length} sublabel="reorder immediately" icon={AlertTriangle} tone={theme.clay} />
           <KpiTile label="Expiring" value={STOCK_ALERTS.filter(s => s.velocity === 'expiring').length} sublabel="within shelf life window" icon={Clock} tone={theme.dusk} />
@@ -10651,7 +11346,7 @@ const StockModule = () => {
 // COMING SOON
 // ============================================================================
 const PmComingSoon = ({ title }) => (
-  <div className="p-8" style={{ background: theme.bg, minHeight: '100%' }}>
+  <div className="p-4 md:p-6" style={{ background: theme.bg, minHeight: '100%' }}>
     <SectionHeader overline="Module" title={title} />
     <div className="p-12 text-center" style={{ background: theme.bgPanel, border: `1px dashed ${theme.rule}` }}>
       <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center" style={{ background: theme.tealSoft, color: theme.teal }}><Sparkles size={20} /></div>
@@ -10719,7 +11414,7 @@ const it_ME = { initials: 'KA', name: 'Kobi Anane', role: 'IT Manager' };
 // SIDEBAR
 // ============================================================================
 const ItSidebar = ({ activeNav, setActiveNav }) => (
-  <aside className="w-64 flex-shrink-0 flex flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
+  <aside className="hidden md:flex w-64 flex-shrink-0 flex-col" style={{ background: theme.navBg, color: '#FBF7EE' }}>
     <div className="px-5 pt-7 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '20px', fontWeight: 600 }}>⌒</div>
@@ -10763,12 +11458,12 @@ const ItSidebar = ({ activeNav, setActiveNav }) => (
 );
 
 const ItTopBar = () => (
-  <div className="flex items-center justify-between px-8 py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
+  <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
-      <Calendar size={14} />Saturday, 25 April 2026 · All systems operational
-    </div>
+      <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026 · All systems operational
+    </span><span className="md:hidden">Sat 25 Apr</span></div>
     <div className="flex items-center gap-3">
-      <div className="flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
+      <div className="hidden md:flex items-center gap-2 px-3 py-1.5" style={{ background: theme.bg, border: `1px solid ${theme.rule}` }}>
         <Search size={13} style={{ color: theme.inkMute }} />
         <input placeholder="Search users, audit log, settings…" className="bg-transparent outline-none text-sm w-56" style={{ color: theme.ink }} />
       </div>
@@ -10883,10 +11578,10 @@ const SystemHealth = ({ setActiveNav }) => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Operations · Cloud</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>System Health</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>System Health</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{operational} of {SYSTEM_STATUS.length} services healthy · 1 vendor incident in flight · last backup {lastBackup.timestamp}</div>
           </div>
           <div className="flex items-center gap-2">
@@ -10896,8 +11591,8 @@ const SystemHealth = ({ setActiveNav }) => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-4 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <KpiTile label="Services Healthy" value={`${operational} / ${SYSTEM_STATUS.length}`} sublabel={degraded > 0 ? `${degraded} degraded` : 'all systems go'} icon={CircleCheck} tone={degraded > 0 ? theme.gold : theme.leaf} />
           <KpiTile label="Avg Uptime · 30d" value={`${avgUptime.toFixed(2)}%`} sublabel="rolling window" icon={Activity} tone={theme.teal} />
           <KpiTile label="Active Sessions" value={PLATFORM_USERS.reduce((s, u) => s + u.sessions, 0)} sublabel={`${PLATFORM_USERS.filter(u => u.sessions > 0).length} users online`} icon={Users} />
@@ -10984,10 +11679,10 @@ const UsersModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Identity & Access</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Users & Roles</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Users & Roles</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{PLATFORM_USERS.length} users · {mfaCovered} with MFA · password policy: 10-char minimum, 90-day rotation</div>
           </div>
           <div className="flex items-center gap-2">
@@ -10997,8 +11692,8 @@ const UsersModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-4 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <KpiTile label="Total Users" value={PLATFORM_USERS.length} sublabel={`${PLATFORM_USERS.filter(u => u.status === 'active').length} active`} icon={Users} tone={theme.teal} />
           <KpiTile label="MFA Coverage" value={`${mfaCovered}/${PLATFORM_USERS.length}`} sublabel={pct(mfaCovered/PLATFORM_USERS.length*100) + ' enrolled'} icon={Key} tone={mfaCovered === PLATFORM_USERS.length ? theme.leaf : theme.gold} />
           <KpiTile label="Pending Invites" value={PLATFORM_USERS.filter(u => u.status === 'invited').length} sublabel="awaiting first login" icon={Mail} tone={theme.gold} />
@@ -11082,10 +11777,10 @@ const AuditModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Compliance · Activity</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Audit Log</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Audit Log</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Searchable activity log · retained 7 years per BRD compliance · last 12 entries shown</div>
           </div>
           <div className="flex items-center gap-2">
@@ -11095,7 +11790,7 @@ const AuditModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         <div className="flex items-center gap-2 p-3" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}` }}>
           <span className="text-[10px] uppercase mr-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Severity</span>
           {['all', 'info', 'warning', 'critical'].map(f => (
@@ -11154,18 +11849,18 @@ const IntegrationsModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>External Connections</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Integrations</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Integrations</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{INTEGRATIONS.filter(i => i.status === 'connected').length} connected · {INTEGRATIONS.filter(i => i.status === 'degraded').length} degraded · click any to view config</div>
           </div>
           <Btn variant="primary" icon={Plus}>Add Integration</Btn>
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-2 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {INTEGRATIONS.map(i => {
             const tone = i.status === 'connected' ? 'leaf' : i.status === 'degraded' ? 'gold' : 'neutral';
             const accent = tone === 'leaf' ? theme.leaf : tone === 'gold' ? theme.gold : theme.dusk;
@@ -11204,10 +11899,10 @@ const BackupsModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Disaster Recovery</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Backups</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Backups</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Daily 02:00 UTC · weekly archive · monthly archive · all encrypted at rest</div>
           </div>
           <div className="flex items-center gap-2">
@@ -11217,15 +11912,15 @@ const BackupsModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-4 gap-4">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <KpiTile label="Last Backup" value={lastBackup.timestamp.split(' ')[1]} sublabel={lastBackup.timestamp.split(' ')[0]} icon={CircleCheck} tone={theme.leaf} />
           <KpiTile label="Last Size" value={lastBackup.size} sublabel={lastBackup.duration + ' duration'} icon={Package} />
           <KpiTile label="Recent Success" value={`${successCount}/${BACKUPS.length}`} sublabel="last 7 backups" icon={Activity} tone={theme.leaf} />
           <KpiTile label="Encryption" value="AES-256" sublabel="at rest + in transit" icon={Key} tone={theme.dusk} />
         </div>
 
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card title="Retention Policy" accent={theme.teal}>
             <div className="space-y-3">
               {[
@@ -11305,18 +12000,18 @@ const LicenseModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Subscription · Updates</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>License & Updates</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>License & Updates</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Cloud SaaS subscription · Boutique Plan · auto-update enabled</div>
           </div>
           <Btn variant="secondary" icon={Download}>Download Invoice</Btn>
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-2 gap-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="p-6" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${theme.gold}` }}>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.18em', fontWeight: 700 }}>Current Plan</div>
             <div className="font-serif" style={{ fontSize: '28px', color: theme.ink, letterSpacing: '-0.02em' }}>Boutique · Cloud SaaS</div>
@@ -11382,10 +12077,10 @@ const APIModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Developer Access</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>API & Webhooks</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>API & Webhooks</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>REST API · OAuth 2.0 · webhook delivery for system events</div>
           </div>
           <div className="flex items-center gap-2">
@@ -11395,7 +12090,7 @@ const APIModule = () => {
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         <Card title="API Keys" accent={theme.gold} padded={false}>
           <table className="w-full text-sm">
             <thead>
@@ -11462,18 +12157,18 @@ const ConfigModule = () => {
   return (
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="px-8 pt-7 pb-5 flex items-end justify-between">
+        <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
           <div>
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>System · Preferences</div>
-            <h1 className="font-serif" style={{ fontSize: '34px', color: theme.ink, letterSpacing: '-0.01em' }}>Configuration</h1>
+            <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Configuration</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>System-wide preferences · timezone · date format · fiscal year</div>
           </div>
           <Btn variant="primary" icon={Check}>Save Changes</Btn>
         </div>
       </div>
 
-      <div className="px-8 py-6 space-y-6">
-        <div className="grid grid-cols-2 gap-6">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card title="Locale & Time" accent={theme.teal}>
             <div className="space-y-4">
               <InfoTile label="Timezone" value="Africa/Accra (GMT+0)" />
@@ -11546,7 +12241,7 @@ const ConfigModule = () => {
 // COMING SOON
 // ============================================================================
 const ItComingSoon = ({ title }) => (
-  <div className="p-8" style={{ background: theme.bg, minHeight: '100%' }}>
+  <div className="p-4 md:p-6" style={{ background: theme.bg, minHeight: '100%' }}>
     <SectionHeader overline="Module" title={title} />
     <div className="p-12 text-center" style={{ background: theme.bgPanel, border: `1px dashed ${theme.rule}` }}>
       <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center" style={{ background: theme.tealSoft, color: theme.teal }}><Sparkles size={20} /></div>
@@ -11613,34 +12308,12 @@ const PERSONA_REGISTRY = [
     id: 'gm',
     name: "Jana Kruger",
     initials: 'JK',
-    role: "GM · Daily",
-    persona: "Daily operational workspace",
-    summary: "Jana's morning-to-end-of-day workspace. Walks the floor, reviews arrivals, approves spend, monitors the queue.",
+    role: "General Manager",
+    persona: "Daily operations · weekly reviews · reports library",
+    summary: "Jana's complete workspace. Daily floor walks, approvals, channel rates and procurement; weekly F&B reviews and maintenance; monthly budget vs actuals and the full reports library.",
     icon: Briefcase,
     accent: theme.gold,
     Component: GmApp,
-  },
-  {
-    id: 'gmperiodic',
-    name: "Jana Kruger",
-    initials: 'JK',
-    role: "GM · Periodic",
-    persona: "Weekly & monthly reviews",
-    summary: "Same persona, different cadence. Weekly F&B review, maintenance backlog, monthly Budget vs. Actuals, Night Audit.",
-    icon: Briefcase,
-    accent: theme.dusk,
-    Component: GmperiodicApp,
-  },
-  {
-    id: 'gmreports',
-    name: "Jana Kruger",
-    initials: 'JK',
-    role: "GM · Reports",
-    persona: "Reports library",
-    summary: "When Jana needs a board-ready PDF. 7 quick reports plus a custom builder.",
-    icon: FileText,
-    accent: theme.teal,
-    Component: GmreportsApp,
   },
   {
     id: 'fom',
@@ -11733,7 +12406,7 @@ const PERSONA_REGISTRY = [
 ];
 
 const ROLE_GROUPS = [
-  { id: 'leadership',  label: 'Leadership',         personas: ['md', 'gm', 'gmperiodic', 'gmreports'] },
+  { id: 'leadership',  label: 'Leadership',         personas: ['md', 'gm'] },
   { id: 'operations',  label: 'Operations',         personas: ['fom', 'fb', 'chef', 'hk'] },
   { id: 'support',     label: 'Support Functions',  personas: ['hr', 'ca', 'pm', 'it'] },
 ];
@@ -11750,7 +12423,7 @@ const LoginScreen = ({ onSelect }) => {
         .font-serif { font-family: 'Cormorant Garamond', serif !important; }
         .font-mono { font-family: 'JetBrains Mono', monospace !important; }
       `}</style>
-      <div className="relative" style={{ background: theme.navBg, color: '#FBF7EE', padding: '64px 64px 72px' }}>
+      <div className="relative px-6 md:px-16 py-10 md:py-16" style={{ background: theme.navBg, color: '#FBF7EE' }}>
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-4 mb-10">
             <div className="w-14 h-14 flex items-center justify-center font-serif" style={{ background: theme.gold, color: theme.navBg, fontSize: '32px', fontWeight: 600 }}>⌒</div>
@@ -11760,7 +12433,7 @@ const LoginScreen = ({ onSelect }) => {
             </div>
           </div>
           <div className="text-[10px] uppercase mb-3" style={{ color: theme.gold, letterSpacing: '0.28em', fontWeight: 700 }}>Hospitality Platform · v1.0.4</div>
-          <h1 className="font-serif" style={{ fontSize: '52px', letterSpacing: '-0.02em', lineHeight: 1.1, maxWidth: '720px' }}>
+          <h1 className="font-serif" style={{ fontSize: 'clamp(32px, 6vw, 52px)', letterSpacing: '-0.02em', lineHeight: 1.1, maxWidth: '720px' }}>
             Akwaaba. Choose your workspace.
           </h1>
           <p className="text-base mt-5 max-w-2xl" style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.6 }}>
@@ -11770,7 +12443,7 @@ const LoginScreen = ({ onSelect }) => {
       </div>
 
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="max-w-6xl mx-auto px-16 flex gap-1">
+        <div className="max-w-6xl mx-auto px-6 md:px-16 flex gap-1 overflow-x-auto">
           {ROLE_GROUPS.map(g => {
             const active = activeGroup === g.id;
             return (
@@ -11785,9 +12458,9 @@ const LoginScreen = ({ onSelect }) => {
         </div>
       </div>
 
-      <div className="flex-1 px-16 py-12" style={{ background: theme.bg }}>
+      <div className="flex-1 px-6 md:px-16 py-8 md:py-12" style={{ background: theme.bg }}>
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {ROLE_GROUPS.find(g => g.id === activeGroup).personas.map(pid => {
               const p = PERSONA_REGISTRY.find(x => x.id === pid);
               const Icon = p.icon;
@@ -11837,16 +12510,68 @@ const PersonaSwitcher = ({ onSwitch }) => (
 
 const App = () => {
   const [active, setActive] = useState(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  
+  // Close drawer when persona changes
+  useEffect(() => { setDrawerOpen(false); }, [active]);
+  
   if (!active) return <LoginScreen onSelect={setActive} />;
   const p = PERSONA_REGISTRY.find(x => x.id === active);
   if (!p) return <LoginScreen onSelect={setActive} />;
   const Workspace = p.Component;
+  
   return (
     <>
-      <PersonaSwitcher onSwitch={() => setActive(null)} />
-      <Workspace />
+      <style>{`
+        /* Mobile drawer behavior */
+        @media (max-width: 768px) {
+          .platform-sidebar-wrapper aside {
+            display: flex !important;
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            z-index: 60;
+            transform: translateX(-100%);
+            transition: transform 0.25s ease;
+            box-shadow: 0 0 40px rgba(0,0,0,0.3);
+          }
+          .platform-sidebar-wrapper.drawer-open aside {
+            transform: translateX(0);
+          }
+          .platform-drawer-overlay {
+            display: none;
+          }
+          .platform-sidebar-wrapper.drawer-open + .platform-drawer-overlay {
+            display: block;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 55;
+          }
+        }
+      `}</style>
+      
+      {/* Mobile-only hamburger button */}
+      <button
+        onClick={() => setDrawerOpen(o => !o)}
+        className="md:hidden fixed top-3 left-3 z-[70] flex items-center justify-center w-10 h-10"
+        style={{ background: theme.navBg, color: theme.gold, border: `1px solid ${theme.gold}`, borderRadius: 4 }}>
+        {drawerOpen ? <X size={18} /> : <Menu size={18} />}
+      </button>
+      
+      <button
+        onClick={() => setActive(null)}
+        className="fixed top-3 right-3 md:top-4 md:right-6 z-[70] flex items-center gap-2 px-3 py-2 transition-all"
+        style={{ background: theme.gold, color: theme.navBg, border: `1px solid ${theme.gold}`, fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 600 }}>
+        <ArrowLeft size={12} /> <span className="hidden sm:inline">Switch Persona</span><span className="sm:hidden">Switch</span>
+      </button>
+      
+      <div className={`platform-sidebar-wrapper ${drawerOpen ? 'drawer-open' : ''}`}>
+        <Workspace />
+      </div>
+      <div className="platform-drawer-overlay" onClick={() => setDrawerOpen(false)} />
     </>
   );
 };
+
 
 export default App;
