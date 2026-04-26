@@ -10,7 +10,6 @@
       *, *::before, *::after {
         box-sizing: border-box;
       }
-      
       html, body, #root {
         margin: 0 !important;
         padding: 0 !important;
@@ -18,23 +17,19 @@
         max-width: 100% !important;
         background: #F4EFE6;
         overflow-x: hidden;
+        text-align: left !important;
       }
-      
       body {
         min-height: 100vh;
       }
-      
       #root {
         min-height: 100vh;
         width: 100vw !important;
       }
-
-      /* Force the React app's flex container to fill */
       #root > div {
         width: 100% !important;
         min-height: 100vh;
       }
-
       table { min-width: max-content; }
       .overflow-y-auto { overflow-x: auto !important; }
     </style>
