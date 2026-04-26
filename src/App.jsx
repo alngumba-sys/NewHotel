@@ -13476,7 +13476,7 @@ const PERSONA_REGISTRY = [
 
 const ROLE_GROUPS = [
   { id: 'leadership',  label: 'Leadership',         personas: ['md', 'gm'] },
-  { id: 'operations',  label: 'Operations',         personas: ['fom', 'fb', 'chef', 'hk'] },
+  { id: 'operations',  label: 'Operations',         personas: ['fom', 'reception', 'fb', 'waiter', 'chef', 'hk'] },
   { id: 'support',     label: 'Support Functions',  personas: ['hr', 'ca', 'pm', 'it'] },
 ];
 
