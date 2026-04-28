@@ -199,7 +199,7 @@ const MdSidebar = ({ activeNav, setActiveNav }) => (
   </aside>
 );
 
-const MdTopBar = () => (
+const MdTopBar = ({ onPersonas, onSignOut }) => (
   <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
       <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026
@@ -210,6 +210,8 @@ const MdTopBar = () => (
         <input placeholder="Search…" className="bg-transparent outline-none text-sm w-48" style={{ color: theme.ink }} />
       </div>
       <button className="relative p-2"><Bell size={15} style={{ color: theme.inkSoft }} /><span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ background: theme.gold }} /></button>
+      <button onClick={onPersonas} title="Switch persona" className="p-2 transition-all" style={{ color: theme.inkSoft }}><Users size={15} /></button>
+      <button onClick={onSignOut} title="Sign out" className="p-2 transition-all" style={{ color: theme.gold }}><LogOut size={15} /></button>
     </div>
   </div>
 );
@@ -374,7 +376,7 @@ const MDBudgetModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Owner · Annual Approval</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Annual Budget · FY 2026/27</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Submitted by Jana Kruger (GM) on 15 March 2026 · Awaiting MD approval</div>
@@ -658,7 +660,7 @@ const MDReportsModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Library · On-Demand</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Reports Library</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>All scheduled and on-demand reports across the platform</div>
@@ -793,7 +795,7 @@ const MdComingSoon = ({ title }) => (
 // ============================================================================
 // APP
 // ============================================================================
-const MdApp = () => {
+const MdApp = ({ onPersonas, onSignOut }) => {
   const [activeNav, setActiveNav] = useState('md-pack');
   let content;
   
@@ -814,7 +816,7 @@ const MdApp = () => {
       `}</style>
       <MdSidebar activeNav={activeNav} setActiveNav={setActiveNav} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <MdTopBar />
+        <MdTopBar onPersonas={onPersonas} onSignOut={onSignOut} />
         <div className="flex-1 overflow-y-auto">{content}</div>
       </div>
     </div>
@@ -868,7 +870,7 @@ const GmSidebar = ({ activeNav, setActiveNav }) => (
       {GM_NAV.map((item, idx) => {
         if (item.type === 'header') {
           return (
-            <div key={'h-' + idx} className="px-3 pt-4 pb-1.5 first:pt-1" style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px', letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 700 }}>
+            <div key={'h-' + idx} className="px-3 pt-4 pb-1.5 first:pt-1 text-left" style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px', letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 700 }}>
               {item.label}
             </div>
           );
@@ -895,7 +897,7 @@ const GmSidebar = ({ activeNav, setActiveNav }) => (
   </aside>
 );
 
-const GmTopBar = () => (
+const GmTopBar = ({ onPersonas, onSignOut }) => (
   <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
       <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026
@@ -906,6 +908,8 @@ const GmTopBar = () => (
         <input placeholder="Search…" className="bg-transparent outline-none text-sm w-48" style={{ color: theme.ink }} />
       </div>
       <button className="relative p-2"><Bell size={15} style={{ color: theme.inkSoft }} /><span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ background: theme.gold }} /></button>
+      <button onClick={onPersonas} title="Switch persona" className="p-2 transition-all" style={{ color: theme.inkSoft }}><Users size={15} /></button>
+      <button onClick={onSignOut} title="Sign out" className="p-2 transition-all" style={{ color: theme.gold }}><LogOut size={15} /></button>
     </div>
   </div>
 );
@@ -1216,7 +1220,7 @@ const GMDashboard = ({ setActiveNav }) => {
           <button key={card.id} onClick={() => setActiveNav(card.id)} className="p-6 text-left transition-all hover:translate-y-[-1px]"
             style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderLeft: `3px solid ${card.color}` }}>
             <div className="flex items-center justify-between">
-              <div>
+              <div className="text-left">
                 <div className="text-[10px] uppercase mb-2" style={{ color: card.color, letterSpacing: '0.16em', fontWeight: 700 }}>Module</div>
                 <h3 className="font-serif text-xl" style={{ color: theme.ink, letterSpacing: '-0.01em' }}>{card.label}</h3>
                 <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{card.sub}</div>
@@ -1245,7 +1249,7 @@ const MorningBriefModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Start of Day · 06:00</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Morning Brief</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday, 25 April 2026 · Everything Jana needs before stepping onto the floor</div>
@@ -1496,7 +1500,7 @@ const ArrivalsModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Front Desk</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Arrivals & Departures</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday, 25 April 2026 · Today&apos;s movements</div>
@@ -2083,7 +2087,7 @@ const RoomStatusModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Housekeeping</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Room Status</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Live updates · 32 rooms</div>
@@ -2179,14 +2183,14 @@ const RoomStatusModule = () => {
             </div>
             <div className="p-6 space-y-4">
               {drawerRoom.guest && (
-                <div>
+                <div className="text-left">
                   <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Current Guest</div>
                   <div className="p-3" style={{ background: theme.bg, border: `1px solid ${theme.ruleSoft}` }}>
                     <div className="text-sm" style={{ color: theme.ink, fontWeight: 500 }}>{drawerRoom.guest}</div>
                   </div>
                 </div>
               )}
-              <div>
+              <div className="text-left">
                 <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Update Status</div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
                   {Object.values(STATUSES).filter(st => st.code !== drawerRoom.status).map(st => (
@@ -2228,7 +2232,7 @@ const ApprovalsModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Workflow · Manager Inbox</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Approvals</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Purchase requisitions, orders, and journal vouchers awaiting your decision</div>
@@ -2374,7 +2378,7 @@ const ApprovalsModule = () => {
               <div className="text-3xl font-serif mt-3" style={{ color: theme.gold, letterSpacing: '-0.02em' }}>{cedi(selected.amount)}</div>
             </div>
             <div className="p-6 space-y-5">
-              <div>
+              <div className="text-left">
                 <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Requester</div>
                 <div className="flex items-center gap-3 p-3" style={{ background: theme.bg, border: `1px solid ${theme.ruleSoft}` }}>
                   <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-medium" style={{ background: theme.tealSoft, color: theme.teal }}>
@@ -2386,11 +2390,11 @@ const ApprovalsModule = () => {
                   </div>
                 </div>
               </div>
-              <div>
+              <div className="text-left">
                 <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Description</div>
                 <p className="text-sm leading-relaxed" style={{ color: theme.ink }}>{selected.description}</p>
               </div>
-              <div>
+              <div className="text-left">
                 <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Cost Breakdown</div>
                 <div className="space-y-1">
                   {selected.breakdown.map((b, i) => (
@@ -2407,7 +2411,7 @@ const ApprovalsModule = () => {
                 </div>
               </div>
               {selected.attachments.length > 0 && (
-                <div>
+                <div className="text-left">
                   <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Attachments</div>
                   <div className="space-y-1.5">
                     {selected.attachments.map((a, i) => (
@@ -2468,7 +2472,7 @@ const ProcurementModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Supply Chain · Backend</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Procurement & Inventory</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{SUPPLIERS.length} active suppliers · {INVENTORY.length} SKUs tracked · {openPOs} POs in flight</div>
@@ -2852,7 +2856,7 @@ const ProcurementModule = () => {
               </div>
             </div>
             <div className="p-6 space-y-5">
-              <div>
+              <div className="text-left">
                 <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Order Details</div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                   <InfoTile label="Date raised" value={selectedPO.dateRaised} />
@@ -2862,7 +2866,7 @@ const ProcurementModule = () => {
                   {selectedPO.deliveredOn && <InfoTile label="Delivered on" value={selectedPO.deliveredOn} />}
                 </div>
               </div>
-              <div>
+              <div className="text-left">
                 <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Line Items</div>
                 <table className="w-full text-sm">
                   <thead>
@@ -2980,7 +2984,7 @@ const ChannelOverviewModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Distribution · Last 30 days</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Channel Manager</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>5 channels connected · all syncing · last sync 06:42</div>
@@ -3069,7 +3073,7 @@ const ChannelRatesModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Rate Management</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Rate Calendar · 14 days</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Drag-select dates to bulk update rates across channels · weekend pricing applied automatically</div>
@@ -3151,7 +3155,7 @@ const ChannelInventoryModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Inventory & Restrictions</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Inventory Controls</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Min/max stays · closed-to-arrival · stop-sells · all channels at once</div>
@@ -3236,7 +3240,7 @@ const ChannelPerformanceModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Channel Performance</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Performance Analysis</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Last 30 days · contribution by channel · commission costs · ADR comparison</div>
@@ -3330,7 +3334,7 @@ const ChannelPromotionsModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Promotions & Discounts</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Promotions</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{promos.filter(p => p.status === 'active').length} active · {promos.filter(p => p.status === 'scheduled').length} scheduled · {promos.filter(p => p.status === 'draft').length} draft</div>
@@ -3423,7 +3427,7 @@ const ChannelManagerModule = () => {
   );
 };
 
-const GmApp = () => {
+const GmApp = ({ onPersonas, onSignOut }) => {
   const [activeNav, setActiveNav] = useState('dashboard');
   let content;
   
@@ -3456,7 +3460,7 @@ const GmApp = () => {
       `}</style>
       <GmSidebar activeNav={activeNav} setActiveNav={setActiveNav} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <GmTopBar />
+        <GmTopBar onPersonas={onPersonas} onSignOut={onSignOut} />
         <div className="flex-1 overflow-y-auto">{content}</div>
       </div>
     </div>
@@ -3519,7 +3523,7 @@ const GmperiodicSidebar = ({ activeNav, setActiveNav }) => (
   </aside>
 );
 
-const GmperiodicTopBar = () => (
+const GmperiodicTopBar = ({ onPersonas, onSignOut }) => (
   <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
       <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026
@@ -3530,6 +3534,8 @@ const GmperiodicTopBar = () => (
         <input placeholder="Search…" className="bg-transparent outline-none text-sm w-48" style={{ color: theme.ink }} />
       </div>
       <button className="relative p-2"><Bell size={15} style={{ color: theme.inkSoft }} /><span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ background: theme.gold }} /></button>
+      <button onClick={onPersonas} title="Switch persona" className="p-2 transition-all" style={{ color: theme.inkSoft }}><Users size={15} /></button>
+      <button onClick={onSignOut} title="Sign out" className="p-2 transition-all" style={{ color: theme.gold }}><LogOut size={15} /></button>
     </div>
   </div>
 );
@@ -3666,7 +3672,7 @@ const FBModule = ({ initialTab }) => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Food & Beverage</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>F&B Performance</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Five outlets, lakeside service · Live</div>
@@ -3810,7 +3816,7 @@ const MaintenanceModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Engineering & Estate</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Maintenance</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday, 25 April 2026 · Live work orders, PM schedule, assets</div>
@@ -4092,7 +4098,7 @@ const MaintenanceModule = () => {
               </div>
             </div>
             <div className="p-6 space-y-5">
-              <div>
+              <div className="text-left">
                 <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Description</div>
                 <p className="text-sm leading-relaxed" style={{ color: theme.ink }}>{drawerWO.description}</p>
               </div>
@@ -4159,7 +4165,7 @@ const BudgetModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Finance · Operational</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Budget vs. Actuals</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>April 2026 — Month to date · Variance analysis & trends</div>
@@ -4369,7 +4375,7 @@ const NightAuditModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>End-of-Day Reconciliation</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Night Audit</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Latest run: 25 Apr 2026 at 03:02 · Completed in 20 minutes</div>
@@ -4589,7 +4595,7 @@ const GmperiodicComingSoon = ({ title }) => (
 // ============================================================================
 // APP
 // ============================================================================
-const GmperiodicApp = () => {
+const GmperiodicApp = ({ onPersonas, onSignOut }) => {
   const [activeNav, setActiveNav] = useState('fb');
   let content;
   
@@ -4611,7 +4617,7 @@ const GmperiodicApp = () => {
       `}</style>
       <GmperiodicSidebar activeNav={activeNav} setActiveNav={setActiveNav} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <GmperiodicTopBar />
+        <GmperiodicTopBar onPersonas={onPersonas} onSignOut={onSignOut} />
         <div className="flex-1 overflow-y-auto">{content}</div>
       </div>
     </div>
@@ -4671,7 +4677,7 @@ const GmreportsSidebar = ({ activeNav, setActiveNav }) => (
   </aside>
 );
 
-const GmreportsTopBar = () => (
+const GmreportsTopBar = ({ onPersonas, onSignOut }) => (
   <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
       <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026
@@ -4682,6 +4688,8 @@ const GmreportsTopBar = () => (
         <input placeholder="Search…" className="bg-transparent outline-none text-sm w-48" style={{ color: theme.ink }} />
       </div>
       <button className="relative p-2"><Bell size={15} style={{ color: theme.inkSoft }} /><span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ background: theme.gold }} /></button>
+      <button onClick={onPersonas} title="Switch persona" className="p-2 transition-all" style={{ color: theme.inkSoft }}><Users size={15} /></button>
+      <button onClick={onSignOut} title="Sign out" className="p-2 transition-all" style={{ color: theme.gold }}><LogOut size={15} /></button>
     </div>
   </div>
 );
@@ -4929,7 +4937,7 @@ const GMReportsModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Reporting · Operational</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Reports</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Run, schedule, and build the reports you need to run the property</div>
@@ -5843,7 +5851,7 @@ const GmreportsComingSoon = ({ title }) => (
 // ============================================================================
 // APP
 // ============================================================================
-const GmreportsApp = () => {
+const GmreportsApp = ({ onPersonas, onSignOut }) => {
   const [activeNav, setActiveNav] = useState('reports');
   let content;
   content = <GMReportsModule />;
@@ -5860,7 +5868,7 @@ const GmreportsApp = () => {
       `}</style>
       <GmreportsSidebar activeNav={activeNav} setActiveNav={setActiveNav} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <GmreportsTopBar />
+        <GmreportsTopBar onPersonas={onPersonas} onSignOut={onSignOut} />
         <div className="flex-1 overflow-y-auto">{content}</div>
       </div>
     </div>
@@ -5924,7 +5932,7 @@ const FomSidebar = ({ activeNav, setActiveNav }) => (
   </aside>
 );
 
-const FomTopBar = () => (
+const FomTopBar = ({ onPersonas, onSignOut }) => (
   <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
       <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026
@@ -5935,6 +5943,8 @@ const FomTopBar = () => (
         <input placeholder="Search…" className="bg-transparent outline-none text-sm w-48" style={{ color: theme.ink }} />
       </div>
       <button className="relative p-2"><Bell size={15} style={{ color: theme.inkSoft }} /><span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ background: theme.gold }} /></button>
+      <button onClick={onPersonas} title="Switch persona" className="p-2 transition-all" style={{ color: theme.inkSoft }}><Users size={15} /></button>
+      <button onClick={onSignOut} title="Sign out" className="p-2 transition-all" style={{ color: theme.gold }}><LogOut size={15} /></button>
     </div>
   </div>
 );
@@ -6058,7 +6068,7 @@ const TapeChartModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Reservations</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Tape Chart</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>32 rooms · 14-day window · drag a reservation block to move it</div>
@@ -6275,7 +6285,7 @@ const InHouseModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Front Desk</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>In-House Guests</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{stats.total} guests currently staying · live folio status</div>
@@ -6394,7 +6404,7 @@ const CashierModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Front Desk</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Cashier Shift</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>
@@ -6410,17 +6420,17 @@ const CashierModule = () => {
 
       <div className="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6">
         <div className="p-5 grid grid-cols-3 gap-6" style={{ background: theme.bgPanel, border: `1px solid ${theme.rule}`, borderTop: `3px solid ${theme.gold}` }}>
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.18em', fontWeight: 700 }}>Opening Float</div>
             <div className="font-serif" style={{ fontSize: '28px', color: theme.ink, letterSpacing: '-0.02em' }}>{cedi(2000)}</div>
             <div className="text-xs mt-1" style={{ color: theme.inkSoft }}>cash, opening drawer count</div>
           </div>
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.18em', fontWeight: 700 }}>Settlements This Shift</div>
             <div className="font-serif" style={{ fontSize: '28px', color: theme.ink, letterSpacing: '-0.02em' }}>{cedi(cashSettled)}</div>
             <div className="text-xs mt-1" style={{ color: theme.inkSoft }}>{CASHIER_TRANSACTIONS.length - CASHIER_TRANSACTIONS.filter(t => t.method === 'Charge to room').length} transactions</div>
           </div>
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.18em', fontWeight: 700 }}>Expected Drawer at Close</div>
             <div className="font-serif" style={{ fontSize: '28px', color: theme.gold, letterSpacing: '-0.02em' }}>{cedi(2000 + totals.cash)}</div>
             <div className="text-xs mt-1" style={{ color: theme.inkSoft }}>opening + cash receipts</div>
@@ -6510,7 +6520,7 @@ const FomComingSoon = ({ title }) => (
 // ============================================================================
 // APP
 // ============================================================================
-const FomApp = () => {
+const FomApp = ({ onPersonas, onSignOut }) => {
   const [activeNav, setActiveNav] = useState('arrivals');
   let content;
   
@@ -6533,7 +6543,7 @@ const FomApp = () => {
       `}</style>
       <FomSidebar activeNav={activeNav} setActiveNav={setActiveNav} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <FomTopBar />
+        <FomTopBar onPersonas={onPersonas} onSignOut={onSignOut} />
         <div className="flex-1 overflow-y-auto">{content}</div>
       </div>
     </div>
@@ -6596,7 +6606,7 @@ const FbSidebar = ({ activeNav, setActiveNav }) => (
   </aside>
 );
 
-const FbTopBar = () => (
+const FbTopBar = ({ onPersonas, onSignOut }) => (
   <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
       <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026
@@ -6607,6 +6617,8 @@ const FbTopBar = () => (
         <input placeholder="Search…" className="bg-transparent outline-none text-sm w-48" style={{ color: theme.ink }} />
       </div>
       <button className="relative p-2"><Bell size={15} style={{ color: theme.inkSoft }} /><span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ background: theme.gold }} /></button>
+      <button onClick={onPersonas} title="Switch persona" className="p-2 transition-all" style={{ color: theme.inkSoft }}><Users size={15} /></button>
+      <button onClick={onSignOut} title="Sign out" className="p-2 transition-all" style={{ color: theme.gold }}><LogOut size={15} /></button>
     </div>
   </div>
 );
@@ -7000,7 +7012,7 @@ const POSModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Restaurant POS</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>{outlet.name}</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday Dinner Service · live floor plan</div>
@@ -7083,7 +7095,7 @@ const FbComingSoon = ({ title }) => (
 // ============================================================================
 // APP
 // ============================================================================
-const FbApp = () => {
+const FbApp = ({ onPersonas, onSignOut }) => {
   const [activeNav, setActiveNav] = useState('fb');
   let content;
   
@@ -7104,7 +7116,7 @@ const FbApp = () => {
       `}</style>
       <FbSidebar activeNav={activeNav} setActiveNav={setActiveNav} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <FbTopBar />
+        <FbTopBar onPersonas={onPersonas} onSignOut={onSignOut} />
         <div className="flex-1 overflow-y-auto">{content}</div>
       </div>
     </div>
@@ -7173,7 +7185,7 @@ const ChefSidebar = ({ activeNav, setActiveNav }) => (
   </aside>
 );
 
-const ChefTopBar = () => (
+const ChefTopBar = ({ onPersonas, onSignOut }) => (
   <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
       <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026 · Service starts 18:00
@@ -7184,6 +7196,8 @@ const ChefTopBar = () => (
         <input placeholder="Search recipes, ingredients…" className="bg-transparent outline-none text-sm w-56" style={{ color: theme.ink }} />
       </div>
       <button className="relative p-2"><Bell size={15} style={{ color: theme.inkSoft }} /><span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ background: theme.gold }} /></button>
+      <button onClick={onPersonas} title="Switch persona" className="p-2 transition-all" style={{ color: theme.inkSoft }}><Users size={15} /></button>
+      <button onClick={onSignOut} title="Sign out" className="p-2 transition-all" style={{ color: theme.gold }}><LogOut size={15} /></button>
     </div>
   </div>
 );
@@ -7383,7 +7397,7 @@ const KitchenOverview = ({ setActiveNav }) => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Kitchen · Pre-Service</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Good afternoon, Chef</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday dinner rush — service starts in 2h 15m</div>
@@ -7523,7 +7537,7 @@ const RecipesModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Recipe Book</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Recipes & Cost</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{RECIPES.length} recipes · click any row for full BOM and cost breakdown</div>
@@ -7641,7 +7655,7 @@ const RecipeDrawer = ({ recipe, onClose }) => {
           </div>
         </div>
         <div className="p-6 space-y-5">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Bill of Materials</div>
             <table className="w-full text-sm">
               <thead>
@@ -7679,7 +7693,7 @@ const RecipeDrawer = ({ recipe, onClose }) => {
             </table>
           </div>
           {recipe.allergens.length > 0 && (
-            <div>
+            <div className="text-left">
               <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Allergens</div>
               <div className="flex flex-wrap gap-1">
                 {recipe.allergens.map(a => <Pill key={a} tone="clay">{a}</Pill>)}
@@ -7687,7 +7701,7 @@ const RecipeDrawer = ({ recipe, onClose }) => {
             </div>
           )}
           {recipe.notes && (
-            <div>
+            <div className="text-left">
               <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Chef Notes</div>
               <div className="p-3 text-sm italic" style={{ background: theme.bg, border: `1px solid ${theme.ruleSoft}`, borderLeft: `3px solid ${theme.gold}`, color: theme.ink }}>{recipe.notes}</div>
             </div>
@@ -7724,7 +7738,7 @@ const ProductionModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Mise-en-Place</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Production Sheet</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday dinner · prep status by station · target full by 17:30</div>
@@ -7818,7 +7832,7 @@ const VarianceModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Cost Control</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Theoretical vs Actual</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Daily food cost variance · MTD running 12% over budget</div>
@@ -7913,7 +7927,7 @@ const WastageModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Quality Control</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Wastage Log</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Last 7 days · {cedi(totalWastageCost)} written off</div>
@@ -7992,7 +8006,7 @@ const StationsModule = () => (
   <div style={{ background: theme.bg, minHeight: '100%' }}>
     <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
       <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-        <div>
+        <div className="text-left">
           <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Brigade · Tonight</div>
           <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Stations & Team</h1>
           <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday dinner service · 6 cooks on duty (1 vacancy)</div>
@@ -8074,7 +8088,7 @@ const ChefComingSoon = ({ title }) => (
 // ============================================================================
 // APP
 // ============================================================================
-const ChefApp = () => {
+const ChefApp = ({ onPersonas, onSignOut }) => {
   const [activeNav, setActiveNav] = useState('chef-overview');
   let content;
   if (activeNav === 'chef-overview') content = <KitchenOverview setActiveNav={setActiveNav} />;
@@ -8098,7 +8112,7 @@ const ChefApp = () => {
       `}</style>
       <ChefSidebar activeNav={activeNav} setActiveNav={setActiveNav} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <ChefTopBar />
+        <ChefTopBar onPersonas={onPersonas} onSignOut={onSignOut} />
         <div className="flex-1 overflow-y-auto">{content}</div>
       </div>
     </div>
@@ -8163,7 +8177,7 @@ const HkSidebar = ({ activeNav, setActiveNav }) => (
   </aside>
 );
 
-const HkTopBar = () => (
+const HkTopBar = ({ onPersonas, onSignOut }) => (
   <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
       <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026
@@ -8174,6 +8188,8 @@ const HkTopBar = () => (
         <input placeholder="Search…" className="bg-transparent outline-none text-sm w-48" style={{ color: theme.ink }} />
       </div>
       <button className="relative p-2"><Bell size={15} style={{ color: theme.inkSoft }} /><span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ background: theme.gold }} /></button>
+      <button onClick={onPersonas} title="Switch persona" className="p-2 transition-all" style={{ color: theme.inkSoft }}><Users size={15} /></button>
+      <button onClick={onSignOut} title="Sign out" className="p-2 transition-all" style={{ color: theme.gold }}><LogOut size={15} /></button>
     </div>
   </div>
 );
@@ -8246,7 +8262,7 @@ const HKAssignmentsModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Housekeeping</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Daily Assignments</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday, 25 April 2026 · 4 attendants on duty · balanced by room credits</div>
@@ -8349,7 +8365,7 @@ const HKMinibarModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Housekeeping · Revenue Capture</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Mini-Bar</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Postings reported by attendants · charge to guest folio</div>
@@ -8430,7 +8446,7 @@ const HKLinenModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Housekeeping</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Linen & Supplies</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Last stock count: 22 April 2026 · Next: 29 April</div>
@@ -8532,7 +8548,7 @@ const HKLostFoundModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Housekeeping</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Lost & Found</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Items found on property · 90-day holding period before disposal</div>
@@ -8623,7 +8639,7 @@ const HkComingSoon = ({ title }) => (
 // ============================================================================
 // APP
 // ============================================================================
-const HkApp = () => {
+const HkApp = ({ onPersonas, onSignOut }) => {
   const [activeNav, setActiveNav] = useState('rooms');
   let content;
   
@@ -8646,7 +8662,7 @@ const HkApp = () => {
       `}</style>
       <HkSidebar activeNav={activeNav} setActiveNav={setActiveNav} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <HkTopBar />
+        <HkTopBar onPersonas={onPersonas} onSignOut={onSignOut} />
         <div className="flex-1 overflow-y-auto">{content}</div>
       </div>
     </div>
@@ -8710,7 +8726,7 @@ const HrSidebar = ({ activeNav, setActiveNav }) => (
   </aside>
 );
 
-const HrTopBar = () => (
+const HrTopBar = ({ onPersonas, onSignOut }) => (
   <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
       <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026
@@ -8721,6 +8737,8 @@ const HrTopBar = () => (
         <input placeholder="Search…" className="bg-transparent outline-none text-sm w-48" style={{ color: theme.ink }} />
       </div>
       <button className="relative p-2"><Bell size={15} style={{ color: theme.inkSoft }} /><span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ background: theme.gold }} /></button>
+      <button onClick={onPersonas} title="Switch persona" className="p-2 transition-all" style={{ color: theme.inkSoft }}><Users size={15} /></button>
+      <button onClick={onSignOut} title="Sign out" className="p-2 transition-all" style={{ color: theme.gold }}><LogOut size={15} /></button>
     </div>
   </div>
 );
@@ -8789,7 +8807,7 @@ const HRModule = ({ activeNav }) => {
       <div style={{ background: theme.bg, minHeight: '100%' }}>
         <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
           <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-            <div>
+            <div className="text-left">
               <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>People & Payroll</div>
               <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>HR Overview</h1>
               <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Saturday, 25 April 2026 · {total} employees on roll</div>
@@ -8889,7 +8907,7 @@ const HRModule = ({ activeNav }) => {
       <div style={{ background: theme.bg, minHeight: '100%' }}>
         <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
           <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-            <div>
+            <div className="text-left">
               <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>People</div>
               <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Employees</h1>
               <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{EMPLOYEES.length} on roll · click any row for full record</div>
@@ -8989,7 +9007,7 @@ const HRModule = ({ activeNav }) => {
                 </div>
               </div>
               <div className="p-6 space-y-5">
-                <div>
+                <div className="text-left">
                   <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Contact</div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-sm" style={{ color: theme.ink }}><Mail size={12} style={{ color: theme.inkMute }} />{selectedEmp.email}</div>
@@ -8997,7 +9015,7 @@ const HRModule = ({ activeNav }) => {
                     <div className="flex items-center gap-2 text-sm" style={{ color: theme.ink }}><Globe size={12} style={{ color: theme.inkMute }} />{selectedEmp.nationality}</div>
                   </div>
                 </div>
-                <div>
+                <div className="text-left">
                   <div className="text-[10px] uppercase mb-2" style={{ color: theme.inkMute, letterSpacing: '0.14em', fontWeight: 600 }}>Employment</div>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                     <InfoTile label="Joined" value={selectedEmp.joined} />
@@ -9032,7 +9050,7 @@ const HRModule = ({ activeNav }) => {
       <div style={{ background: theme.bg, minHeight: '100%' }}>
         <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
           <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-            <div>
+            <div className="text-left">
               <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Attendance · Leave</div>
               <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Attendance & Leave</h1>
               <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Today's attendance · open leave requests</div>
@@ -9136,7 +9154,7 @@ const HRModule = ({ activeNav }) => {
       <div style={{ background: theme.bg, minHeight: '100%' }}>
         <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
           <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-            <div>
+            <div className="text-left">
               <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Payroll · {PAYROLL_SUMMARY.month}</div>
               <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Payroll</h1>
               <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Pay date: {PAYROLL_SUMMARY.payDate} · SSNIT due: {PAYROLL_SUMMARY.ssnitDue}</div>
@@ -9247,7 +9265,7 @@ const HRModule = ({ activeNav }) => {
       <div style={{ background: theme.bg, minHeight: '100%' }}>
         <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
           <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-            <div>
+            <div className="text-left">
               <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Hiring Pipeline</div>
               <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Recruitment</h1>
               <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{RECRUITMENT.length} open positions · 73 active applicants</div>
@@ -9324,7 +9342,7 @@ const HrComingSoon = ({ title }) => (
 // ============================================================================
 // APP
 // ============================================================================
-const HrApp = () => {
+const HrApp = ({ onPersonas, onSignOut }) => {
   const [activeNav, setActiveNav] = useState('hr-overview');
   let content;
   content = <HRModule activeNav={activeNav} />;
@@ -9341,7 +9359,7 @@ const HrApp = () => {
       `}</style>
       <HrSidebar activeNav={activeNav} setActiveNav={setActiveNav} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <HrTopBar />
+        <HrTopBar onPersonas={onPersonas} onSignOut={onSignOut} />
         <div className="flex-1 overflow-y-auto">{content}</div>
       </div>
     </div>
@@ -9412,7 +9430,7 @@ const CaSidebar = ({ activeNav, setActiveNav }) => (
   </aside>
 );
 
-const CaTopBar = () => (
+const CaTopBar = ({ onPersonas, onSignOut }) => (
   <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
       <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026 · Period: April 2026 (open)
@@ -9423,6 +9441,8 @@ const CaTopBar = () => (
         <input placeholder="Search GL accounts, transactions…" className="bg-transparent outline-none text-sm w-56" style={{ color: theme.ink }} />
       </div>
       <button className="relative p-2"><Bell size={15} style={{ color: theme.inkSoft }} /><span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ background: theme.gold }} /></button>
+      <button onClick={onPersonas} title="Switch persona" className="p-2 transition-all" style={{ color: theme.inkSoft }}><Users size={15} /></button>
+      <button onClick={onSignOut} title="Sign out" className="p-2 transition-all" style={{ color: theme.gold }}><LogOut size={15} /></button>
     </div>
   </div>
 );
@@ -9562,7 +9582,7 @@ const FinanceOverview = ({ setActiveNav }) => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Finance · April 2026</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Good morning, Adriaan</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>April period open · 5 days to month-end · April returns due 15 May</div>
@@ -9690,7 +9710,7 @@ const LedgerModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Chart of Accounts</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>General Ledger</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>USALI-aligned · {COA.length} accounts · click any account for transaction history</div>
@@ -9779,7 +9799,7 @@ const StatementsModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Period · April 2026</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Trial Balance & P&amp;L</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Period: 1–25 April 2026 (open) · vs prior month and budget</div>
@@ -10025,7 +10045,7 @@ const ARModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>City Ledger</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Accounts Receivable</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{AR_LEDGER.length} open invoices · {cedi(total)} outstanding</div>
@@ -10102,7 +10122,7 @@ const APModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Vendor Payments</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Accounts Payable</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{AP_INVOICES.length} open invoices · {cedi(total)} due · 3-way match enforced</div>
@@ -10179,7 +10199,7 @@ const BankModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Bank Accounts</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Bank Reconciliation</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Last statement import: 24 April 2026 · {UNMATCHED_BANK_ITEMS.length} items unmatched</div>
@@ -10266,7 +10286,7 @@ const JVModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Manual Journals</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Journal Vouchers</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{JOURNAL_VOUCHERS.length} JVs this period · period April 2026 open</div>
@@ -10327,7 +10347,7 @@ const TaxModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Statutory Filings</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Tax Returns</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>VAT + Tourism Levy · PAYE · SSNIT · Ghana Revenue Authority and SSNIT filings</div>
@@ -10406,7 +10426,7 @@ const AssetsModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>PP&amp;E Register</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Fixed Assets</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{FIXED_ASSETS.length} capitalized assets · NBV {cedi(totalNBV)}</div>
@@ -10485,7 +10505,7 @@ const CaComingSoon = ({ title }) => (
 // ============================================================================
 // APP
 // ============================================================================
-const CaApp = () => {
+const CaApp = ({ onPersonas, onSignOut }) => {
   const [activeNav, setActiveNav] = useState('ca-overview');
   let content;
   if (activeNav === 'ca-overview') content = <FinanceOverview setActiveNav={setActiveNav} />;
@@ -10512,7 +10532,7 @@ const CaApp = () => {
       `}</style>
       <CaSidebar activeNav={activeNav} setActiveNav={setActiveNav} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <CaTopBar />
+        <CaTopBar onPersonas={onPersonas} onSignOut={onSignOut} />
         <div className="flex-1 overflow-y-auto">{content}</div>
       </div>
     </div>
@@ -10583,7 +10603,7 @@ const PmSidebar = ({ activeNav, setActiveNav }) => (
   </aside>
 );
 
-const PmTopBar = () => (
+const PmTopBar = ({ onPersonas, onSignOut }) => (
   <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
       <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026 · 5 PRs awaiting action
@@ -10594,6 +10614,8 @@ const PmTopBar = () => (
         <input placeholder="Search PRs, POs, vendors…" className="bg-transparent outline-none text-sm w-56" style={{ color: theme.ink }} />
       </div>
       <button className="relative p-2"><Bell size={15} style={{ color: theme.inkSoft }} /><span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ background: theme.gold }} /></button>
+      <button onClick={onPersonas} title="Switch persona" className="p-2 transition-all" style={{ color: theme.inkSoft }}><Users size={15} /></button>
+      <button onClick={onSignOut} title="Sign out" className="p-2 transition-all" style={{ color: theme.gold }}><LogOut size={15} /></button>
     </div>
   </div>
 );
@@ -10708,7 +10730,7 @@ const PMDashboard = ({ setActiveNav }) => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Procurement · Operations</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Good morning, Kojo</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{openPRs} PRs awaiting RFQ · {activeRFQs} RFQs in flight · {pendingPOs} POs at GM</div>
@@ -10829,7 +10851,7 @@ const PRsModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Demand · Intake</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Purchase Requisitions</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Department requests waiting to be turned into RFQs or direct POs</div>
@@ -10917,7 +10939,7 @@ const RFQsModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Quotation Comparison</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>RFQ Comparison</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{RFQS.length} active RFQs · pick a winning quote and convert to PO</div>
@@ -11010,7 +11032,7 @@ const POsModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>POs · Lifecycle</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Purchase Orders</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{POS.length} POs in current view · drag PRs to drafts or convert directly</div>
@@ -11083,7 +11105,7 @@ const GRNsModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Receiving</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Goods Received Notes</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Track deliveries · resolve discrepancies · feed three-way match in AP</div>
@@ -11149,7 +11171,7 @@ const VendorsModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Master Data</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Vendor Directory</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{VENDORS.length} active vendors · {VENDORS.filter(v => v.preferred).length} preferred · contracts up to 2030</div>
@@ -11212,7 +11234,7 @@ const PerformanceModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Vendor Scorecards</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Vendor Performance</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Rolling 12-month scorecards · on-time delivery · fill rate · quality</div>
@@ -11293,7 +11315,7 @@ const StockModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Inventory Health</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Stock Movements</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Slow-moving items · expiring stock · reorder critical · velocity analysis</div>
@@ -11365,7 +11387,7 @@ const PmComingSoon = ({ title }) => (
 // ============================================================================
 // APP
 // ============================================================================
-const PmApp = () => {
+const PmApp = ({ onPersonas, onSignOut }) => {
   const [activeNav, setActiveNav] = useState('pm-dashboard');
   let content;
   if (activeNav === 'pm-dashboard') content = <PMDashboard setActiveNav={setActiveNav} />;
@@ -11391,7 +11413,7 @@ const PmApp = () => {
       `}</style>
       <PmSidebar activeNav={activeNav} setActiveNav={setActiveNav} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <PmTopBar />
+        <PmTopBar onPersonas={onPersonas} onSignOut={onSignOut} />
         <div className="flex-1 overflow-y-auto">{content}</div>
       </div>
     </div>
@@ -11462,7 +11484,7 @@ const ItSidebar = ({ activeNav, setActiveNav }) => (
   </aside>
 );
 
-const ItTopBar = () => (
+const ItTopBar = ({ onPersonas, onSignOut }) => (
   <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
       <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026 · All systems operational
@@ -11473,6 +11495,8 @@ const ItTopBar = () => (
         <input placeholder="Search users, audit log, settings…" className="bg-transparent outline-none text-sm w-56" style={{ color: theme.ink }} />
       </div>
       <button className="relative p-2"><Bell size={15} style={{ color: theme.inkSoft }} /><span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ background: theme.leaf }} /></button>
+      <button onClick={onPersonas} title="Switch persona" className="p-2 transition-all" style={{ color: theme.inkSoft }}><Users size={15} /></button>
+      <button onClick={onSignOut} title="Sign out" className="p-2 transition-all" style={{ color: theme.gold }}><LogOut size={15} /></button>
     </div>
   </div>
 );
@@ -11584,7 +11608,7 @@ const SystemHealth = ({ setActiveNav }) => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Operations · Cloud</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>System Health</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{operational} of {SYSTEM_STATUS.length} services healthy · 1 vendor incident in flight · last backup {lastBackup.timestamp}</div>
@@ -11685,7 +11709,7 @@ const UsersModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Identity & Access</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Users & Roles</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{PLATFORM_USERS.length} users · {mfaCovered} with MFA · password policy: 10-char minimum, 90-day rotation</div>
@@ -11783,7 +11807,7 @@ const AuditModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Compliance · Activity</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Audit Log</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Searchable activity log · retained 7 years per BRD compliance · last 12 entries shown</div>
@@ -11855,7 +11879,7 @@ const IntegrationsModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>External Connections</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Integrations</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{INTEGRATIONS.filter(i => i.status === 'connected').length} connected · {INTEGRATIONS.filter(i => i.status === 'degraded').length} degraded · click any to view config</div>
@@ -11905,7 +11929,7 @@ const BackupsModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Disaster Recovery</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Backups</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Daily 02:00 UTC · weekly archive · monthly archive · all encrypted at rest</div>
@@ -12006,7 +12030,7 @@ const LicenseModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Subscription · Updates</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>License & Updates</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Cloud SaaS subscription · Boutique Plan · auto-update enabled</div>
@@ -12083,7 +12107,7 @@ const APIModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Developer Access</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>API & Webhooks</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>REST API · OAuth 2.0 · webhook delivery for system events</div>
@@ -12163,7 +12187,7 @@ const ConfigModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>System · Preferences</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Configuration</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>System-wide preferences · timezone · date format · fiscal year</div>
@@ -12259,7 +12283,7 @@ const ItComingSoon = ({ title }) => (
 // ============================================================================
 // APP
 // ============================================================================
-const ItApp = () => {
+const ItApp = ({ onPersonas, onSignOut }) => {
   const [activeNav, setActiveNav] = useState('it-health');
   let content;
   if (activeNav === 'it-health') content = <SystemHealth setActiveNav={setActiveNav} />;
@@ -12285,7 +12309,7 @@ const ItApp = () => {
       `}</style>
       <ItSidebar activeNav={activeNav} setActiveNav={setActiveNav} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <ItTopBar />
+        <ItTopBar onPersonas={onPersonas} onSignOut={onSignOut} />
         <div className="flex-1 overflow-y-auto">{content}</div>
       </div>
     </div>
@@ -12338,7 +12362,7 @@ const ReceptionistQueueModule = () => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Front Desk · Today</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>Today's Queue</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{arriving.length} arrivals · {departing.length} departures · {inRoom.length} already in</div>
@@ -12422,7 +12446,7 @@ const ReceptionistCheckInModule = () => {
       <div style={{ background: theme.bg, minHeight: '100%' }}>
         <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
           <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-            <div>
+            <div className="text-left">
               <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Check-In · Step {step + 1} of 3</div>
               <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>{selected.guest}</h1>
               <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{selected.type} · Room {selected.room || 'TBA'} · {selected.nights} nights</div>
@@ -12621,7 +12645,7 @@ const ReceptionistCheckOutModule = () => {
       <div style={{ background: theme.bg, minHeight: '100%' }}>
         <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
           <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-            <div>
+            <div className="text-left">
               <div className="text-[10px] uppercase mb-2" style={{ color: theme.clay, letterSpacing: '0.24em', fontWeight: 700 }}>Check-Out · Folio Settlement</div>
               <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>{selected.guest}</h1>
               <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>Room {selected.room} · {selected.nights} nights · Departing now</div>
@@ -12870,7 +12894,7 @@ const ReceptionistSidebar = ({ activeNav, setActiveNav }) => (
   </aside>
 );
 
-const ReceptionistTopBar = () => (
+const ReceptionistTopBar = ({ onPersonas, onSignOut }) => (
   <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
       <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026 · Shift 14:00–22:00</span><span className="md:hidden">Sat 25 Apr</span>
@@ -12881,11 +12905,13 @@ const ReceptionistTopBar = () => (
         <input placeholder="Search guest by name or room..." className="bg-transparent outline-none text-sm w-56" style={{ color: theme.ink }} />
       </div>
       <button className="relative p-2"><Bell size={15} style={{ color: theme.inkSoft }} /><span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ background: theme.gold }} /></button>
+      <button onClick={onPersonas} title="Switch persona" className="p-2 transition-all" style={{ color: theme.inkSoft }}><Users size={15} /></button>
+      <button onClick={onSignOut} title="Sign out" className="p-2 transition-all" style={{ color: theme.gold }}><LogOut size={15} /></button>
     </div>
   </div>
 );
 
-const ReceptionistApp = () => {
+const ReceptionistApp = ({ onPersonas, onSignOut }) => {
   const [activeNav, setActiveNav] = useState('queue');
   let content;
   if (activeNav === 'queue') content = <ReceptionistQueueModule />;
@@ -12907,7 +12933,7 @@ const ReceptionistApp = () => {
       `}</style>
       <ReceptionistSidebar activeNav={activeNav} setActiveNav={setActiveNav} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <ReceptionistTopBar />
+        <ReceptionistTopBar onPersonas={onPersonas} onSignOut={onSignOut} />
         <div className="flex-1 overflow-y-auto">{content}</div>
       </div>
     </div>
@@ -12983,7 +13009,7 @@ const WaiterTabsModule = ({ openTab }) => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Service · Restaurant Floor</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>My Tables</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{WAITER_TABS.length} active tabs · {WAITER_TABS.reduce((s,t)=>s+t.guests,0)} covers · {cedi(totalRevenue)} on the floor</div>
@@ -13042,7 +13068,7 @@ const WaiterTabDetailModule = ({ tab, onBack }) => {
     <div style={{ background: theme.bg, minHeight: '100%' }}>
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
         <div className="px-4 md:px-8 pt-5 md:pt-7 pb-4 md:pb-5 flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-0">
-          <div>
+          <div className="text-left">
             <div className="text-[10px] uppercase mb-2" style={{ color: theme.gold, letterSpacing: '0.24em', fontWeight: 700 }}>Tab · Table {tab.table}</div>
             <h1 className="font-serif" style={{ fontSize: 'clamp(22px, 4vw, 34px)', color: theme.ink, letterSpacing: '-0.01em' }}>{tab.id}</h1>
             <div className="text-sm mt-1" style={{ color: theme.inkSoft }}>{tab.guests} guests · opened {tab.opened}{tab.vip ? ' · VIP' : ''}</div>
@@ -13296,18 +13322,20 @@ const WaiterSidebar = ({ activeNav, setActiveNav }) => (
   </aside>
 );
 
-const WaiterTopBar = () => (
+const WaiterTopBar = ({ onPersonas, onSignOut }) => (
   <div className="flex items-center justify-between pl-16 pr-4 md:px-8 py-3 md:py-4" style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
     <div className="flex items-center gap-3 text-sm" style={{ color: theme.inkSoft }}>
       <Calendar size={14} /><span className="hidden md:inline">Saturday, 25 April 2026 · Dinner service · 20:38</span><span className="md:hidden">Sat 25 Apr</span>
     </div>
     <div className="flex items-center gap-3">
       <button className="relative p-2"><Bell size={15} style={{ color: theme.inkSoft }} /><span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ background: theme.gold }} /></button>
+      <button onClick={onPersonas} title="Switch persona" className="p-2 transition-all" style={{ color: theme.inkSoft }}><Users size={15} /></button>
+      <button onClick={onSignOut} title="Sign out" className="p-2 transition-all" style={{ color: theme.gold }}><LogOut size={15} /></button>
     </div>
   </div>
 );
 
-const WaiterApp = () => {
+const WaiterApp = ({ onPersonas, onSignOut }) => {
   const [activeNav, setActiveNav] = useState('tabs');
   const [openedTab, setOpenedTab] = useState(null);
   let content;
@@ -13331,7 +13359,7 @@ const WaiterApp = () => {
       `}</style>
       <WaiterSidebar activeNav={activeNav} setActiveNav={(id) => { setOpenedTab(null); setActiveNav(id); }} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <WaiterTopBar />
+        <WaiterTopBar onPersonas={onPersonas} onSignOut={onSignOut} />
         <div className="flex-1 overflow-y-auto">{content}</div>
       </div>
     </div>
@@ -13493,7 +13521,7 @@ const LoginScreen = ({ onSelect, onSignOut }) => {
         .font-mono { font-family: 'JetBrains Mono', monospace !important; }
       `}</style>
       <div className="relative px-6 md:px-16 py-10 md:py-16" style={{ background: theme.navBg, color: '#FBF7EE' }}>
-        <div className="max-w-6xl mx-auto">
+        <div>
           <div className="flex flex-col items-start gap-3 mb-10">
             <FloatLogo size="xl" />
             <div className="text-xs" style={{ color: theme.gold, letterSpacing: '0.24em', textTransform: 'uppercase', fontWeight: 600 }}>Akosombo · Lake Volta · Ghana</div>
@@ -13514,7 +13542,7 @@ const LoginScreen = ({ onSelect, onSignOut }) => {
       </div>
 
       <div style={{ background: theme.bgPanel, borderBottom: `1px solid ${theme.rule}` }}>
-        <div className="max-w-6xl mx-auto px-6 md:px-16 flex gap-1 overflow-x-auto">
+        <div className="px-6 md:px-16 flex gap-1 overflow-x-auto">
           {ROLE_GROUPS.map(g => {
             const active = activeGroup === g.id;
             return (
@@ -13530,7 +13558,7 @@ const LoginScreen = ({ onSelect, onSignOut }) => {
       </div>
 
       <div className="flex-1 px-6 md:px-16 py-8 md:py-12" style={{ background: theme.bg }}>
-        <div className="max-w-6xl mx-auto">
+        <div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {ROLE_GROUPS.find(g => g.id === activeGroup).personas.map(pid => {
               const p = PERSONA_REGISTRY.find(x => x.id === pid);
@@ -14690,23 +14718,10 @@ const App = () => {
         {drawerOpen ? <X size={18} /> : <Menu size={18} />}
       </button>
       
-      <div className="fixed top-3 right-3 md:top-4 md:right-6 z-[70] flex items-center gap-2">
-        <button
-          onClick={() => setActive(null)}
-          className="flex items-center gap-2 px-3 py-2 transition-all"
-          style={{ background: 'transparent', color: theme.gold, border: `1px solid ${theme.gold}`, fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 600 }}>
-          <ArrowLeft size={12} /> <span className="hidden sm:inline">Personas</span>
-        </button>
-        <button
-          onClick={handleSignOut}
-          className="flex items-center gap-2 px-3 py-2 transition-all"
-          style={{ background: theme.gold, color: theme.navBg, border: `1px solid ${theme.gold}`, fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 600 }}>
-          <LogOut size={12} /> <span className="hidden sm:inline">Sign Out</span>
-        </button>
-      </div>
+
       
       <div className={`platform-sidebar-wrapper ${drawerOpen ? 'drawer-open' : ''}`}>
-        <Workspace />
+        <Workspace onPersonas={() => setActive(null)} onSignOut={handleSignOut} />
       </div>
       <div className="platform-drawer-overlay" onClick={() => setDrawerOpen(false)} />
     </>
